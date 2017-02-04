@@ -63,7 +63,7 @@ Contents below show the data structures and algorithms available in this project
     |:-----:|:----:|:-------:|
     |Makefile|Makefile|Visual Studio Project|
 
-4. All executables(benchmarks and unit tests) will be generated in the `bin` directory. To run all unit tests together, use command below:
+4. All executables will be generated in the `bin` directory. To run all unit tests together, use command below:
 
     ```bash
     $ ctest --verbose
@@ -258,7 +258,7 @@ int main() {
 
 ##### Cost in practice
 
-Note that there are many different ways to implement the hash table. The C++ standard library implements the `std::unordered_set` as a **dynamic** hash table, which means that its bucket amount changes dynamically when performing `insert()` and `remove()/erase()` operations(i.e., using [extendible hashing](https://en.wikipedia.org/wiki/Extendible_hashing) or [linear hashing](https://en.wikipedia.org/wiki/Linear_hashing)). While in TastyLib, for simplicity, the hash table is **static** so its bucket amount is fixed after initialized. Since different implementations have different pros and cons, it's hard to give a convincing benchmark result.
+Note that there are many different ways to implement the hash table. The C++ standard library implements the `std::unordered_set` as a **dynamic** hash table, which means that its bucket amount changes dynamically when performing `insert()` and `remove()/erase()` operations (i.e., using [extendible hashing](https://en.wikipedia.org/wiki/Extendible_hashing) or [linear hashing](https://en.wikipedia.org/wiki/Linear_hashing)). While in TastyLib, for simplicity, the hash table is **static** so its bucket amount is fixed after initialized. Since different implementations have different pros and cons, it's hard to give a convincing benchmark result.
 
 ### AVLTree
 
@@ -312,7 +312,7 @@ int main() {
 
 Source: [benchmark_AVLTree.cpp](./src/benchmark_AVLTree.cpp)
 
-The program compares the time cost of `AVLTree` with `std::multiset`. It calculates the average time cost of each operation. Note that the `std::multiset` is implemented as a [red-black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), which is faster than the AVL tree when performing `insert()` and `remove()` operations(but slower when performing `find()`). Here are the results under different environments:
+The program compares the time cost of `AVLTree` with `std::multiset`. It calculates the average time cost of each operation. Note that the `std::multiset` is implemented as a [red-black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), which is faster than the AVL tree when performing `insert()` and `remove()` operations but slower when performing `find()`. Here are the results under different environments:
 
 ###### Ubuntu 16.04 64-bit / g++ 5.4
 
