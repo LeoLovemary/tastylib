@@ -604,32 +604,18 @@ int main() {
 #### Usage
 
 ```c++
-#include "tastylib/Dijkstra.h"
+#include "tastylib/LCS.h"
 #include <string>
 
 using namespace tastylib;
 
 int main() {
-    DijkGraph<string> graph(3);  // Create a graph that has three vertices
 
-    graph[0].val = "Alice";  // Vertex 0 denotes Alice's home
-    graph[1].val = "Darth";  // Vertex 1 denotes Darth's home
-    graph[2].val = "Bob";    // Vertex 2 denotes Bob' home
+    // res1 == 2
+    auto res1 = lcs("aa", "aa");
 
-    graph.setWeight(0, 1, 5);   // Distance from Alice's home to Darth's is 5
-    graph.setWeight(0, 2, 20);  // Distance from Alice's home to Bob's is 20
-    graph.setWeight(1, 2, 5);   // Distance from Darth's home to Bob's is 5
-
-    // Run Dijkstra's algorithm to compute the
-    // shortest path from Alice's home to others'.
-    dijkstra(graph, 0);
-
-    // Now I know the minimum distance from Alice's home to Bob's home, which is 10.
-    auto distToBob = graph[2].dist;  // distToBob == 10
-
-    // I also know the minimum path to Bob's home is "0->1->2", namely "Alice->Darth->Bob".
-    auto prev1 = graph[2].prev;      // prev1 == 1
-    auto prev2 = graph[prev1].prev;  // prev2 == 0
+    // res2 == 7
+    auto res2 = lcs("aa123XXXXabc", "abc123abc");
 
     return 0;
 }
