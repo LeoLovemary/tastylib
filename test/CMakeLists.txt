@@ -23,7 +23,8 @@ set(TEST_EXEC_LIST
     test_MD5
     test_NPuzzle
     test_Sort
-    test_Dijkstra)
+    test_Dijkstra
+    test_LCS)
 
 foreach (exec ${TEST_EXEC_LIST})
     add_executable(${exec} ${exec}.cpp ${TASTYLIB_HEADERS})
