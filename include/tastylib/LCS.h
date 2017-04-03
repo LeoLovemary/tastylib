@@ -18,19 +18,19 @@ inline std::size_t lcs(const std::string &s1, const std::string &s2) {
     if (s1.empty() || s2.empty()) {
         return 0;
     }
-    // v[i][j] denotes the length of the longest common
+    // len[i][j] denotes the length of the longest common
     // subsequence of s1.substring(0, i + 1) and s2.substring(0, j + 1).
-    std::vector<std::vector<std::size_t>> v(s1.size() + 1, std::vector<std::size_t>(s2.size() + 1, 0));
+    std::vector<std::vector<std::size_t>> len(s1.size() + 1, std::vector<std::size_t>(s2.size() + 1, 0));
     for (std::size_t i = 1; i <= s1.size(); ++i) {
         for (std::size_t j = 1; j <= s2.size(); ++j) {
-            if (s1[i] == s2[j]) {
-                v[i][j] = v[i - 1][j - 1] + 1;
+            if (s1[i - 1] == s2[j - 1]) {
+                len[i][j] = len[i - 1][j - 1] + 1;
             } else {
-                v[i][j] = std::max(v[i][j - 1], v[i - 1][j]);
+                len[i][j] = std::max(len[i][j - 1], len[i - 1][j]);
             }
         }
     }
-    return v[s1.size()][s2.size()];
+    return len[s1.size()][s2.size()];
 }
 
 TASTYLIB_NS_END

@@ -617,6 +617,9 @@ int main() {
     // res2 == 7
     auto res2 = lcs("aa123XXXXabc", "abc123abc");
 
+    // res3 == 4
+    auto res3 = lcs("3256abcde", "1X2XcXdXe");
+
     return 0;
 }
 ```
