@@ -5,10 +5,12 @@
 using namespace tastylib;
 using std::string;
 
-TEST(LCS, Basic) {
-    ASSERT_EQ((std::size_t)0, lcs("", ""));
-    ASSERT_EQ((std::size_t)2, lcs("aa", "aa"));
-    ASSERT_EQ((std::size_t)7, lcs("aa123XXXXabc", "abc123abc"));
-    ASSERT_EQ((std::size_t)4, lcs("3256abcde", "1X2XcXdXe"));
+TEST(LCS, subsequence) {
+    ASSERT_EQ((std::size_t)0, LCSubseq("", ""));
+    ASSERT_EQ((std::size_t)4, LCSubseq("0x2x3x4x5", "a12345a"));
 }
 
+TEST(LCS, substring) {
+    ASSERT_EQ((std::size_t)0, LCSubstr("", ""));
+    ASSERT_EQ((std::size_t)1, LCSubstr("0x2x3x4x5", "a12345a"));
+}

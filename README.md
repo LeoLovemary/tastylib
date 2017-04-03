@@ -32,7 +32,7 @@ Contents below show the data structures and algorithms available in this project
 |[NPuzzle](#npuzzle)|[Unit test](./test/test_NPuzzle.cpp)<br />[NPuzzle.h](./include/tastylib/NPuzzle.h)|Yes|A classic searching problem solved with [A* search](https://en.wikipedia.org/wiki/A*_search_algorithm). A [GUI demo](https://github.com/stevennL/Puzzle) has been provided.|[Wikipedia](https://en.wikipedia.org/wiki/15_puzzle)|
 |[Sort](#sort)|[Unit test](./test/test_Sort.cpp)<br />[Sort.h](./include/tastylib/Sort.h)|Yes|Including [insertion sort](https://en.wikipedia.org/wiki/Insertion_sort), [selection sort](https://en.wikipedia.org/wiki/Selection_sort), [heapsort](https://en.wikipedia.org/wiki/Heapsort), [quicksort](https://en.wikipedia.org/wiki/Quicksort), [quickselect](https://en.wikipedia.org/wiki/Quickselect). For [merge sort](https://en.wikipedia.org/wiki/Merge_sort), please refer to [DoublyLinkedList.sort()](#cost-in-theory).|[Wikipedia](https://en.wikipedia.org/wiki/Sorting_algorithm)|
 |[Dijkstra](#dijkstra)|[Unit test](./test/test_Dijkstra.cpp)<br />[Dijkstra.h](./include/tastylib/Dijkstra.h)|No|An algorithm to find the shortest paths between vertices in a graph.|[Wikipedia](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)|
-|[LCS](#lcs)|[Unit test](./test/test_LCS.cpp)<br />[LCS.h](./include/tastylib/LCS.h)|No|A dynamic programming solution to find the longest subsequence common to two sequences.|[Wikipedia](https://en.wikipedia.org/wiki/Longest_common_subsequence_problem)|
+|[LCS](#lcs)|[Unit test](./test/test_LCS.cpp)<br />[LCS.h](./include/tastylib/LCS.h)|No|A dynamic programming solution to find the longest subsequence or substring common to two sequences.|[Wikipedia_1](https://en.wikipedia.org/wiki/Longest_common_subsequence_problem) [Wikipedia_2](https://en.wikipedia.org/wiki/Longest_common_substring_problem)|
 
 ## Installation
 
@@ -611,14 +611,11 @@ using namespace tastylib;
 
 int main() {
 
-    // res1 == 2
-    auto res1 = lcs("aa", "aa");
+    // res1 == 4
+    auto res1 = LCSubseq("0x2x3x4x5", "a12345a");
 
-    // res2 == 7
-    auto res2 = lcs("aa123XXXXabc", "abc123abc");
-
-    // res3 == 4
-    auto res3 = lcs("3256abcde", "1X2XcXdXe");
+    // res2 == 1
+    auto res2 = LCSubstr("0x2x3x4x5", "a12345a");
 
     return 0;
 }
