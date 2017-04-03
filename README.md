@@ -17,7 +17,7 @@ Contents below show the data structures and algorithms available in this project
 ### Data Structures
 
 | Name | Source | Benchmarked | Note | Reference |
-|:----:|:------:|:-----------:|------|-----------|
+|:----:|:------:|:-----------:|------|:---------:|
 |[DoublyLinkedList](#doublylinkedlist)|[Unit test](./test/test_DoublyLinkedList.cpp)<br />[DoublyLinkedList.h](./include/tastylib/DoublyLinkedList.h)|Yes|A linked data structure that consists of a set of sequentially linked records. It also supports merge sort.|[Wikipedia](https://en.wikipedia.org/wiki/Doubly_linked_list)|
 |[BinaryHeap](#binaryheap)|[Unit test](./test/test_BinaryHeap.cpp)<br />[BinaryHeap.h](./include/tastylib/BinaryHeap.h)|Yes|A heap data structure taking the form of a complete binary tree. A common way of implementing [priority queue](https://en.wikipedia.org/wiki/Priority_queue).|[Wikipedia](https://en.wikipedia.org/wiki/Binary_heap)|
 |[HashTable](#hashtable)|[Unit test](./test/test_HashTable.cpp)<br />[HashTable.h](./include/tastylib/HashTable.h)|No|A data structure that stores unique elements in no particular order, and which allows for fast retrieval of individual elements based on their values. Similar to [std::unordered_set](http://www.cplusplus.com/reference/unordered_set/unordered_set).|[Wikipedia](https://en.wikipedia.org/wiki/Hash_table)|
@@ -27,12 +27,12 @@ Contents below show the data structures and algorithms available in this project
 ### Algorithms
 
 | Name | Source | Benchmarked | Note | Reference |
-|:----:|:------:|:-----------:|------|-----------|
+|:----:|:------:|:-----------:|------|:---------:|
 |[MD5](#md5)|[Unit test](./test/test_MD5.cpp)<br />[MD5.h](./include/tastylib/MD5.h)|Yes|A widely used hash function producing a 128-bit hash value.|[Wikipedia](https://en.wikipedia.org/wiki/MD5)|
 |[NPuzzle](#npuzzle)|[Unit test](./test/test_NPuzzle.cpp)<br />[NPuzzle.h](./include/tastylib/NPuzzle.h)|Yes|A classic searching problem solved with [A* search](https://en.wikipedia.org/wiki/A*_search_algorithm). A [GUI demo](https://github.com/stevennL/Puzzle) has been provided.|[Wikipedia](https://en.wikipedia.org/wiki/15_puzzle)|
 |[Sort](#sort)|[Unit test](./test/test_Sort.cpp)<br />[Sort.h](./include/tastylib/Sort.h)|Yes|Including [insertion sort](https://en.wikipedia.org/wiki/Insertion_sort), [selection sort](https://en.wikipedia.org/wiki/Selection_sort), [heapsort](https://en.wikipedia.org/wiki/Heapsort), [quicksort](https://en.wikipedia.org/wiki/Quicksort), [quickselect](https://en.wikipedia.org/wiki/Quickselect). For [merge sort](https://en.wikipedia.org/wiki/Merge_sort), please refer to [DoublyLinkedList.sort()](#cost-in-theory).|[Wikipedia](https://en.wikipedia.org/wiki/Sorting_algorithm)|
 |[Dijkstra](#dijkstra)|[Unit test](./test/test_Dijkstra.cpp)<br />[Dijkstra.h](./include/tastylib/Dijkstra.h)|No|An algorithm to find the shortest paths between vertices in a graph.|[Wikipedia](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)|
-|[LCS](#lcs)|[Unit test](./test/test_LCS.cpp)<br />[LCS.h](./include/tastylib/LCS.h)|No|A dynamic programming solution to find the longest subsequence or substring common to two sequences.|[Wikipedia_1](https://en.wikipedia.org/wiki/Longest_common_subsequence_problem) [Wikipedia_2](https://en.wikipedia.org/wiki/Longest_common_substring_problem)|
+|[LCS](#lcs)|[Unit test](./test/test_LCS.cpp)<br />[LCS.h](./include/tastylib/LCS.h)|No|A dynamic programming solution to find the longest subsequence or substring common to two sequences.|[Wikipedia_substring](https://en.wikipedia.org/wiki/Longest_common_substring_problem) [Wikipedia_subsequence](https://en.wikipedia.org/wiki/Longest_common_subsequence_problem)|
 
 ## Installation
 
