@@ -28,16 +28,13 @@ TEST(BinaryHeap, Basic) {
 }
 
 TEST(BinaryHeap, MinRoot) {
-    BinaryHeap<int> heap;
     vector<int> ans;
     for (int i = 0; i < 30; ++i) {
         ans.push_back(i);
     }
-    vector<int> add(ans);
-    Random<>::getInstance()->shuffle(add.begin(), add.end());
-    for (const auto &x : add) {
-        heap.push(x);
-    }
+    vector<int> test(ans);
+    Random<>::getInstance()->shuffle(test.begin(), test.end());
+	BinaryHeap<int> heap(test);
     for (const auto &x : ans) {
         EXPECT_EQ(heap.top(), x);
         heap.pop();
@@ -46,16 +43,13 @@ TEST(BinaryHeap, MinRoot) {
 }
 
 TEST(BinaryHeap, MaxRoot) {
-    BinaryHeap<int, std::less_equal<int>> heap;
     vector<int> ans;
     for (int i = 29; i >= 0; --i) {
         ans.push_back(i);
     }
-    vector<int> add(ans);
-    Random<>::getInstance()->shuffle(add.begin(), add.end());
-    for (const auto &x : add) {
-        heap.push(x);
-    }
+    vector<int> test(ans);
+    Random<>::getInstance()->shuffle(test.begin(), test.end());
+	BinaryHeap<int, std::less_equal<int>> heap(test);
     for (const auto &x : ans) {
         EXPECT_EQ(heap.top(), x);
         heap.pop();
