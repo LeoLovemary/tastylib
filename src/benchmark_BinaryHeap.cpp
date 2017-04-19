@@ -3,6 +3,7 @@
 #include "tastylib/util/Random.h"
 #include "tastylib/util/convert.h"
 #include "tastylib/BinaryHeap.h"
+#include <algorithm>
 #include <string>
 #include <queue>
 
@@ -10,6 +11,7 @@ using namespace tastylib;
 using std::string;
 using std::priority_queue;
 using std::vector;
+using std::make_heap;
 
 int main() {
     printLn("Benchmark of BinaryHeap running...\n");
@@ -67,6 +69,22 @@ int main() {
             printLn("Avg time of std VS TastyLib: " + toString(stdTime / SIZE) + " ms / "
                     + toString(libTime / SIZE) + " ms");
             printLn("Benchmark of pop() finished.\n");
+        }
+
+        {   // Benchmark makeHeap()     
+            printLn("Benchmarking makeHeap()...");
+            printLn("Building a " + toString(SIZE) + " elements heap...");
+            auto stdTime = timing([&]() {
+                vector<int> test = vals;
+                make_heap(test.begin(), test.end());
+            });
+            printLn("std finished.");
+            auto libTime = timing([&]() {
+                BinaryHeap<int, std::less_equal<int>> libHeap(vals);
+            });
+            printLn("lib finished.");
+            printLn("Time of std VS TastyLib: " + toString(stdTime) + " ms / " + toString(libTime) + " ms");
+            printLn("Benchmark of makeHeap() finished.\n");
         }
     }
     printLn("Benchmark of BinaryHeap finished.");

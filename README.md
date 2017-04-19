@@ -153,28 +153,47 @@ The program compares the time cost of `DoublyLinkedList` with `std::list`. When 
 
 ```c++
 #include "tastylib/BinaryHeap.h"
+#include <vector>
 
 using namespace tastylib;
 
 int main() {
-    BinaryHeap<int> heap;  // Create a min-root heap
+    BinaryHeap<int> heap1;  // Create a min-root heap
 
-    auto isEmpty = heap.isEmpty();  // isEmpty == true
+    auto isEmpty = heap1.isEmpty();  // isEmpty == true
 
-    heap.push(50);
-    heap.push(20);
-    heap.push(30);
+    heap1.push(50);
+    heap1.push(20);
+    heap1.push(30);
 
-    auto size1 = heap.getSize();  // size1 == 3
+    auto size1 = heap1.getSize();  // size1 == 3
 
-    auto val1 = heap.top();  // val1 == 20
-    heap.pop();
-    auto val2 = heap.top();  // val2 == 30
-    heap.pop();
-    auto val3 = heap.top();  // val3 == 50
-    heap.pop();
+    auto val1 = heap1.top();  // val1 == 20
+    heap1.pop();
+    auto val2 = heap1.top();  // val2 == 30
+    heap1.pop();
+    auto val3 = heap1.top();  // val3 == 50
+    heap1.pop();
 
-    auto size2 = heap.getSize();  // size2 == 0
+    auto size2 = heap1.getSize();  // size2 == 0
+
+    vector<int> vals;
+    vals.push_back(50);
+    vals.push_back(20);
+    vals.push_back(30);
+
+    BinaryHeap<int> heap2(vals);  // Build heap using a vector
+
+    auto size3 = heap2.getSize();  // size3 == 3
+
+    auto val4 = heap2.top();  // val4 == 20
+    heap2.pop();
+    auto val5 = heap2.top();  // val5 == 30
+    heap2.pop();
+    auto val6 = heap2.top();  // val6 == 50
+    heap2.pop();
+
+    auto size4 = heap2.getSize();  // size4 == 0
 
     return 0;
 }
@@ -186,29 +205,32 @@ int main() {
 
 | Operation | Time |
 |:---------:|:----:|
-|[push()](./include/tastylib/BinaryHeap.h#L63)|O(nlogn)|
-|[top()](./include/tastylib/BinaryHeap.h#L79)|O(1)|
-|[pop()](./include/tastylib/BinaryHeap.h#L87)|O(nlogn)|
+|[push()](./include/tastylib/BinaryHeap.h#L86)|O(nlogn)|
+|[top()](./include/tastylib/BinaryHeap.h#L102)|O(1)|
+|[pop()](./include/tastylib/BinaryHeap.h#L110)|O(nlogn)|
+|[makeHeap()](./include/tastylib/BinaryHeap.h#L40)|O(n)|
 
 ##### Cost in practice
 
 Source: [benchmark_BinaryHeap.cpp](./src/benchmark_BinaryHeap.cpp)
 
-The program compares the time cost of `BinaryHeap` with `std::priority_queue`. It calculates the average time cost of each operation. Here are the results under different environments:
+The program compares the time cost of `BinaryHeap` with `std::priority_queue` and `std::make_heap`. It calculates the average time cost of each operation. Here are the results under different environments:
 
 ###### Ubuntu 16.04 64-bit / g++ 5.4
 
-| Operation | std::priority_queue | BinaryHeap |
-|:---------:|:-------------------:|:----------:|
+| Operation | std::priority_queue / std::make_heap | BinaryHeap |
+|:---------:|:------------------------------------:|:----------:|
 |push()|18 ns|17 ns|
 |pop()|259 ns|271 ns|
+|makeHeap()|455 ms|434 ms|
 
 ###### Windows 10 64-bit / Visual Studio 14 2015
 
-| Operation | std::priority_queue | BinaryHeap |
-|:---------:|:-------------------:|:----------:|
+| Operation | std::priority_queue / std::make_heap | BinaryHeap |
+|:---------:|:------------------------------------:|:----------:|
 |push()|22 ns|21 ns|
 |pop()|592 ns|267 ns|
+|makeHeap()|430 ms|515 ms|
 
 ### HashTable
 

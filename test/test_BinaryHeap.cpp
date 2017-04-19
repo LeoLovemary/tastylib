@@ -34,7 +34,7 @@ TEST(BinaryHeap, MinRoot) {
     }
     vector<int> test(ans);
     Random<>::getInstance()->shuffle(test.begin(), test.end());
-	BinaryHeap<int> heap(test);
+    BinaryHeap<int> heap(test);
     for (const auto &x : ans) {
         EXPECT_EQ(heap.top(), x);
         heap.pop();
@@ -49,7 +49,7 @@ TEST(BinaryHeap, MaxRoot) {
     }
     vector<int> test(ans);
     Random<>::getInstance()->shuffle(test.begin(), test.end());
-	BinaryHeap<int, std::less_equal<int>> heap(test);
+    BinaryHeap<int, std::less_equal<int>> heap(test);
     for (const auto &x : ans) {
         EXPECT_EQ(heap.top(), x);
         heap.pop();

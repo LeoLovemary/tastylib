@@ -34,28 +34,28 @@ public:
     */
     BinaryHeap() : size(0), tree(1, 0) {}
 
-	/*
-	Build heap with a given array of values.
-	*/
-	BinaryHeap(const Container &vals) : size(vals.size()), tree(vals) {
-		tree.push_back(tree[0]);
-		for (SizeType i = size / 2; i > 0; --i) {
-			Value ele = tree[i];
-			SizeType j, child;
-			for (j = i; (j << 1) <= size; j = child) {
-				child = j << 1;
-				if (child < size && pred(tree[child], tree[child + 1])) {
-					++child;
-				}
-				if (pred(tree[child], ele)) {
-					break;
-				} else {
-					tree[j] = tree[child];
-				}
-			}
-			tree[j] = ele;
-		}
-	}
+    /*
+    Build heap with a given array of values.
+    */
+    BinaryHeap(const Container &vals) : size(vals.size()), tree(vals) {
+        tree.push_back(tree[0]);
+        for (SizeType i = size / 2; i > 0; --i) {
+            Value ele = tree[i];
+            SizeType j, child;
+            for (j = i; (j << 1) <= size; j = child) {
+                child = j << 1;
+                if (child < size && pred(tree[child], tree[child + 1])) {
+                    ++child;
+                }
+                if (pred(tree[child], ele)) {
+                    break;
+                } else {
+                    tree[j] = tree[child];
+                }
+            }
+            tree[j] = ele;
+        }
+    }
 
     /*
     Return the amount of elements in the heap.
