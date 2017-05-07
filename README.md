@@ -205,9 +205,9 @@ int main() {
 
 | Operation | Time |
 |:---------:|:----:|
-|[push()](./include/tastylib/BinaryHeap.h#L86)|O(nlogn)|
+|[push()](./include/tastylib/BinaryHeap.h#L86)|O(logn)|
 |[top()](./include/tastylib/BinaryHeap.h#L102)|O(1)|
-|[pop()](./include/tastylib/BinaryHeap.h#L110)|O(nlogn)|
+|[pop()](./include/tastylib/BinaryHeap.h#L110)|O(logn)|
 |[makeHeap()](./include/tastylib/BinaryHeap.h#L40)|O(n)|
 
 ##### Cost in practice
