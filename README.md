@@ -6,7 +6,7 @@ TastyLib is a c++ library of data structures and algorithms. It is a header-only
 
 | Linux | Windows | Coverage |
 |:-----:|:-------:|:--------:|
-|[![Travis Status](https://travis-ci.org/stevennl/TastyLib.svg?branch=master)](https://travis-ci.org/stevennl/TastyLib)|[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/qhk3bbfb9spn5sqs/branch/master?svg=true)](https://ci.appveyor.com/project/stevennl/tastylib/branch/master)|[![Coverage Status](https://coveralls.io/repos/github/stevennl/TastyLib/badge.svg?branch=master)](https://coveralls.io/github/stevennl/TastyLib?branch=master)|
+|[![Build Status](https://travis-ci.org/chuyangliu/TastyLib.svg?branch=master)](https://travis-ci.org/chuyangliu/TastyLib)|[![Build status](https://ci.appveyor.com/api/projects/status/snba7lqd9fnx6kvt/branch/master?svg=true)](https://ci.appveyor.com/project/chuyangliu/tastylib/branch/master)|[![Coverage Status](https://coveralls.io/repos/github/chuyangliu/TastyLib/badge.svg?branch=master)](https://coveralls.io/github/chuyangliu/TastyLib?branch=master)|
 
 ## Outline
 
