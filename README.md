@@ -30,13 +30,11 @@ Contents below show the data structures and algorithms available in this project
 |[NPuzzle](#npuzzle)|[Unit test](./test/test_NPuzzle.cpp)<br />[NPuzzle.h](./include/tastylib/NPuzzle.h)|Yes|A classic searching problem solved with [A* search](https://en.wikipedia.org/wiki/A*_search_algorithm). A [GUI demo](https://github.com/stevennL/Puzzle) has been provided.|[Wikipedia](https://en.wikipedia.org/wiki/15_puzzle)|
 |[Sort](#sort)|[Unit test](./test/test_Sort.cpp)<br />[Sort.h](./include/tastylib/Sort.h)|Yes|Including [insertion sort](https://en.wikipedia.org/wiki/Insertion_sort), [selection sort](https://en.wikipedia.org/wiki/Selection_sort), [heapsort](https://en.wikipedia.org/wiki/Heapsort), [quicksort](https://en.wikipedia.org/wiki/Quicksort), [quickselect](https://en.wikipedia.org/wiki/Quickselect). For [merge sort](https://en.wikipedia.org/wiki/Merge_sort), please refer to [DoublyLinkedList.sort()](#cost-in-theory).|[Wikipedia](https://en.wikipedia.org/wiki/Sorting_algorithm)|
 |[Dijkstra](#dijkstra)|[Unit test](./test/test_Dijkstra.cpp)<br />[Dijkstra.h](./include/tastylib/Dijkstra.h)|No|An algorithm to find the shortest paths between vertices in a graph.|[Wikipedia](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)|
-|[LCS](#lcs)|[Unit test](./test/test_LCS.cpp)<br />[LCS.h](./include/tastylib/LCS.h)|No|A dynamic programming solution to find the longest subsequence or substring common to two sequences.|[Wikipedia_substring](https://en.wikipedia.org/wiki/Longest_common_substring_problem) [Wikipedia_subsequence](https://en.wikipedia.org/wiki/Longest_common_subsequence_problem)|
+|[LCS](#lcs)|[Unit test](./test/test_LCS.cpp)<br />[LCS.h](./include/tastylib/LCS.h)|No|A dynamic programming solution to find the longest subsequence or substring common to two sequences.|[Wikipedia-substring](https://en.wikipedia.org/wiki/Longest_common_substring_problem) [Wikipedia-subsequence](https://en.wikipedia.org/wiki/Longest_common_subsequence_problem)|
 
 ## Installation
 
-1. Install [CMake](https://cmake.org/download/).
-
-2. Generate build files using the commands below:
+1. Build with CMake:
 
     * Build benchmarks only
 
@@ -56,16 +54,18 @@ Contents below show the data structures and algorithms available in this project
         $ cmake -DTASTYLIB_BUILD_TEST=ON ..
         ```
 
-3. Build files will be generated in the `build` directory based on your operating system. Use them to build this project:
-
-    | Linux | OS X | Windows |
-    |:-----:|:----:|:-------:|
-    |Makefile|Makefile|Visual Studio Project|
-
-4. All executables will be generated in the `bin` directory. To run all unit tests together, use command below:
+2. Build with GNU Make on Linux:
 
     ```bash
-    $ ctest --verbose
+    $ make
+    ```
+
+    On other platforms like Windows or OS X, CMake may generate a Visual Studio or XCode project. You can [customize your CMake Generators](https://cmake.org/cmake/help/v3.0/manual/cmake-generators.7.html).
+
+4. Run all tests:
+
+    ```bash
+    $ ctest
     ```
 
 ## Details

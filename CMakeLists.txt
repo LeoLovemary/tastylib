@@ -1,19 +1,6 @@
-cmake_minimum_required(VERSION 2.8.2)
-
-if (POLICY CMP0025)
-    cmake_policy(SET CMP0025 NEW)
-endif ()
-if (POLICY CMP0054)
-    cmake_policy(SET CMP0054 NEW)
-endif ()
+cmake_minimum_required(VERSION 2.6.4)
 
 project(TastyLib CXX)
-
-# Disable in-source build
-if ("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
-    file(MAKE_DIRECTORY build)
-    message(FATAL_ERROR "In-source builds are not allowed.\nPlease try:\n1.Delete 'CMakeFiles' and 'CMakeCache.txt' in current directory\n2.Change to directory 'build' and run 'cmake ..'")
-endif ()
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
@@ -26,15 +13,15 @@ endif ()
 option(TASTYLIB_BUILD_TEST "Build tastylib tests." OFF)
 
 # Compiler config
-if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
     set(CMAKE_CXX_FLAGS "-Wall -Werror -Wextra -std=c++11 ${CMAKE_CXX_FLAGS}")
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
     set(CMAKE_CXX_FLAGS_RELEASE "-O2")
-elseif ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+elseif (${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
     set(CMAKE_CXX_FLAGS "-Wall -Werror -Wextra -std=c++11 ${CMAKE_CXX_FLAGS}")
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
     set(CMAKE_CXX_FLAGS_RELEASE "-O2")
-elseif ("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
+elseif (${CMAKE_CXX_COMPILER_ID} MATCHES "MSVC")
     # No config
 endif ()
 message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
