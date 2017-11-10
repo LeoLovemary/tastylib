@@ -54,7 +54,7 @@ Contents below show the data structures and algorithms available in this project
         $ cmake -DTASTYLIB_BUILD_TEST=ON ..
         ```
 
-2. Build with GNU Make on Linux:
+2. Continue to build with GNU Make on Linux:
 
     ```
     $ make
