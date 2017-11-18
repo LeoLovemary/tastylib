@@ -2,7 +2,7 @@
 #define TASTYLIB_NPUZZLE_H_
 
 #include "tastylib/internal/base.h"
-#include "tastylib/util/Random.h"
+#include "tastylib/util/random.h"
 #include "tastylib/util/swap.h"
 #include "tastylib/HashTable.h"
 #include "tastylib/BinaryHeap.h"
