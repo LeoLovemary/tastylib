@@ -1,6 +1,6 @@
 #include "tastylib/util/io.h"
 #include "tastylib/util/timer.h"
-#include "tastylib/util/Random.h"
+#include "tastylib/util/random.h"
 #include "tastylib/util/convert.h"
 #include "tastylib/util/swap.h"
 #include "tastylib/DoublyLinkedList.h"

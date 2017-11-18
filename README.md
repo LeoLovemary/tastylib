@@ -62,7 +62,7 @@ Contents below show the data structures and algorithms available in this project
 
     Note that on other platforms like Windows or OS X, CMake may generate a Visual Studio or Xcode project instead of a Makefile. You can [customize your CMake Generators](https://cmake.org/cmake/help/v3.0/manual/cmake-generators.7.html).
 
-4. Run all tests:
+4. All executables will be generated in the `bin` directory. Run all tests:
 
     ```
     $ ctest

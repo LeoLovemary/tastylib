@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "tastylib/Sort.h"
-#include "tastylib/util/Random.h"
+#include "tastylib/util/random.h"
 #include <algorithm>
 #include <functional>
 

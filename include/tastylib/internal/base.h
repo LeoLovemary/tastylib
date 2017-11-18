@@ -1,7 +1,7 @@
 #ifndef TASTYLIB_BASE_H_
 #define TASTYLIB_BASE_H_
 
-#include "tastylib/util/leak_check.h"
+#include "tastylib/util/leakcheck.h"
 #include <cstddef>
 #include <cstdint>
 

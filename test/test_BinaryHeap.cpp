@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "tastylib/util/Random.h"
+#include "tastylib/util/random.h"
 #include "tastylib/BinaryHeap.h"
 
 using namespace tastylib;
