@@ -1,6 +1,6 @@
 # TastyLib
 
-TastyLib is a c++ library of data structures and algorithms. It is a header-only library, which means that you could just copy the `include/tastylib` directory to your project's include path and use it without caring about the issues related to link libraries.
+TastyLib is a C++ library of classic data structures and algorithms. It is a header-only library, which means that you could just copy the `include/tastylib` directory to your project's include path and use it without caring about the issues related to linking libraries.
 
 ## Build Status
 
@@ -10,7 +10,7 @@ TastyLib is a c++ library of data structures and algorithms. It is a header-only
 
 ## Outline
 
-Contents below show the data structures and algorithms available in this project. Just click the links at the `name` column to see the details of their usages and benchmarks. All benchmarks are run with the `-O2` compiler flag under the `Release` version.
+Contents below show the data structures and algorithms available in this project. Just click the links at the `name` column to see the details of their usages and benchmarks. All benchmarks are run with the `-O2` compiler flag under the `release` version.
 
 ### Data Structures
 
