@@ -17,14 +17,8 @@ template<typename UInt32 = std::uint32_t,
          typename UInt64 = std::uint64_t>
 class MD5 {
 public:
-    /*
-    Destructor.
-    */
     ~MD5() {}
 
-    /*
-    Return the only instance.
-    */
     static MD5* getInstance() {
         static MD5 instance;
         return &instance;
@@ -53,15 +47,6 @@ public:
     }
 
 private:
-    // Hexadecimal character
-    const std::string hex;
-
-    // Left shift number
-    const std::vector<UInt32> s;
-
-    // Constants in main loop
-    const std::vector<UInt32> k;
-
     /*
     Initialize params related to MD5.
     */
@@ -178,6 +163,16 @@ private:
     UInt32 cycleShiftLeft(const UInt32 num, const UInt32 shiftCnt) {
         return (num << shiftCnt) | (num >> (32 - shiftCnt));
     }
+
+private:
+    // Hexadecimal character
+    const std::string hex;
+
+    // Left shift number
+    const std::vector<UInt32> s;
+
+    // Constants in main loop
+    const std::vector<UInt32> k;
 };
 
 TASTYLIB_NS_END

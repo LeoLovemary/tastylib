@@ -6,9 +6,6 @@
 
 TASTYLIB_NS_BEGIN
 
-/*
-Print one line to terminal.
-*/
 template<typename T>
 void printLn(const T &line) {
     std::cout << line << std::endl;

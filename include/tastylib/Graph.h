@@ -31,9 +31,6 @@ public:
         MATRIX
     };
 
-    /*
-    Destructor.
-    */
     ~Graph() {}
 
     /*

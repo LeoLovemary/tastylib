@@ -28,18 +28,11 @@ public:
 
     typedef std::size_t SizeType;
 
-    /*
-    Destructor.
-    */
     ~DoublyLinkedList() {
         clear();
     }
 
-    /*
-    Default constructor.
-    */
-    DoublyLinkedList() : size(0), head(nullptr), tail(nullptr) {
-    }
+    DoublyLinkedList() : size(0), head(nullptr), tail(nullptr) {}
 
     /*
     Return the amount of nodes in the list.
@@ -261,10 +254,6 @@ public:
     }
 
 private:
-    SizeType size;
-    Node *head;
-    Node *tail;
-
     /*
     Get a best node to perform inserting operation at a given position.
     The function is available only when the list is not empty.
@@ -353,6 +342,11 @@ private:
         }
         return newHead;
     }
+
+private:
+    SizeType size;
+    Node *head;
+    Node *tail;
 };
 
 TASTYLIB_NS_END

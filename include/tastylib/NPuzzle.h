@@ -26,9 +26,6 @@ public:
     typedef std::vector<Int> Container;
     typedef typename Container::size_type SizeType;
 
-    /*
-    Definition of the move direction.
-    */
     enum Direction {
         NONE,
         LEFT,
@@ -37,9 +34,6 @@ public:
         DOWN
     };
 
-    /*
-    Destructor.
-    */
     ~PuzzleNode() {}
 
     /*
@@ -274,18 +268,6 @@ public:
     }
 
 private:
-    static const SizeType SHUFFLE_TIMES = 1000;
-
-    Container val;
-
-    SizeType emptyPos = 0;
-    SizeType row = 0;
-    SizeType col = 0;
-
-    SizeType g = 0;
-    SizeType h = 0;
-    PuzzleNode *parent = nullptr;
-
     /*
     Compute the row number according to a given index of one-dimension array.
 
@@ -305,6 +287,19 @@ private:
     SizeType getCol(const SizeType i) const {
         return i % col;
     }
+
+private:
+    static const SizeType SHUFFLE_TIMES = 1000;
+
+    Container val;
+
+    SizeType emptyPos = 0;
+    SizeType row = 0;
+    SizeType col = 0;
+
+    SizeType g = 0;
+    SizeType h = 0;
+    PuzzleNode *parent = nullptr;
 };
 
 /*
@@ -318,9 +313,6 @@ public:
     typedef typename Node::SizeType SizeType;
     typedef typename Node::Direction Direction;
 
-    /*
-    Destructor.
-    */
     ~NPuzzle() {}
 
     /*
@@ -427,37 +419,6 @@ public:
     }
 
 private:
-    struct Equal {
-        bool operator()(const Node *const &n1,
-                        const Node *const &n2) const {
-            return *n1 == *n2;
-        }
-    };
-
-    struct GreaterEqual {
-        bool operator()(const Node *const &n1,
-                        const Node *const &n2) const {
-            return *n1 >= *n2;
-        }
-    };
-
-    struct Hash {
-        SizeType operator()(const Node *const &n) const {
-            return n->hash();
-        }
-    };
-
-    Node beg;
-    Node end;
-
-    BinaryHeap<Node*, GreaterEqual> openList;
-    HashTable<Node*, Equal, Hash> closeList;
-
-    std::list<Direction> path;
-    std::list<Node*> alloc;
-
-    SizeType searchCnt = 0;
-
     /*
     Return the index of the grid numbers in the ending node value.
     */
@@ -498,6 +459,38 @@ private:
         openList.clear();
         closeList.clear();
     }
+
+private:
+    struct Equal {
+        bool operator()(const Node *const &n1,
+                        const Node *const &n2) const {
+            return *n1 == *n2;
+        }
+    };
+
+    struct GreaterEqual {
+        bool operator()(const Node *const &n1,
+                        const Node *const &n2) const {
+            return *n1 >= *n2;
+        }
+    };
+
+    struct Hash {
+        SizeType operator()(const Node *const &n) const {
+            return n->hash();
+        }
+    };
+
+    Node beg;
+    Node end;
+
+    BinaryHeap<Node*, GreaterEqual> openList;
+    HashTable<Node*, Equal, Hash> closeList;
+
+    std::list<Direction> path;
+    std::list<Node*> alloc;
+
+    SizeType searchCnt = 0;
 };
 
 TASTYLIB_NS_END

@@ -24,14 +24,8 @@ public:
     typedef std::vector<Value> Container;
     typedef typename Container::size_type SizeType;
 
-    /*
-    Destructor.
-    */
     ~BinaryHeap() {}
 
-    /*
-    Default constructor.
-    */
     BinaryHeap() : size(0), tree(1, 0) {}
 
     /*

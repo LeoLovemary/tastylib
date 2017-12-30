@@ -14,14 +14,8 @@ Random number generator.
 template<typename RandEngine = std::default_random_engine>
 class Random {
 public:
-    /*
-    Destructor.
-    */
     ~Random() {}
 
-    /*
-    Return the only instance.
-    */
     static Random<>* getInstance() {
         static Random<> instance;
         return &instance;
@@ -58,13 +52,12 @@ public:
             }
         }
     }
+
+private:
+    Random() : engine((unsigned)std::time(nullptr)) {}
+
 private:
     RandEngine engine;
-
-    /*
-    Initialize.
-    */
-    Random() : engine((unsigned)std::time(nullptr)) {}
 };
 
 TASTYLIB_NS_END

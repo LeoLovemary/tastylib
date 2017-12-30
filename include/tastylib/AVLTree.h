@@ -37,16 +37,10 @@ public:
             : val(v), left(l), right(r), height(0) {}
     };
 
-    /*
-    Destructor.
-    */
     ~AVLTree() {
         clear();
     }
 
-    /*
-    Initialize the tree.
-    */
     AVLTree() : root(nullptr), size(0) {}
 
     /*
@@ -161,12 +155,6 @@ public:
     }
 
 private:
-    Node *root;
-    SizeType size;
-
-    PredEq predEq;
-    PredCmp predCmp;
-
     /*
     Remove all nodes of a tree and free the resources.
 
@@ -408,6 +396,13 @@ private:
         r->right = rotateSingleLeft(r->right);
         return rotateSingleRight(r);
     }
+
+private:
+    Node *root;
+    SizeType size;
+
+    PredEq predEq;
+    PredCmp predCmp;
 };
 
 TASTYLIB_NS_END

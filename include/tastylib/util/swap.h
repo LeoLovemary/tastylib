@@ -5,9 +5,6 @@
 
 TASTYLIB_NS_BEGIN
 
-/*
-Swap the values of two elements.
-*/
 template<typename T>
 void swap(T &a, T &b) {
     T tmp = a;

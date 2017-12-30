@@ -5,7 +5,6 @@
 #include <cstddef>
 #include <cstdint>
 
-// Namespace
 #define TASTYLIB_NS_BEGIN namespace tastylib {
 #define TASTYLIB_NS_END   }
 

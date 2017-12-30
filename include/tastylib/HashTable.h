@@ -26,9 +26,6 @@ public:
     typedef std::size_t SizeType;
     typedef std::vector<DoublyLinkedList<Value, Pred>> Container;
 
-    /*
-    Destructor.
-    */
     ~HashTable() {
         delete buckets;
     }
@@ -134,14 +131,6 @@ public:
     }
 
 private:
-    static const SizeType MIN_BUCKET = 8;
-
-    Hash hasher;
-
-    SizeType size;
-    SizeType bucketNum;
-    Container *buckets;
-
     /*
     The function to compute the hash value of an element.
 
@@ -151,6 +140,15 @@ private:
     SizeType hash(const Value &val) const {
         return (SizeType)(hasher(val) & (bucketNum - 1));
     }
+
+private:
+    static const SizeType MIN_BUCKET = 8;
+
+    Hash hasher;
+
+    SizeType size;
+    SizeType bucketNum;
+    Container *buckets;
 };
 
 TASTYLIB_NS_END
