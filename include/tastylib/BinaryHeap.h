@@ -31,7 +31,7 @@ public:
     /*
     Build heap with a given array of values.
     */
-    BinaryHeap(const Container &vals) : size(vals.size()), tree(vals) {
+    explicit BinaryHeap(const Container &vals) : size(vals.size()), tree(vals) {
         tree.push_back(tree[0]);
         for (SizeType i = size / 2; i > 0; --i) {
             Value ele = tree[i];

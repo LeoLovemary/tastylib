@@ -39,7 +39,7 @@ public:
     @param n_    The amount of vertices in the graph
     @param type_ The storage type of the graph
     */
-    Graph(const NumType n_, const StorageType type_ = LIST) : type(type_) {
+    explicit Graph(const NumType n_, const StorageType type_ = LIST) : type(type_) {
         vertices.resize(n_);
         if (type == MATRIX) {
             for (NumType i = 0; i < n_; ++i) {

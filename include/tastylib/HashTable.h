@@ -36,7 +36,7 @@ public:
     @param n Expected buckets amount. In practice, the
              amount of buckets may be greater than 'n'.
     */
-    HashTable(const SizeType n = MIN_BUCKET)
+    explicit HashTable(const SizeType n = MIN_BUCKET)
         : size(0), bucketNum(0), buckets(nullptr) {
         rehash(n);
     }
