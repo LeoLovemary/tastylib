@@ -32,7 +32,7 @@ C++ implementations of data structures, algorithms and whatever attracts me.
 
 ## Installation
 
-1. Build with CMake:
+1. Build with [CMake][cmake-site]:
 
     * Build benchmarks only
 
@@ -139,4 +139,5 @@ See the [LICENSE](./LICENSE) file for license rights and limitations.
 [lcs-wiki-substr]: https://en.wikipedia.org/wiki/Longest_common_substring_problem
 [lcs-wiki-subseq]: https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
 
+[cmake-site]: https://cmake.org
 [cmake-gen-docs]: https://cmake.org/cmake/help/v3.0/manual/cmake-generators.7.html
