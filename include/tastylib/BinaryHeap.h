@@ -24,9 +24,17 @@ public:
     typedef std::vector<Value> Container;
     typedef typename Container::size_type SizeType;
 
-    ~BinaryHeap() {}
-
     BinaryHeap() : size(0), tree(1, 0) {}
+
+    BinaryHeap(const BinaryHeap &h) = default;
+
+    BinaryHeap(BinaryHeap &&h) = default;
+
+    BinaryHeap& operator=(const BinaryHeap &h) = default;
+
+    BinaryHeap& operator=(BinaryHeap &&h) = default;
+
+    ~BinaryHeap() = default;
 
     /*
     Build heap with a given array of values.

@@ -17,7 +17,15 @@ template<typename UInt32 = std::uint32_t,
          typename UInt64 = std::uint64_t>
 class MD5 {
 public:
-    ~MD5() {}
+    MD5(const MD5 &md5) = delete;
+
+    MD5(MD5 &&md5) = delete;
+
+    MD5& operator=(const MD5 &md5) = delete;
+
+    MD5& operator=(MD5 &&md5) = delete;
+
+    ~MD5() = default;
 
     static MD5* getInstance() {
         static MD5 instance;

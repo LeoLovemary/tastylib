@@ -31,7 +31,7 @@ public:
         MATRIX
     };
 
-    ~Graph() {}
+    Graph() = delete;
 
     /*
     Initialize the graph.
@@ -49,6 +49,16 @@ public:
             }
         }
     }
+
+    Graph(const Graph &g) = default;
+
+    Graph(Graph &&g) = default;
+
+    Graph& operator=(const Graph &g) = default;
+
+    Graph& operator=(Graph &&g) = default;
+
+    ~Graph() = default;
 
     /*
     Return the amount of vertices in the graph.

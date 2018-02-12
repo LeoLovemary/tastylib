@@ -16,7 +16,7 @@ Doubly linked list data structure.
 */
 template<typename Value, typename Pred = std::equal_to<Value>>
 class DoublyLinkedList {
-public:
+private:
     struct Node {
         Value val;
         Node *prev;
@@ -26,13 +26,22 @@ public:
             : val(v), prev(p), next(n) {}
     };
 
+public:
     typedef std::size_t SizeType;
+
+    DoublyLinkedList() : size(0), head(nullptr), tail(nullptr) {}
+
+    DoublyLinkedList(const DoublyLinkedList &l) = delete;
+
+    DoublyLinkedList(DoublyLinkedList &&l) = delete;
+
+    DoublyLinkedList& operator=(const DoublyLinkedList &l) = delete;
+
+    DoublyLinkedList& operator=(DoublyLinkedList &&l) = delete;
 
     ~DoublyLinkedList() {
         clear();
     }
-
-    DoublyLinkedList() : size(0), head(nullptr), tail(nullptr) {}
 
     /*
     Return the amount of nodes in the list.

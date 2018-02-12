@@ -14,12 +14,20 @@ Random number generator.
 template<typename RandEngine = std::default_random_engine>
 class Random {
 public:
-    ~Random() {}
-
     static Random<>* getInstance() {
         static Random<> instance;
         return &instance;
     }
+
+    Random(const Random &r) = delete;
+
+    Random(Random &&r) = delete;
+
+    Random& operator=(const Random &r) = delete;
+
+    Random& operator=(Random &&r) = delete;
+
+    ~Random() = default;
 
     /*
     Return a random real number in the interval [min, max).

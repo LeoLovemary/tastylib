@@ -26,10 +26,6 @@ public:
     typedef std::size_t SizeType;
     typedef std::vector<DoublyLinkedList<Value, Pred>> Container;
 
-    ~HashTable() {
-        delete buckets;
-    }
-
     /*
     Initialize the hash table.
 
@@ -39,6 +35,18 @@ public:
     explicit HashTable(const SizeType n = MIN_BUCKET)
         : size(0), bucketNum(0), buckets(nullptr) {
         rehash(n);
+    }
+
+    HashTable(const HashTable &tbl) = delete;
+
+    HashTable(HashTable &&tbl) = delete;
+
+    HashTable& operator=(const HashTable &tbl) = delete;
+
+    HashTable& operator=(HashTable &&tbl) = delete;
+
+    ~HashTable() {
+        delete buckets;
     }
 
     /*

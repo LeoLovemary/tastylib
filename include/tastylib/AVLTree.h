@@ -24,9 +24,7 @@ template<typename Value,
          typename PredCmp = std::less<Value>,
          typename PredEq = std::equal_to<Value>>
 class AVLTree {
-public:
-    typedef std::size_t SizeType;
-
+private:
     struct Node {
         Value val;
         Node* left;
@@ -37,11 +35,22 @@ public:
             : val(v), left(l), right(r), height(0) {}
     };
 
+public:
+    typedef std::size_t SizeType;
+
+    AVLTree() : root(nullptr), size(0) {}
+
+    AVLTree(const AVLTree &tree) = delete;
+
+    AVLTree(AVLTree &&tree) = delete;
+
+    AVLTree& operator=(const AVLTree &tree) = delete;
+
+    AVLTree& operator=(AVLTree &&tree) = delete;
+
     ~AVLTree() {
         clear();
     }
-
-    AVLTree() : root(nullptr), size(0) {}
 
     /*
     Return true if there are no elements in the tree.

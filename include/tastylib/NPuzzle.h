@@ -34,7 +34,7 @@ public:
         DOWN
     };
 
-    ~PuzzleNode() {}
+    PuzzleNode() = delete;
 
     /*
     Initialize the node. The node value is stored in an one-dimension array.
@@ -55,6 +55,16 @@ public:
             }
         }
     }
+
+    PuzzleNode(const PuzzleNode &n) = default;
+
+    PuzzleNode(PuzzleNode &&n) = default;
+
+    PuzzleNode& operator=(const PuzzleNode &n) = default;
+
+    PuzzleNode& operator=(PuzzleNode &&n) = default;
+
+    ~PuzzleNode() = default;
 
     /*
     Return the node value.
@@ -313,7 +323,7 @@ public:
     typedef typename Node::SizeType SizeType;
     typedef typename Node::Direction Direction;
 
-    ~NPuzzle() {}
+    NPuzzle() = delete;
 
     /*
     Initialize the beginning node and the ending node.
@@ -323,6 +333,16 @@ public:
     */
     NPuzzle(const Node &beg_, const Node &end_)
         : beg(beg_), end(end_), closeList(1000000) {}
+
+    NPuzzle(const NPuzzle &p) = delete;
+
+    NPuzzle(NPuzzle &&p) = delete;
+
+    NPuzzle& operator=(const NPuzzle &p) = delete;
+
+    NPuzzle& operator=(NPuzzle &&p) = delete;
+
+    ~NPuzzle() = default;
 
     /*
     Solve the problem using A* searching.
