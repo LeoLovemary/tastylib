@@ -40,14 +40,14 @@ int main() {
 
 | Operation | Time |
 |:---------:|:----:|
-|[insertFront()](../include/tastylib/DoublyLinkedList.h#L146)|O(1)|
-|[removeFront()](../include/tastylib/DoublyLinkedList.h#L212)|O(1)|
-|[insertBack()](../include/tastylib/DoublyLinkedList.h#L162)|O(1)|
-|[removeBack()](../include/tastylib/DoublyLinkedList.h#L229)|O(1)|
-|[insert()](../include/tastylib/DoublyLinkedList.h#L112)|O(n)|
-|[remove()](../include/tastylib/DoublyLinkedList.h#L179)|O(n)|
-|[find()](../include/tastylib/DoublyLinkedList.h#L94)|O(n)|
-|[sort()](../include/tastylib/DoublyLinkedList.h#L246) (merge sort)|O(nlogn)|
+|[insertFront()](../include/tastylib/DoublyLinkedList.h#L139-L148)|O(1)|
+|[removeFront()](../include/tastylib/DoublyLinkedList.h#L205-L217)|O(1)|
+|[insertBack()](../include/tastylib/DoublyLinkedList.h#L155-L164)|O(1)|
+|[removeBack()](../include/tastylib/DoublyLinkedList.h#L222-L234)|O(1)|
+|[insert()](../include/tastylib/DoublyLinkedList.h#L105-L132)|O(n)|
+|[remove()](../include/tastylib/DoublyLinkedList.h#L172-L200)|O(n)|
+|[find()](../include/tastylib/DoublyLinkedList.h#L87-L96)|O(n)|
+|[sort()](../include/tastylib/DoublyLinkedList.h#L294-L344) (merge sort)|O(nlogn)|
 
 #### Cost in practice
 
@@ -135,10 +135,10 @@ int main() {
 
 | Operation | Time |
 |:---------:|:----:|
-|[push()](../include/tastylib/BinaryHeap.h#L86)|O(logn)|
-|[top()](../include/tastylib/BinaryHeap.h#L102)|O(1)|
-|[pop()](../include/tastylib/BinaryHeap.h#L110)|O(logn)|
-|[makeHeap()](../include/tastylib/BinaryHeap.h#L40)|O(n)|
+|[push()](../include/tastylib/BinaryHeap.h#L80-L90)|O(logn)|
+|[top()](../include/tastylib/BinaryHeap.h#L96-L98)|O(1)|
+|[pop()](../include/tastylib/BinaryHeap.h#L104-L120)|O(logn)|
+|[makeHeap()](../include/tastylib/BinaryHeap.h#L34-L52)|O(n)|
 
 #### Cost in practice
 
@@ -202,10 +202,10 @@ int main() {
 
 | Operation | Time |
 |:---------:|:----:|
-|[insert()](../include/tastylib/HashTable.h#L88)|O(1)|
-|[has()/find()](../include/tastylib/HashTable.h#L76)|O(1)|
-|[remove()](../include/tastylib/HashTable.h#L102)|O(1)|
-|[rehash()](../include/tastylib/HashTable.h#L117)|O(n)|
+|[insert()](../include/tastylib/HashTable.h#L85-L91)|O(1)|
+|[has()/find()](../include/tastylib/HashTable.h#L73-L76)|O(1)|
+|[remove()](../include/tastylib/HashTable.h#L99-L106)|O(1)|
+|[rehash()](../include/tastylib/HashTable.h#L114-L131)|O(n)|
 
 #### Cost in practice
 
@@ -255,9 +255,9 @@ int main() {
 
 | Operation | Time |
 |:---------:|:----:|
-|[find()](../include/tastylib/AVLTree.h#L191)|O(logn)|
-|[insert()](../include/tastylib/AVLTree.h#L253)|O(logn)|
-|[remove()](../include/tastylib/AVLTree.h#L287)|O(logn)|
+|[find()](../include/tastylib/AVLTree.h#L179-L187)|O(logn)|
+|[insert()](../include/tastylib/AVLTree.h#L241-L265)|O(logn)|
+|[remove()](../include/tastylib/AVLTree.h#L275-L310)|O(logn)|
 
 #### Cost in practice
 
@@ -476,12 +476,12 @@ int main() {
 
 | Operation | Time | Stable |
 |:---------:|:----:|:------:|
-|[insertionSort()](../include/tastylib/Sort.h#L18)|O(n^2)|Yes|
-|[selectionSort()](../include/tastylib/Sort.h#L40)|O(n^2)|No|
-|[heapSort()](../include/tastylib/Sort.h#L62)|O(nlogn)|No|
-|[mergeSort()](#cost-in-theory)|O(nlogn)|Yes|
-|[quickSort()](../include/tastylib/Sort.h#L110)|O(nlogn)|No|
-|[quickSelect()](../include/tastylib/Sort.h#L144)|O(n)|-|
+|[insertionSort()](../include/tastylib/Sort.h#L17-L31)|O(n^2)|Yes|
+|[selectionSort()](../include/tastylib/Sort.h#L39-L53)|O(n^2)|No|
+|[heapSort()](../include/tastylib/Sort.h#L61-L71)|O(nlogn)|No|
+|[mergeSort()](../include/tastylib/DoublyLinkedList.h#L294-L344)|O(nlogn)|Yes|
+|[quickSort()](../include/tastylib/Sort.h#L109-L131)|O(nlogn)|No|
+|[quickSelect()](../include/tastylib/Sort.h#L143-L171)|O(n)|-|
 
 #### Cost in practice
 
