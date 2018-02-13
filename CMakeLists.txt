@@ -4,15 +4,12 @@ project(TastyLib CXX)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
-# Set default build type
 if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
+    set(CMAKE_BUILD_TYPE Release)  # Default build type
 endif ()
 
-# Options
 option(TASTYLIB_BUILD_TEST "Build tastylib tests." OFF)
 
-# Compiler config
 if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
     set(CMAKE_CXX_FLAGS "-Wall -Werror -Wextra -std=c++11 ${CMAKE_CXX_FLAGS}")
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
@@ -30,18 +27,21 @@ message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 message(STATUS "CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}")
 message(STATUS "CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
 
-# Include headers
+# Headers
 file(GLOB_RECURSE TASTYLIB_HEADERS "${PROJECT_SOURCE_DIR}/include/*.h")
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-# Include test subdirectory
+# Sources
+file(GLOB_RECURSE TASTYLIB_SRCS "${PROJECT_SOURCE_DIR}/src/tastylib/*.cpp")
+
+# Tests
 if (TASTYLIB_BUILD_TEST)
     include(CTest)
     add_subdirectory(${PROJECT_SOURCE_DIR}/test)
 endif ()
 
-# Add benchmark executables
-set(BENCHMARK_EXEC_LIST
+# Executables
+set(EXEC_LIST
     sample
     benchmark_DoublyLinkedList
     benchmark_BinaryHeap
@@ -50,6 +50,7 @@ set(BENCHMARK_EXEC_LIST
     benchmark_NPuzzle
     benchmark_Sort)
 
-foreach (exec ${BENCHMARK_EXEC_LIST})
-    add_executable(${exec} ${PROJECT_SOURCE_DIR}/src/${exec}.cpp ${TASTYLIB_HEADERS})
+foreach (exec ${EXEC_LIST})
+    add_executable(${exec} ${PROJECT_SOURCE_DIR}/src/${exec}.cpp
+                   ${TASTYLIB_SRCS} ${TASTYLIB_HEADERS})
 endforeach ()
