@@ -6,7 +6,7 @@
 
 using namespace tastylib;
 
-TEST(Sort, InsertionSort) {
+TEST(SortTest, InsertionSort) {
     Random<> *random = Random<>::getInstance();
     const int n = 3000;
     int arr1[n], arr2[n];
@@ -22,7 +22,7 @@ TEST(Sort, InsertionSort) {
     }
 }
 
-TEST(Sort, SelectionSort) {
+TEST(SortTest, SelectionSort) {
     Random<> *random = Random<>::getInstance();
     const int n = 3000;
     int arr1[n], arr2[n];
@@ -38,7 +38,7 @@ TEST(Sort, SelectionSort) {
     }
 }
 
-TEST(Sort, HeapSort) {
+TEST(SortTest, HeapSort) {
     Random<> *random = Random<>::getInstance();
     const int n = 3000;
     int arr1[n], arr2[n];
@@ -54,7 +54,7 @@ TEST(Sort, HeapSort) {
     }
 }
 
-TEST(Sort, QuickSort) {
+TEST(SortTest, QuickSort) {
     Random<> *random = Random<>::getInstance();
     const int n = 3000;
     int arr1[n], arr2[n];
@@ -70,7 +70,7 @@ TEST(Sort, QuickSort) {
     }
 }
 
-TEST(Sort, QuickSelect) {
+TEST(SortTest, QuickSelect) {
     Random<> *random = Random<>::getInstance();
     const int n = 3000;
     for (int i = 0; i < 5; ++i) {

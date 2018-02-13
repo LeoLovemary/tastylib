@@ -19,7 +19,7 @@ string getListContent(const DoublyLinkedList<T> &list) {
     return str;
 }
 
-TEST(DoublyLinkedList, Basic) {
+TEST(DoublyLinkedListTest, Basic) {
     DoublyLinkedList<int> list;
     EXPECT_TRUE(list.isEmpty());
     list.insertBack(1);
@@ -48,7 +48,7 @@ TEST(DoublyLinkedList, Basic) {
     EXPECT_EQ(list.getSize(), (SizeType)0);
 }
 
-TEST(DoublyLinkedList, Insert) {
+TEST(DoublyLinkedListTest, Insert) {
     DoublyLinkedList<int> list;
 
     // Test insertFront()
@@ -74,7 +74,7 @@ TEST(DoublyLinkedList, Insert) {
     EXPECT_STREQ(getListContent(list).c_str(), "1102030405060708099");
 }
 
-TEST(DoublyLinkedList, Remove) {
+TEST(DoublyLinkedListTest, Remove) {
     DoublyLinkedList<int> list;
 
     // Test removeFront()
@@ -119,7 +119,7 @@ TEST(DoublyLinkedList, Remove) {
     EXPECT_STREQ(getListContent(list).c_str(), "");
 }
 
-TEST(DoublyLinkedList, Find) {
+TEST(DoublyLinkedListTest, Find) {
     DoublyLinkedList<int> list;
     for (int i = 0; i < 3; ++i) {
         list.insertBack(i);
@@ -134,7 +134,7 @@ TEST(DoublyLinkedList, Find) {
     EXPECT_EQ(p, -1);
 }
 
-TEST(DoublyLinkedList, Sort) {
+TEST(DoublyLinkedListTest, Sort) {
     DoublyLinkedList<int> list;
     list.sort();
     EXPECT_STREQ(getListContent(list).c_str(), "");

@@ -11,7 +11,7 @@ typedef DijkGraph<string> G;
 typedef G::NumType NumType;
 typedef G::WeightType WeightType;
 
-TEST(Dijkstra, Simple) {
+TEST(DijkstraTest, Simple) {
     G graph(3, G::LIST);
     graph[0].val = "Alice";
     graph[1].val = "Darth";
@@ -33,7 +33,7 @@ TEST(Dijkstra, Simple) {
     EXPECT_TRUE(graph[2].val == "Bob");
 }
 
-TEST(Dijkstra, Complex) {
+TEST(DijkstraTest, Complex) {
     G graph(8, G::MATRIX);
     graph.setWeight(1, 0, 1);
     graph.setWeight(1, 2, 2);

@@ -9,7 +9,7 @@ using std::string;
 
 typedef HashTable<string>::SizeType SizeType;
 
-TEST(HashTable, Basic) {
+TEST(HashTableTest, Basic) {
     HashTable<string> table;
     table.clear();
     EXPECT_TRUE(table.isEmpty());
@@ -28,7 +28,7 @@ TEST(HashTable, Basic) {
     EXPECT_EQ(table.getSize(), (SizeType)0);
 }
 
-TEST(HashTable, Rehash) {
+TEST(HashTableTest, Rehash) {
     HashTable<string> table(100);
     for (int i = 0; i < 100; ++i) {
         table.insert(toString(i));

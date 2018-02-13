@@ -7,7 +7,7 @@ using tastylib::NPuzzle;
 typedef PuzzleNode<>::Direction Direc;
 typedef PuzzleNode<>::SizeType SizeType;
 
-TEST(PuzzleNode, Basic) {
+TEST(PuzzleNodeTest, Basic) {
     PuzzleNode<> oriNode({1, 2, 3, 4, 0, 5, 6, 7, 8}, 3, 3);
     PuzzleNode<> node({1, 2, 3, 4, 0, 5, 6, 7, 8}, 3, 3);
     EXPECT_EQ(node.getRowCount(), (SizeType)3);
@@ -62,7 +62,7 @@ TEST(PuzzleNode, Basic) {
     EXPECT_EQ(node.getDirectionTo(&oriNode), Direc::NONE);
 }
 
-TEST(NPuzzle, Basic) {
+TEST(NPuzzleTest, Basic) {
     PuzzleNode<> oriBeg({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, 4, 4);
     PuzzleNode<> oriEnd({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, 4, 4);
     NPuzzle<> puzzle(oriBeg, oriEnd);
@@ -75,7 +75,7 @@ TEST(NPuzzle, Basic) {
     EXPECT_TRUE(puzzle.getBeg() == puzzle.getEnd());
 }
 
-TEST(NPuzzle, AStar) {
+TEST(NPuzzleTest, AStar) {
     PuzzleNode<> beg({0, 1, 2, 3, 4, 5, 6, 7, 8}, 3, 3);
     PuzzleNode<> end({0, 1, 2, 3, 4, 5, 6, 7, 8}, 3, 3);
     beg.shuffle();

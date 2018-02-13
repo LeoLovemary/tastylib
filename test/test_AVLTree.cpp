@@ -6,7 +6,7 @@ using namespace tastylib;
 
 typedef AVLTree<int>::SizeType SizeType;
 
-TEST(AVLTree, Basic) {
+TEST(AVLTreeTest, Basic) {
     AVLTree<int> tree;
     tree.clear();
     tree.clear();
@@ -36,7 +36,7 @@ TEST(AVLTree, Basic) {
     EXPECT_EQ(tree.getSize(), (SizeType)0);
 }
 
-TEST(AVLTree, Insert) {
+TEST(AVLTreeTest, Insert) {
     AVLTree<int> tree;
     tree.insert(3);
     tree.insert(2);
@@ -59,7 +59,7 @@ TEST(AVLTree, Insert) {
     EXPECT_STREQ(tree.postorder().c_str(), "{1, 3, 2, 5, 6, 4, 8, 10, 9, 12, 11, 14, 16, 15, 13, 7}");
 }
 
-TEST(AVLTree, Remove) {
+TEST(AVLTreeTest, Remove) {
     AVLTree<int> tree;
     // Single rotate with right
     tree.insert(5);
@@ -112,7 +112,7 @@ TEST(AVLTree, Remove) {
     EXPECT_TRUE(tree.isEmpty());
 }
 
-TEST(AVLTree, DescendingOrder) {
+TEST(AVLTreeTest, DescendingOrder) {
     AVLTree<int, std::greater<int>> tree;
     tree.insert(20);
     tree.insert(15);

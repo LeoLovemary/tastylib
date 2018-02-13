@@ -9,7 +9,7 @@ typedef Graph<string> G;
 typedef G::NumType NumType;
 typedef G::WeightType WeightType;
 
-TEST(Graph, List) {
+TEST(GraphTest, List) {
     G graph(3, G::LIST);
     EXPECT_EQ(graph.getSize(), (NumType)3);
     // Test operator[]
@@ -65,7 +65,7 @@ TEST(Graph, List) {
     EXPECT_EQ(n2.size(), (decltype(n2)::size_type)0);
 }
 
-TEST(Graph, Matrix) {
+TEST(GraphTest, Matrix) {
     G graph(3, G::MATRIX);
     EXPECT_EQ(graph.getSize(), (NumType)3);
     // Test operator[]

@@ -7,7 +7,7 @@ using std::vector;
 
 typedef BinaryHeap<int>::SizeType SizeType;
 
-TEST(BinaryHeap, Basic) {
+TEST(BinaryHeapTest, Basic) {
     BinaryHeap<int> heap;
     EXPECT_TRUE(heap.isEmpty());
     EXPECT_EQ(heap.getSize(), (SizeType)0);
@@ -27,7 +27,7 @@ TEST(BinaryHeap, Basic) {
     EXPECT_EQ(heap.getSize(), (SizeType)0);
 }
 
-TEST(BinaryHeap, MinRoot) {
+TEST(BinaryHeapTest, MinRoot) {
     vector<int> ans;
     for (int i = 0; i < 30; ++i) {
         ans.push_back(i);
@@ -42,7 +42,7 @@ TEST(BinaryHeap, MinRoot) {
     EXPECT_TRUE(heap.isEmpty());
 }
 
-TEST(BinaryHeap, MaxRoot) {
+TEST(BinaryHeapTest, MaxRoot) {
     vector<int> ans;
     for (int i = 29; i >= 0; --i) {
         ans.push_back(i);
