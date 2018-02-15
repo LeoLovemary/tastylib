@@ -42,7 +42,14 @@ matrix:
         - pip
       after_success:
         - pip install --user cpp-coveralls
-        - coveralls -r .. --gcov-options '\-lp' -e build/CMakeFiles -e thirdparty -e test -e src -e include/tastylib/internal -e include/tastylib/util
+        - coveralls -r .. --gcov-options '\-lp'
+          -e build/CMakeFiles
+          -e thirdparty
+          -e test
+          -e include/tastylib/internal
+          -e include/tastylib/util
+          -e src/sample.cpp
+          -e src/benchmark
 
 before_install:
   - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test

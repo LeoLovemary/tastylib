@@ -40,9 +40,8 @@ if (TASTYLIB_BUILD_TEST)
     add_subdirectory(${PROJECT_SOURCE_DIR}/test)
 endif ()
 
-# Executables
+# Benchmark executables
 set(EXEC_LIST
-    sample
     benchmark_DoublyLinkedList
     benchmark_BinaryHeap
     benchmark_AVLTree
@@ -51,6 +50,10 @@ set(EXEC_LIST
     benchmark_Sort)
 
 foreach (exec ${EXEC_LIST})
-    add_executable(${exec} ${PROJECT_SOURCE_DIR}/src/${exec}.cpp
+    add_executable(${exec} ${PROJECT_SOURCE_DIR}/src/benchmark/${exec}.cpp
                    ${TASTYLIB_SRCS} ${TASTYLIB_HEADERS})
 endforeach ()
+
+# Sample executable
+add_executable(sample ${PROJECT_SOURCE_DIR}/src/sample.cpp
+                ${TASTYLIB_SRCS} ${TASTYLIB_HEADERS})
