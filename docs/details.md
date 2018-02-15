@@ -107,7 +107,7 @@ int main() {
 
     auto size2 = heap1.getSize();  // size2 == 0
 
-    vector<int> vals;
+    std::vector<int> vals;
     vals.push_back(50);
     vals.push_back(20);
     vals.push_back(30);
@@ -555,7 +555,6 @@ int main() {
 
 ```c++
 #include "tastylib/LCS.h"
-#include <string>
 
 using namespace tastylib;
 
@@ -572,3 +571,59 @@ int main() {
 ```
 
 ## TextQuery
+
+### Usage
+
+```c++
+#include "tastylib/TextQuery.h"
+#include <string>
+#include <sstream>
+#include <iostream>
+
+using namespace tastylib;
+
+int main() {
+
+    const std::string article =
+        "Alice Emma has long flowing red hair\n"
+        "Her Daddy says when the wind blows\n"
+        "like a fiery bird in flight.\n"
+        "through her hair, it looks almost alive,\n"
+        "A beautiful fiery bird, he tells her,\n"
+        "magical but untamed.\n"
+        "\"Daddy, shush, there is no such thing,\"\n"
+        "she tells him, at the same time wanting\n"
+        "him to tell her more.\n"
+        "Shyly, she asks, \"I mean, Daddy, is there?\"\n";
+
+    std::istringstream iss(article);
+    TextQuery tq(iss);
+
+    /*
+    Print:
+    Daddy occurs: 3
+    (line 2) Her Daddy says when the wind blows
+    (line 7) "Daddy, shush, there is no such thing,"
+    (line 10) Shyly, she asks, "I mean, Daddy, is there?"
+    */
+    std::cout << Query("Daddy").eval(tq);
+
+    /*
+    Print:
+    (but | (there & ~(thing))) occurs: 2
+    (line 6) magical but untamed.
+    (line 10) Shyly, she asks, "I mean, Daddy, is there?"
+    */
+    std::cout << (Query("but") | (Query("there") & ~Query("thing"))).eval(tq);
+
+    return 0;
+}
+```
+
+### Design
+
+![](./images/textquery_class_diagram.png)
+
+<br>
+
+![](./images/textquery_example.png)

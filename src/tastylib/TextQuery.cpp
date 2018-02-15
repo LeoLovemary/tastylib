@@ -1,8 +1,11 @@
 #include "tastylib/TextQuery.h"
 #include <sstream>
 #include <algorithm>
+#include <iterator>
 
 TASTYLIB_NS_BEGIN
+
+// TextQuery
 
 TextQuery::TextQuery(std::istream &is) : txt(new std::vector<std::string>) {
     std::string line;
@@ -15,7 +18,7 @@ TextQuery::TextQuery(std::istream &is) : txt(new std::vector<std::string>) {
         while (iss >> word) {
             auto &lines = wm[word];
             if (!lines) {
-                lines.reset(new std::set<line_no>);
+                lines.reset(new std::set<LineNo>);
             }
             lines->insert(txt->size() - 1);
         }
@@ -23,7 +26,7 @@ TextQuery::TextQuery(std::istream &is) : txt(new std::vector<std::string>) {
 }
 
 QueryResult TextQuery::query(const std::string &word) const {
-    static std::shared_ptr<std::set<line_no>> empty(new std::set<line_no>);
+    static std::shared_ptr<std::set<LineNo>> empty(new std::set<LineNo>);
     auto it = wm.find(word);
     if (it == wm.end()) {
         return QueryResult(word, txt, empty);
@@ -36,17 +39,127 @@ bool TextQuery::isPunc(const char c) {
     return c == '.' || c == ',' || c == '?' || c == '\'' || c == '\"';
 }
 
-QueryResult::QueryResult(const std::string &word_,
-                         std::shared_ptr<std::vector<std::string>> txt_,
-                         std::shared_ptr<std::set<TextQuery::line_no>> lines_)
-    : word(word_), txt(txt_), lines(lines_) {}
+// QueryResult
+
+QueryResult::QueryResult(const std::string &s,
+                         std::shared_ptr<std::vector<std::string>> t,
+                         std::shared_ptr<std::set<LineNo>> l)
+    : queryStr_(s), txt_(t), lines_(l) {}
 
 std::ostream& operator<<(std::ostream &os, const QueryResult &res) {
-    os << res.word << ": " << res.lines->size();
-    for (const auto line : *(res.lines)) {
-        os << " | line " << line + 1 << ": " << res.txt->at(line);
+    os << res.queryStr_ << " occurs: " << res.lines_->size() << "\n";
+    for (const auto line : *(res.lines_)) {
+        os << "(line " << line + 1 << ") " << res.txt_->at(line) << "\n";
     }
     return os;
+}
+
+const std::string& QueryResult::queryStr() const {
+    return queryStr_;
+}
+
+std::shared_ptr<std::vector<std::string>> QueryResult::txt() const {
+    return txt_;
+}
+
+std::shared_ptr<std::set<QueryResult::LineNo>> QueryResult::lines() const {
+    return lines_;
+}
+
+// Query
+
+Query::Query(const std::string &word) : p(new WordQuery(word)) {}
+
+Query::Query(const std::shared_ptr<QueryBase> p_) : p(p_) {}
+
+QueryResult Query::eval(const TextQuery &tq) const {
+    return p->eval(tq);
+}
+
+std::string Query::rep() const {
+    return p->rep();
+}
+
+Query operator~(const Query &q) {
+    return Query(std::shared_ptr<NotQuery>(new NotQuery(q)));
+}
+
+Query operator&(const Query &lhs, const Query &rhs) {
+    return Query(std::shared_ptr<AndQuery>(new AndQuery(lhs, rhs)));
+}
+
+Query operator|(const Query &lhs, const Query &rhs) {
+    return Query(std::shared_ptr<OrQuery>(new OrQuery(lhs, rhs)));
+}
+
+// WordQuery
+
+WordQuery::WordQuery(const std::string &w) : word(w) {}
+
+QueryResult WordQuery::eval(const TextQuery &tq) const {
+    return tq.query(word);
+}
+
+std::string WordQuery::rep() const {
+    return word;
+}
+
+// NotQuery
+
+NotQuery::NotQuery(const Query &q) : query(q) {}
+
+QueryResult NotQuery::eval(const TextQuery &tq) const {
+    QueryResult ori = query.eval(tq);
+    auto resLines = std::make_shared<std::set<LineNo>>();
+    auto lines = ori.lines();
+    auto numLines = ori.txt()->size();
+    auto it = lines->cbegin(), end = lines->cend();
+    for (decltype(numLines) i = 0; i != numLines; ++i) {
+        if (it == end || i != *it) {
+            resLines->insert(i);
+        } else {
+            ++it;
+        }
+    }
+    return QueryResult(rep(), ori.txt(), resLines);
+}
+
+std::string NotQuery::rep() const {
+    return "~(" + query.rep() + ")";
+}
+
+// BinaryQuery
+
+BinaryQuery::BinaryQuery(const Query &l, const Query &r, const std::string &o) : lhs(l), rhs(r), op(o) {}
+
+std::string BinaryQuery::rep() const {
+    return "(" + lhs.rep() + " " + op + " " + rhs.rep() + ")";
+}
+
+// OrQuery
+
+OrQuery::OrQuery(const Query &l, const Query &r) : BinaryQuery(l, r, "|") {}
+
+QueryResult OrQuery::eval(const TextQuery &tq) const {
+    QueryResult lRes = lhs.eval(tq);
+    QueryResult rRes = rhs.eval(tq);
+    auto resLines = std::make_shared<std::set<LineNo>>(*(lRes.lines()));
+    resLines->insert(rRes.lines()->cbegin(), rRes.lines()->cend());
+    return QueryResult(rep(), lRes.txt(), resLines);
+}
+
+// AndQuery
+
+AndQuery::AndQuery(const Query &l, const Query &r) : BinaryQuery(l, r, "&") {}
+
+QueryResult AndQuery::eval(const TextQuery &tq) const {
+    QueryResult lRes = lhs.eval(tq);
+    QueryResult rRes = rhs.eval(tq);
+    auto resLines = std::make_shared<std::set<LineNo>>();
+    std::set_intersection(lRes.lines()->cbegin(), lRes.lines()->cend(),
+                          rRes.lines()->cbegin(), rRes.lines()->cend(),
+                          std::inserter(*resLines, resLines->cbegin()));
+    return QueryResult(rep(), lRes.txt(), resLines);
 }
 
 TASTYLIB_NS_END

@@ -34,7 +34,7 @@ C++ implementations of data structures, algorithms and whatever attracts me.
 
 | Name | Source | Benchmarked | Note | Reference |
 |:----:|:------:|:-----------:|------|:---------:|
-|[TextQuery][textquery-details]|[Tests][textquery-tests]<br>[.h][textquery-h] [.cpp][textquery-cpp]|No|Search a given file for words. (OOP practice)|§12.3 & §15.9, C++ Primer, 5th Edition|
+|[TextQuery][textquery-details]|[Tests][textquery-tests]<br>[.h][textquery-h] [.cpp][textquery-cpp]|No|Search a given input stream for words. (OOP practice)|§12.3 & §15.9, C++ Primer, 5th Edition|
 
 ## Installation
 

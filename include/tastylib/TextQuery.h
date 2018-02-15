@@ -17,9 +17,12 @@ TASTYLIB_NS_BEGIN
 
 class QueryResult;
 
+/*
+Search words from a given input stream.
+*/
 class TextQuery {
 public:
-    using line_no = std::vector<std::string>::size_type;
+    using LineNo = std::vector<std::string>::size_type;
 
     explicit TextQuery(std::istream &is);
 
@@ -32,21 +35,145 @@ private:
     // Store each line in the text
     std::shared_ptr<std::vector<std::string>> txt;
     // Map words to line numbers
-    std::map<std::string, std::shared_ptr<std::set<line_no>>> wm;
+    std::map<std::string, std::shared_ptr<std::set<LineNo>>> wm;
 };
 
+/*
+Query result from TextQuery.
+*/
 class QueryResult {
     friend std::ostream& operator<<(std::ostream &os, const QueryResult &res);
 
 public:
-    QueryResult(const std::string &word_,
-                std::shared_ptr<std::vector<std::string>> txt_,
-                std::shared_ptr<std::set<TextQuery::line_no>> lines_);
+    using LineNo = TextQuery::LineNo;
+
+    QueryResult(const std::string &s,
+                std::shared_ptr<std::vector<std::string>> t,
+                std::shared_ptr<std::set<LineNo>> l);
+
+    const std::string& queryStr() const;
+
+    std::shared_ptr<std::vector<std::string>> txt() const;
+
+    std::shared_ptr<std::set<LineNo>> lines() const;
 
 private:
-    std::string word;  // Word this query represents
-    std::shared_ptr<std::vector<std::string>> txt;
-    std::shared_ptr<std::set<TextQuery::line_no>> lines;
+    std::string queryStr_;  // Word this query represents
+    std::shared_ptr<std::vector<std::string>> txt_;
+    std::shared_ptr<std::set<LineNo>> lines_;
+};
+
+class QueryBase;
+
+/*
+Public interface for query.
+*/
+class Query {
+    friend Query operator~(const Query &q);
+    friend Query operator&(const Query &lhs, const Query &rhs);
+    friend Query operator|(const Query &lhs, const Query &rhs);
+
+public:
+    explicit Query(const std::string &word);  // Create a WordQuery
+
+    QueryResult eval(const TextQuery &tq) const;
+
+    std::string rep() const;
+
+private:
+    explicit Query(const std::shared_ptr<QueryBase> p_);
+
+private:
+    std::shared_ptr<QueryBase> p;
+};
+
+/*
+Base class for different query types.
+*/
+class QueryBase {
+    friend class Query;
+
+protected:
+    using LineNo = TextQuery::LineNo;
+
+    virtual ~QueryBase() = default;
+
+private:
+    virtual QueryResult eval(const TextQuery &tq) const = 0;
+    virtual std::string rep() const = 0;
+};
+
+/*
+Query for words.
+*/
+class WordQuery: public QueryBase {
+    friend class Query;
+
+private:
+    explicit WordQuery(const std::string &w);
+
+    virtual QueryResult eval(const TextQuery &tq) const;
+
+    virtual std::string rep() const;
+
+private:
+    std::string word;
+};
+
+/*
+NOT logic query.
+*/
+class NotQuery: public QueryBase {
+    friend Query operator~(const Query &q);
+
+private:
+    explicit NotQuery(const Query &q);
+
+    virtual QueryResult eval(const TextQuery &tq) const;
+
+    virtual std::string rep() const;
+
+private:
+    Query query;
+};
+
+/*
+Base class for two-operand query.
+*/
+class BinaryQuery: public QueryBase {
+protected:
+    BinaryQuery(const Query &l, const Query &r, const std::string &o);
+
+    virtual std::string rep() const;
+
+protected:
+    Query lhs;
+    Query rhs;
+    std::string op;
+};
+
+/*
+OR logic query.
+*/
+class OrQuery: public BinaryQuery {
+    friend Query operator|(const Query &lhs, const Query &rhs);
+
+private:
+    OrQuery(const Query &l, const Query &r);
+
+    virtual QueryResult eval(const TextQuery &tq) const;
+};
+
+/*
+AND logic query.
+*/
+class AndQuery: public BinaryQuery {
+    friend Query operator&(const Query &lhs, const Query &rhs);
+
+private:
+    AndQuery(const Query &l, const Query &r);
+
+    virtual QueryResult eval(const TextQuery &tq) const;
 };
 
 TASTYLIB_NS_END
