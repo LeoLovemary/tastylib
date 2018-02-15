@@ -39,33 +39,6 @@ bool TextQuery::isPunc(const char c) {
     return c == '.' || c == ',' || c == '?' || c == '\'' || c == '\"';
 }
 
-// QueryResult
-
-QueryResult::QueryResult(const std::string &s,
-                         std::shared_ptr<std::vector<std::string>> t,
-                         std::shared_ptr<std::set<LineNo>> l)
-    : queryStr_(s), txt_(t), lines_(l) {}
-
-std::ostream& operator<<(std::ostream &os, const QueryResult &res) {
-    os << res.queryStr_ << " occurs: " << res.lines_->size() << "\n";
-    for (const auto line : *(res.lines_)) {
-        os << "(line " << line + 1 << ") " << res.txt_->at(line) << "\n";
-    }
-    return os;
-}
-
-const std::string& QueryResult::queryStr() const {
-    return queryStr_;
-}
-
-std::shared_ptr<std::vector<std::string>> QueryResult::txt() const {
-    return txt_;
-}
-
-std::shared_ptr<std::set<QueryResult::LineNo>> QueryResult::lines() const {
-    return lines_;
-}
-
 // Query
 
 Query::Query(const std::string &word) : p(new WordQuery(word)) {}
@@ -111,8 +84,8 @@ NotQuery::NotQuery(const Query &q) : query(q) {}
 QueryResult NotQuery::eval(const TextQuery &tq) const {
     QueryResult ori = query.eval(tq);
     auto resLines = std::make_shared<std::set<LineNo>>();
-    auto lines = ori.lines();
-    auto numLines = ori.txt()->size();
+    auto lines = ori.lines;
+    auto numLines = ori.txt->size();
     auto it = lines->cbegin(), end = lines->cend();
     for (decltype(numLines) i = 0; i != numLines; ++i) {
         if (it == end || i != *it) {
@@ -121,7 +94,7 @@ QueryResult NotQuery::eval(const TextQuery &tq) const {
             ++it;
         }
     }
-    return QueryResult(rep(), ori.txt(), resLines);
+    return QueryResult(rep(), ori.txt, resLines);
 }
 
 std::string NotQuery::rep() const {
@@ -143,9 +116,9 @@ OrQuery::OrQuery(const Query &l, const Query &r) : BinaryQuery(l, r, "|") {}
 QueryResult OrQuery::eval(const TextQuery &tq) const {
     QueryResult lRes = lhs.eval(tq);
     QueryResult rRes = rhs.eval(tq);
-    auto resLines = std::make_shared<std::set<LineNo>>(*(lRes.lines()));
-    resLines->insert(rRes.lines()->cbegin(), rRes.lines()->cend());
-    return QueryResult(rep(), lRes.txt(), resLines);
+    auto resLines = std::make_shared<std::set<LineNo>>(*(lRes.lines));
+    resLines->insert(rRes.lines->cbegin(), rRes.lines->cend());
+    return QueryResult(rep(), lRes.txt, resLines);
 }
 
 // AndQuery
@@ -156,10 +129,25 @@ QueryResult AndQuery::eval(const TextQuery &tq) const {
     QueryResult lRes = lhs.eval(tq);
     QueryResult rRes = rhs.eval(tq);
     auto resLines = std::make_shared<std::set<LineNo>>();
-    std::set_intersection(lRes.lines()->cbegin(), lRes.lines()->cend(),
-                          rRes.lines()->cbegin(), rRes.lines()->cend(),
+    std::set_intersection(lRes.lines->cbegin(), lRes.lines->cend(),
+                          rRes.lines->cbegin(), rRes.lines->cend(),
                           std::inserter(*resLines, resLines->cbegin()));
-    return QueryResult(rep(), lRes.txt(), resLines);
+    return QueryResult(rep(), lRes.txt, resLines);
+}
+
+// QueryResult
+
+QueryResult::QueryResult(const std::string &s,
+                         std::shared_ptr<std::vector<std::string>> t,
+                         std::shared_ptr<std::set<LineNo>> l)
+    : queryStr(s), txt(t), lines(l) {}
+
+std::ostream& operator<<(std::ostream &os, const QueryResult &res) {
+    os << res.queryStr << " occurs: " << res.lines->size() << "\n";
+    for (const auto line : *(res.lines)) {
+        os << "(line " << line + 1 << ") " << res.txt->at(line) << "\n";
+    }
+    return os;
 }
 
 TASTYLIB_NS_END

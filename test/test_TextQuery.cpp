@@ -53,7 +53,13 @@ std::vector<std::string> *TextQueryTest::lines = nullptr;
 TEST_F(TextQueryTest, WordQuery) {
     std::ostringstream oss;
 
-    std::string word = "Alice";
+    std::string word = "apple";
+    oss.str("");
+    oss << Query(word).eval(*tq);
+    ASSERT_EQ(oss.str(),
+              word + " occurs: 0\n");
+
+    word = "Alice";
     oss.str("");
     oss << Query(word).eval(*tq);
     ASSERT_EQ(oss.str(),
@@ -137,6 +143,11 @@ TEST_F(TextQueryTest, OrQuery) {
               "(hair | Alice) occurs: 2\n" +
               "(line 1) " + lines->at(0) + "\n" +
               "(line 4) " + lines->at(3) + "\n");
+
+    oss.str("");
+    oss << (Query("apple") | Query("peach")).eval(*tq);
+    ASSERT_EQ(oss.str(), std::string() +
+              "(apple | peach) occurs: 0\n");
 }
 
 TEST_F(TextQueryTest, AndQuery) {
@@ -147,6 +158,11 @@ TEST_F(TextQueryTest, AndQuery) {
     ASSERT_EQ(oss.str(), std::string() +
               "(hair & Alice) occurs: 1\n" +
               "(line 1) " + lines->at(0) + "\n");
+
+    oss.str("");
+    oss << (Query("apple") & Query("peach")).eval(*tq);
+    ASSERT_EQ(oss.str(), std::string() +
+              "(apple & peach) occurs: 0\n");
 }
 
 TEST_F(TextQueryTest, CompoundQuery) {
@@ -166,4 +182,9 @@ TEST_F(TextQueryTest, CompoundQuery) {
               "(but | (there & ~(thing))) occurs: 2\n" +
               "(line 6) " + lines->at(5) + "\n" +
               "(line 10) " + lines->at(9) + "\n");
+
+    oss.str("");
+    oss << ((Query("apple") & Query("peach")) | Query("pair")).eval(*tq);
+    ASSERT_EQ(oss.str(), std::string() +
+              "((apple & peach) | pair) occurs: 0\n");
 }

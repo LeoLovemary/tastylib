@@ -38,31 +38,6 @@ private:
     std::map<std::string, std::shared_ptr<std::set<LineNo>>> wm;
 };
 
-/*
-Query result from TextQuery.
-*/
-class QueryResult {
-    friend std::ostream& operator<<(std::ostream &os, const QueryResult &res);
-
-public:
-    using LineNo = TextQuery::LineNo;
-
-    QueryResult(const std::string &s,
-                std::shared_ptr<std::vector<std::string>> t,
-                std::shared_ptr<std::set<LineNo>> l);
-
-    const std::string& queryStr() const;
-
-    std::shared_ptr<std::vector<std::string>> txt() const;
-
-    std::shared_ptr<std::set<LineNo>> lines() const;
-
-private:
-    std::string queryStr_;  // Word this query represents
-    std::shared_ptr<std::vector<std::string>> txt_;
-    std::shared_ptr<std::set<LineNo>> lines_;
-};
-
 class QueryBase;
 
 /*
@@ -174,6 +149,29 @@ private:
     AndQuery(const Query &l, const Query &r);
 
     virtual QueryResult eval(const TextQuery &tq) const;
+};
+
+/*
+Query result from TextQuery.
+*/
+class QueryResult {
+    friend class NotQuery;
+    friend class OrQuery;
+    friend class AndQuery;
+
+    friend std::ostream& operator<<(std::ostream &os, const QueryResult &res);
+
+public:
+    using LineNo = TextQuery::LineNo;
+
+    QueryResult(const std::string &s,
+                std::shared_ptr<std::vector<std::string>> t,
+                std::shared_ptr<std::set<LineNo>> l);
+
+private:
+    std::string queryStr;  // Word this query represents
+    std::shared_ptr<std::vector<std::string>> txt;
+    std::shared_ptr<std::set<LineNo>> lines;
 };
 
 TASTYLIB_NS_END
