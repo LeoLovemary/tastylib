@@ -85,7 +85,7 @@ See the [LICENSE](./LICENSE) file for license rights and limitations.
 [coverage-state]: https://coveralls.io/github/chuyangliu/TastyLib?branch=master
 
 [cmake-site]: https://cmake.org
-[cmake-generator-docs]: https://cmake.org/cmake/help/v3.0/manual/cmake-generators.7.html
+[cmake-generator-docs]: https://cmake.org/cmake/help/v3.10/manual/cmake-generators.7.html
 
 [doublylist-details]: ./docs/details.md#doublylinkedlist
 [doublylist-tests]: ./test/test_DoublyLinkedList.cpp
