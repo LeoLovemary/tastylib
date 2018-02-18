@@ -25,7 +25,8 @@ set(TEST_EXEC_LIST
     test_Sort
     test_Dijkstra
     test_LCS
-    test_TextQuery)
+    test_TextQuery
+    test_SharedPtr)
 
 foreach (exec ${TEST_EXEC_LIST})
     add_executable(${exec} ${exec}.cpp ${TASTYLIB_SRCS} ${TASTYLIB_HEADERS})

@@ -12,8 +12,8 @@ C++ implementations of data structures, algorithms and whatever attracts me.
 
 ### Data Structures
 
-| Name | Source | Benchmarked | Note | Reference |
-|:----:|:------:|:-----------:|------|:---------:|
+| Name | Source | Benchmarked | Note | Definition |
+|:----:|:------:|:-----------:|------|:----------:|
 |[DoublyLinkedList][doublylist-details]|[Tests][doublylist-tests]<br>[.h][doublylist-src]|Yes|A linked data structure that consists of a set of sequentially linked records. It also supports merge sort.|[Wikipedia][doublylist-wiki]|
 |[BinaryHeap][binheap-details]|[Tests][binheap-tests]<br>[.h][binheap-src]|Yes|A heap data structure taking the form of a complete binary tree. A common way of implementing [priority queue][priqueue-wiki].|[Wikipedia][binheap-wiki]|
 |[HashTable][hashtbl-details]|[Tests][hashtbl-tests]<br>[.h][hashtbl-src]|No|A data structure that stores unique elements in no particular order, and which allows for fast retrieval of individual elements based on their values. Similar to [std::unordered_set][unorderedset-wiki].|[Wikipedia][hashtbl-wiki]|
@@ -22,8 +22,8 @@ C++ implementations of data structures, algorithms and whatever attracts me.
 
 ### Algorithms
 
-| Name | Source | Benchmarked | Note | Reference |
-|:----:|:------:|:-----------:|------|:---------:|
+| Name | Source | Benchmarked | Note | Definition |
+|:----:|:------:|:-----------:|------|:----------:|
 |[MD5][md5-details]|[Tests][md5-tests]<br>[.h][md5-src]|Yes|A widely used hash function producing a 128-bit hash value.|[Wikipedia][md5-wiki]|
 |[NPuzzle][npuzzle-details]|[Tests][npuzzle-tests]<br>[.h][npuzzle-src]|Yes|A classic searching problem solved with [A* search][astar-wiki]. A [GUI demo][npuzzle-demo] is provided.|[Wikipedia][npuzzle-wiki]|
 |[Sort][sort-details]|[Tests][sort-tests]<br>[.h][sort-src]|Yes|Including [insertion sort][sort-wiki-insertion], [selection sort][sort-wiki-selection], [heapsort][sort-wiki-heap], [quicksort][sort-wiki-quick], [quickselect][sort-wiki-quickselect]. For [merge sort][sort-wiki-merge], please refer to [DoublyLinkedList.sort()][doublylist-details].|[Wikipedia][sort-wiki]|
@@ -35,6 +35,7 @@ C++ implementations of data structures, algorithms and whatever attracts me.
 | Name | Source | Benchmarked | Note | Reference |
 |:----:|:------:|:-----------:|------|:---------:|
 |[TextQuery][textquery-details]|[Tests][textquery-tests]<br>[.h][textquery-h] [.cpp][textquery-cpp]|No|Search a given input stream for words. (OOP practice)|§12.3 & §15.9, C++ Primer, 5th Edition|
+|[SharedPtr][sharedptr-details]|[Tests][sharedptr-tests]<br>[.h][sharedptr-src]|No|My owe version of [std::shared_ptr][sharedptr-std].|§12.1 & §16.1.6, C++ Primer, 5th Edition|
 
 ## Installation
 
@@ -152,3 +153,8 @@ See the [LICENSE](./LICENSE) file for license rights and limitations.
 [textquery-tests]: ./test/test_TextQuery.cpp
 [textquery-h]: ./include/tastylib/TextQuery.h
 [textquery-cpp]: ./src/tastylib/TextQuery.cpp
+
+[sharedptr-details]: ./docs/details.md#sharedptr
+[sharedptr-tests]: ./test/test_SharedPtr.cpp
+[sharedptr-src]: ./include/tastylib/SharedPtr.h
+[sharedptr-std]: http://www.cplusplus.com/reference/memory/shared_ptr/?kw=shared_ptr

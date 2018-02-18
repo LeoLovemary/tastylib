@@ -627,3 +627,60 @@ int main() {
 <br>
 
 ![](./images/textquery_example.png)
+
+## SharedPtr
+
+### Usage
+
+```c++
+#include "tastylib/SharedPtr.h"
+#include <string>
+#include <utility>
+
+using namespace tastylib;
+
+int main() {
+
+    SharedPtr<std::string> p1;
+    auto cnt = p1.useCount();  // cnt == 0
+    auto ptr = p1.get();       // ptr == nullptr
+
+    p1 = SharedPtr<std::string>(new std::string("hello world"));
+    auto cnt = p1.useCount();  // cnt == 1
+
+    SharedPtr<std::string> p2 = p1;
+    cnt = p1.useCount();  // cnt == 2
+    cnt = p2.useCount();  // cnt == 2
+
+    p1.reset();
+    cnt = p1.useCount();  // cnt == 0
+    cnt = p2.useCount();  // cnt == 1
+
+    SharedPtr<std::string> p3 = std::move(p2);
+    cnt = p1.useCount();  // cnt == 0
+    cnt = p2.useCount();  // cnt == 0
+    cnt = p3.useCount();  // cnt == 1
+
+    p2 = p3;
+    cnt = p1.useCount();  // cnt == 0
+    cnt = p2.useCount();  // cnt == 2
+    cnt = p3.useCount();  // cnt == 2
+
+    p1 = std::move(p2);
+    cnt = p1.useCount();  // cnt == 2
+    cnt = p2.useCount();  // cnt == 0
+    cnt = p3.useCount();  // cnt == 2
+
+    p1.reset();
+    cnt = p1.useCount();  // cnt == 0
+    cnt = p2.useCount();  // cnt == 0
+    cnt = p3.useCount();  // cnt == 1
+
+    p3.reset();
+    cnt = p1.useCount();  // cnt == 0
+    cnt = p2.useCount();  // cnt == 0
+    cnt = p3.useCount();  // cnt == 0
+
+    return 0;
+}
+```
