@@ -56,20 +56,20 @@ TEST_F(TextQueryTest, WordQuery) {
     std::string word = "apple";
     oss.str("");
     oss << Query(word).eval(*tq);
-    ASSERT_EQ(oss.str(),
+    EXPECT_EQ(oss.str(),
               word + " occurs: 0\n");
 
     word = "Alice";
     oss.str("");
     oss << Query(word).eval(*tq);
-    ASSERT_EQ(oss.str(),
+    EXPECT_EQ(oss.str(),
               word + " occurs: 1\n" +
               "(line 1) " + lines->at(0) + "\n");
 
     word = "Daddy";
     oss.str("");
     oss << Query(word).eval(*tq);
-    ASSERT_EQ(oss.str(),
+    EXPECT_EQ(oss.str(),
               word + " occurs: 3\n" +
               "(line 2) " + lines->at(1) + "\n" +
               "(line 7) " + lines->at(6) + "\n" +
@@ -78,7 +78,7 @@ TEST_F(TextQueryTest, WordQuery) {
     word = "hair";
     oss.str("");
     oss << Query(word).eval(*tq);
-    ASSERT_EQ(oss.str(),
+    EXPECT_EQ(oss.str(),
               word + " occurs: 2\n" +
               "(line 1) " + lines->at(0) + "\n" +
               "(line 4) " + lines->at(3) + "\n");
@@ -86,7 +86,7 @@ TEST_F(TextQueryTest, WordQuery) {
     word = "fiery";
     oss.str("");
     oss << Query(word).eval(*tq);
-    ASSERT_EQ(oss.str(),
+    EXPECT_EQ(oss.str(),
               word + " occurs: 2\n" +
               "(line 3) " + lines->at(2) + "\n" +
               "(line 5) " + lines->at(4) + "\n");
@@ -94,7 +94,7 @@ TEST_F(TextQueryTest, WordQuery) {
     word = "bird";
     oss.str("");
     oss << Query(word).eval(*tq);
-    ASSERT_EQ(oss.str(),
+    EXPECT_EQ(oss.str(),
               word + " occurs: 2\n" +
               "(line 3) " + lines->at(2) + "\n" +
               "(line 5) " + lines->at(4) + "\n");
@@ -102,14 +102,14 @@ TEST_F(TextQueryTest, WordQuery) {
     word = "wind";
     oss.str("");
     oss << Query(word).eval(*tq);
-    ASSERT_EQ(oss.str(),
+    EXPECT_EQ(oss.str(),
               word + " occurs: 1\n" +
               "(line 2) " + lines->at(1) + "\n");
 
     word = "her";
     oss.str("");
     oss << Query(word).eval(*tq);
-    ASSERT_EQ(oss.str(),
+    EXPECT_EQ(oss.str(),
               word + " occurs: 3\n" +
               "(line 4) " + lines->at(3) + "\n" +
               "(line 5) " + lines->at(4) + "\n" +
@@ -121,7 +121,7 @@ TEST_F(TextQueryTest, NotQuery) {
 
     oss.str("");
     oss << (~Query("Alice")).eval(*tq);
-    ASSERT_EQ(oss.str(), std::string() +
+    EXPECT_EQ(oss.str(), std::string() +
               "~(Alice) occurs: 9\n" +
               "(line 2) " + lines->at(1) + "\n" +
               "(line 3) " + lines->at(2) + "\n" +
@@ -139,14 +139,14 @@ TEST_F(TextQueryTest, OrQuery) {
 
     oss.str("");
     oss << (Query("hair") | Query("Alice")).eval(*tq);
-    ASSERT_EQ(oss.str(), std::string() +
+    EXPECT_EQ(oss.str(), std::string() +
               "(hair | Alice) occurs: 2\n" +
               "(line 1) " + lines->at(0) + "\n" +
               "(line 4) " + lines->at(3) + "\n");
 
     oss.str("");
     oss << (Query("apple") | Query("peach")).eval(*tq);
-    ASSERT_EQ(oss.str(), std::string() +
+    EXPECT_EQ(oss.str(), std::string() +
               "(apple | peach) occurs: 0\n");
 }
 
@@ -155,13 +155,13 @@ TEST_F(TextQueryTest, AndQuery) {
 
     oss.str("");
     oss << (Query("hair") & Query("Alice")).eval(*tq);
-    ASSERT_EQ(oss.str(), std::string() +
+    EXPECT_EQ(oss.str(), std::string() +
               "(hair & Alice) occurs: 1\n" +
               "(line 1) " + lines->at(0) + "\n");
 
     oss.str("");
     oss << (Query("apple") & Query("peach")).eval(*tq);
-    ASSERT_EQ(oss.str(), std::string() +
+    EXPECT_EQ(oss.str(), std::string() +
               "(apple & peach) occurs: 0\n");
 }
 
@@ -170,7 +170,7 @@ TEST_F(TextQueryTest, CompoundQuery) {
 
     oss.str("");
     oss << ((Query("fiery") & Query("bird")) | Query("wind")).eval(*tq);
-    ASSERT_EQ(oss.str(), std::string() +
+    EXPECT_EQ(oss.str(), std::string() +
               "((fiery & bird) | wind) occurs: 3\n" +
               "(line 2) " + lines->at(1) + "\n" +
               "(line 3) " + lines->at(2) + "\n" +
@@ -178,13 +178,13 @@ TEST_F(TextQueryTest, CompoundQuery) {
 
     oss.str("");
     oss << (Query("but") | (Query("there") & ~Query("thing"))).eval(*tq);
-    ASSERT_EQ(oss.str(), std::string() +
+    EXPECT_EQ(oss.str(), std::string() +
               "(but | (there & ~(thing))) occurs: 2\n" +
               "(line 6) " + lines->at(5) + "\n" +
               "(line 10) " + lines->at(9) + "\n");
 
     oss.str("");
     oss << ((Query("apple") & Query("peach")) | Query("pair")).eval(*tq);
-    ASSERT_EQ(oss.str(), std::string() +
+    EXPECT_EQ(oss.str(), std::string() +
               "((apple & peach) | pair) occurs: 0\n");
 }

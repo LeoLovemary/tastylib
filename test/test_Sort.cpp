@@ -15,10 +15,10 @@ TEST(SortTest, InsertionSort) {
     }
     std::sort(arr1, arr1 + n, std::greater<int>());
     insertionSort<int, std::greater<int>>(arr2, n);
-    ASSERT_TRUE(std::is_sorted(arr1, arr1 + n, std::greater<int>()));
-    ASSERT_TRUE(std::is_sorted(arr2, arr2 + n, std::greater<int>()));
+    EXPECT_TRUE(std::is_sorted(arr1, arr1 + n, std::greater<int>()));
+    EXPECT_TRUE(std::is_sorted(arr2, arr2 + n, std::greater<int>()));
     for (int i = 0; i < n; ++i) {
-        ASSERT_EQ(arr1[i], arr2[i]);
+        EXPECT_EQ(arr1[i], arr2[i]);
     }
 }
 
@@ -31,10 +31,10 @@ TEST(SortTest, SelectionSort) {
     }
     std::sort(arr1, arr1 + n, std::greater<int>());
     selectionSort<int, std::greater<int>>(arr2, n);
-    ASSERT_TRUE(std::is_sorted(arr1, arr1 + n, std::greater<int>()));
-    ASSERT_TRUE(std::is_sorted(arr2, arr2 + n, std::greater<int>()));
+    EXPECT_TRUE(std::is_sorted(arr1, arr1 + n, std::greater<int>()));
+    EXPECT_TRUE(std::is_sorted(arr2, arr2 + n, std::greater<int>()));
     for (int i = 0; i < n; ++i) {
-        ASSERT_EQ(arr1[i], arr2[i]);
+        EXPECT_EQ(arr1[i], arr2[i]);
     }
 }
 
@@ -47,10 +47,10 @@ TEST(SortTest, HeapSort) {
     }
     std::sort(arr1, arr1 + n, std::greater<int>());
     heapSort<int, std::less<int>>(arr2, n);
-    ASSERT_TRUE(std::is_sorted(arr1, arr1 + n, std::greater<int>()));
-    ASSERT_TRUE(std::is_sorted(arr2, arr2 + n, std::greater<int>()));
+    EXPECT_TRUE(std::is_sorted(arr1, arr1 + n, std::greater<int>()));
+    EXPECT_TRUE(std::is_sorted(arr2, arr2 + n, std::greater<int>()));
     for (int i = 0; i < n; ++i) {
-        ASSERT_EQ(arr1[i], arr2[i]);
+        EXPECT_EQ(arr1[i], arr2[i]);
     }
 }
 
@@ -63,10 +63,10 @@ TEST(SortTest, QuickSort) {
     }
     std::sort(arr1, arr1 + n, std::greater<int>());
     quickSort<int, std::greater<int>>(arr2, 0, n - 1);
-    ASSERT_TRUE(std::is_sorted(arr1, arr1 + n, std::greater<int>()));
-    ASSERT_TRUE(std::is_sorted(arr2, arr2 + n, std::greater<int>()));
+    EXPECT_TRUE(std::is_sorted(arr1, arr1 + n, std::greater<int>()));
+    EXPECT_TRUE(std::is_sorted(arr2, arr2 + n, std::greater<int>()));
     for (int i = 0; i < n; ++i) {
-        ASSERT_EQ(arr1[i], arr2[i]);
+        EXPECT_EQ(arr1[i], arr2[i]);
     }
 }
 
@@ -81,6 +81,6 @@ TEST(SortTest, QuickSelect) {
         unsigned k = random->nextInt(0, n - 1);
         std::nth_element(arr1, arr1 + k, arr1 + n, std::greater<int>());
         quickSelect<int, std::greater<int>>(arr2, 0, n - 1, k);
-        ASSERT_EQ(arr1[k], arr2[k]);
+        EXPECT_EQ(arr1[k], arr2[k]);
     }
 }
