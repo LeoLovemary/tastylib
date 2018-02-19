@@ -1,5 +1,24 @@
 # Details
 
+<!-- TOC depthTo:2 -->
+
+- [DoublyLinkedList](#doublylinkedlist)
+- [BinaryHeap](#binaryheap)
+- [HashTable](#hashtable)
+- [AVLTree](#avltree)
+- [Graph](#graph)
+- [MD5](#md5)
+- [NPuzzle](#npuzzle)
+- [Sort](#sort)
+- [Dijkstra](#dijkstra)
+- [LCS](#lcs)
+- [TextQuery](#textquery)
+- [SharedPtr](#sharedptr)
+- [UniquePtr](#uniqueptr)
+
+<!-- /TOC -->
+
+<a id="markdown-doublylinkedlist" name="doublylinkedlist"></a>
 ## DoublyLinkedList
 
 ### Usage
@@ -77,6 +96,7 @@ The program compares the time cost of `DoublyLinkedList` with `std::list`. When 
 |find()|214 µs|218 µs|
 |sort()|3171 ms|2699 ms|
 
+<a id="markdown-binaryheap" name="binaryheap"></a>
 ## BinaryHeap
 
 ### Usage
@@ -162,6 +182,7 @@ The program compares the time cost of `BinaryHeap` with `std::priority_queue` an
 |pop()|592 ns|267 ns|
 |makeHeap()|430 ms|515 ms|
 
+<a id="markdown-hashtable" name="hashtable"></a>
 ## HashTable
 
 ### Usage
@@ -211,6 +232,7 @@ int main() {
 
 Note that there are many different ways to implement the hash table. The MSVC compiler implements the `std::unordered_set` as a **dynamic** hash table, which means that its bucket amount changes dynamically when performing `insert()` and `remove()/erase()` operations (i.e., using [extendible hashing](https://en.wikipedia.org/wiki/Extendible_hashing) or [linear hashing](https://en.wikipedia.org/wiki/Linear_hashing)). While in TastyLib, for simplicity, the hash table is **static** so its bucket amount is fixed after initialized. Since different implementations have different pros and cons, it's hard to give a convincing benchmark result.
 
+<a id="markdown-avltree" name="avltree"></a>
 ## AVLTree
 
 ### Usage
@@ -281,6 +303,7 @@ The program compares the time cost of `AVLTree` with `std::multiset`. It calcula
 |insert()|1098 ns|1213 ns|
 |remove()|1405 ns|1485 ns|
 
+<a id="markdown-graph" name="graph"></a>
 ## Graph
 
 ### Usage
@@ -321,6 +344,7 @@ int main() {
 }
 ```
 
+<a id="markdown-md5" name="md5"></a>
 ## MD5
 
 ### Usage
@@ -351,6 +375,7 @@ The program uses the MD5 algorithm to hash a fixed message of 200 MB for several
 |Ubuntu 16.04 64-bit / g++ 5.4|834 ms|
 |Windows 10 64-bit / Visual Studio 14 2015|1140 ms|
 
+<a id="markdown-npuzzle" name="npuzzle"></a>
 ## NPuzzle
 
 ### Usage
@@ -437,6 +462,7 @@ Benchmark of 6*6 puzzle finished.
 Benchmark of NPuzzle finished.
 ```
 
+<a id="markdown-sort" name="sort"></a>
 ## Sort
 
 ### Usage
@@ -513,6 +539,7 @@ The program calculates the average time cost to sort or find the kth element in 
 |std::nth_element()|0.80 ms|
 |quickSelect()|0.90 ms|
 
+<a id="markdown-dijkstra" name="dijkstra"></a>
 ## Dijkstra
 
 ### Usage
@@ -549,6 +576,7 @@ int main() {
 }
 ```
 
+<a id="markdown-lcs" name="lcs"></a>
 ## LCS
 
 ### Usage
@@ -570,6 +598,7 @@ int main() {
 }
 ```
 
+<a id="markdown-textquery" name="textquery"></a>
 ## TextQuery
 
 ### Usage
@@ -628,6 +657,7 @@ int main() {
 
 ![](./images/textquery_example.png)
 
+<a id="markdown-sharedptr" name="sharedptr"></a>
 ## SharedPtr
 
 ### Usage
@@ -685,6 +715,7 @@ int main() {
 }
 ```
 
+<a id="markdown-uniqueptr" name="uniqueptr"></a>
 ## UniquePtr
 
 ### Usage
