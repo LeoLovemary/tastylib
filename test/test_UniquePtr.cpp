@@ -103,7 +103,6 @@ TEST_F(UniquePtrTest, CopyControl2) {
     EXPECT_EQ(*deleteCnt, 0);
 
     p1 = std::move(p2);
-    p1 = std::move(p1);
     EXPECT_EQ(*p1.get(), "quick fox");
     EXPECT_EQ(p2.get(), nullptr);
     EXPECT_EQ(*deleteCnt, 0);
