@@ -12,11 +12,14 @@ template<typename>
 class SharedPtr;
 
 template<typename T>
-void swap(SharedPtr<T> &lhs, SharedPtr<T> &rhs);
+void swap(SharedPtr<T> &lhs, SharedPtr<T> &rhs) {
+    lhs.swap(rhs);
+}
 
 template<typename T>
-void defaultDeleter(T *p);
-
+void defaultDeleter(T *p) {
+    delete p;
+}
 
 /*
 Simplified version of std::shared_ptr.
@@ -30,6 +33,12 @@ public:
     Default ctor.
     */
     SharedPtr() : ptr(nullptr), refCnt(nullptr), deleter(defaultDeleter<T>) {}
+
+    /*
+    Contruct from raw pointer (optional custom deleter).
+    */
+    explicit SharedPtr(T *p, const std::function<void(T*)> &d = defaultDeleter<T>)
+        : ptr(p), refCnt(new std::size_t(1)), deleter(d) {}
 
     /*
     Copy ctor.
@@ -47,12 +56,6 @@ public:
         other.ptr = nullptr;
         other.refCnt = nullptr;
     }
-
-    /*
-    Contruct from raw pointer (optional custom deleter).
-    */
-    SharedPtr(T *p, const std::function<void(T*)> &d = defaultDeleter<T>)
-        : ptr(p), refCnt(new std::size_t(1)), deleter(d) {}
 
     /*
     Both the move- and copy-assignment operator (copy-and-swap trick).
@@ -155,18 +158,6 @@ private:
     std::size_t *refCnt;
     std::function<void(T*)> deleter;
 };
-
-
-template<typename T>
-void swap(SharedPtr<T> &lhs, SharedPtr<T> &rhs) {
-    lhs.swap(rhs);
-}
-
-template<typename T>
-void defaultDeleter(T *p) {
-    delete p;
-}
-
 
 TASTYLIB_NS_END
 

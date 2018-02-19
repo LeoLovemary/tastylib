@@ -38,7 +38,7 @@ TEST_F(SharedPtrTest, Basic) {
     EXPECT_EQ(p1.unique(), false);
     EXPECT_EQ(p1.useCount(), 0);
 
-    SharedPtr<std::string> p2 = new std::string("hello world");
+    SharedPtr<std::string> p2(new std::string("hello world"));
     EXPECT_EQ(static_cast<bool>(p2), true);
     EXPECT_EQ(p2.unique(), true);
     EXPECT_EQ(p2.useCount(), 1);
@@ -59,9 +59,9 @@ TEST_F(SharedPtrTest, Basic) {
 TEST_F(SharedPtrTest, Reset) {
     *deleteCnt = 0;
 
-    SharedPtr<std::string> p1 = new std::string("hello world");
+    SharedPtr<std::string> p1(new std::string("hello world"));
     EXPECT_EQ(p1.useCount(), 1);
-    EXPECT_NE(p1.get(), nullptr);
+    EXPECT_EQ(*p1.get(), "hello world");
 
     p1.reset();
     EXPECT_EQ(p1.useCount(), 0);
@@ -70,7 +70,7 @@ TEST_F(SharedPtrTest, Reset) {
 
     p1.reset(new std::string("quick fox"), *deleter);
     EXPECT_EQ(p1.useCount(), 1);
-    EXPECT_NE(p1.get(), nullptr);
+    EXPECT_EQ(*p1.get(), "quick fox");
     EXPECT_EQ(*deleteCnt, 0);
 
     p1.reset();
@@ -80,12 +80,10 @@ TEST_F(SharedPtrTest, Reset) {
 }
 
 TEST_F(SharedPtrTest, CopyControl1) {
-    *deleteCnt = 0;
-
     SharedPtr<std::string> p1;
     EXPECT_EQ(p1.useCount(), 0);
 
-    p1 = SharedPtr<std::string>(new std::string("hello world"), *deleter);
+    p1 = SharedPtr<std::string>(new std::string("hello world"));
     EXPECT_EQ(p1.useCount(), 1);
 
     SharedPtr<std::string> p2 = p1;
@@ -120,8 +118,6 @@ TEST_F(SharedPtrTest, CopyControl1) {
     EXPECT_EQ(p1.useCount(), 0);
     EXPECT_EQ(p2.useCount(), 0);
     EXPECT_EQ(p3.useCount(), 0);
-
-    EXPECT_EQ(*deleteCnt, 1);
 }
 
 TEST_F(SharedPtrTest, CopyControl2) {

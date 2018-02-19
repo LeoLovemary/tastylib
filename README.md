@@ -1,6 +1,6 @@
 # TastyLib
 
-C++ implementations of data structures, algorithms and whatever attracts me.
+C++ implementations of data structures, algorithms and useful designs.
 
 ## Build Status
 
@@ -30,12 +30,13 @@ C++ implementations of data structures, algorithms and whatever attracts me.
 |[Dijkstra][dijkstra-details]|[Tests][dijkstra-tests]<br>[.h][dijkstra-src]|No|An algorithm to find the shortest paths between vertices in a graph.|[Wikipedia][dijkstra-wiki]|
 |[LCS][lcs-details]|[Tests][lcs-tests]<br>[.h][lcs-src]|No|A dynamic programming solution to find the longest subsequence or substring common to two sequences.|[Wikipedia (substring)][lcs-wiki-substr]<br>[Wikipedia (subsequence)][lcs-wiki-subseq]|
 
-### Programs
+### Designs
 
 | Name | Source | Benchmarked | Note | Reference |
 |:----:|:------:|:-----------:|------|:---------:|
 |[TextQuery][textquery-details]|[Tests][textquery-tests]<br>[.h][textquery-h] [.cpp][textquery-cpp]|No|Search a given input stream for words. (OOP practice)|§12.3 & §15.9, C++ Primer, 5th Edition|
-|[SharedPtr][sharedptr-details]|[Tests][sharedptr-tests]<br>[.h][sharedptr-src]|No|My owe version of [std::shared_ptr][sharedptr-std].|§12.1 & §16.1.6, C++ Primer, 5th Edition|
+|[SharedPtr][sharedptr-details]|[Tests][sharedptr-tests]<br>[.h][sharedptr-src]|No|My own version of [std::shared_ptr][sharedptr-std].|§12.1 & §16.1.6, C++ Primer, 5th Edition|
+|[UniquePtr][uniqueptr-details]|[Tests][uniqueptr-tests]<br>[.h][uniqueptr-src]|No|My own version of [std::unique_ptr][uniqueptr-std].|§12.1 & §16.1.6, C++ Primer, 5th Edition|
 
 ## Installation
 
@@ -158,3 +159,8 @@ See the [LICENSE](./LICENSE) file for license rights and limitations.
 [sharedptr-tests]: ./test/test_SharedPtr.cpp
 [sharedptr-src]: ./include/tastylib/SharedPtr.h
 [sharedptr-std]: http://www.cplusplus.com/reference/memory/shared_ptr/?kw=shared_ptr
+
+[uniqueptr-details]: ./docs/details.md#uniqueptr
+[uniqueptr-tests]: ./test/test_UniquePtr.cpp
+[uniqueptr-src]: ./include/tastylib/UniquePtr.h
+[uniqueptr-std]: http://www.cplusplus.com/reference/memory/unique_ptr/?kw=unique_ptr

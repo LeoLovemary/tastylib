@@ -684,3 +684,38 @@ int main() {
     return 0;
 }
 ```
+
+## UniquePtr
+
+### Usage
+
+```c++
+#include "tastylib/UniquePtr.h"
+#include <string>
+#include <utility>
+
+using namespace tastylib;
+
+int main() {
+
+    UniquePtr<std::string> p1(new std::string("hello world"));
+    auto str = *p1.get();  // str == "hello world"
+
+    UniquePtr<std::string> p2(std::move(p1));
+    auto ptr = p1.get();   // ptr == nullptr
+    str = *p2.get();       // str == "hello world"
+
+    UniquePtr<std::string> p3;
+    p3 = std::move(p2);
+    ptr = p1.get();        // ptr == nullptr
+    ptr = p2.get();        // ptr == nullptr
+    str = *p3.get();       // ptr == "hello world"
+
+    p3.reset();
+    ptr = p1.get();        // ptr == nullptr
+    ptr = p2.get();        // ptr == nullptr
+    ptr = p3.get();        // ptr == nullptr
+
+    return 0;
+}
+```
