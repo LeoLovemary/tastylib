@@ -1,5 +1,4 @@
 #include "tastylib/Calculator.h"
-#include <utility>
 #include <stdexcept>
 #include <stack>
 
@@ -28,7 +27,7 @@ Token Lexer::scan() {
 
     auto tok = Token::oper(std::string(1, cur));
     cur = ' ';
-    return std::move(tok);
+    return tok;
 }
 
 // Parser
