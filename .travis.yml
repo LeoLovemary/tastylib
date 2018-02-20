@@ -45,6 +45,7 @@ matrix:
         - coveralls -r .. --gcov-options '\-lp'
           -e build/CMakeFiles
           -e thirdparty
+          -e tools
           -e test
           -e include/tastylib/internal
           -e include/tastylib/util
