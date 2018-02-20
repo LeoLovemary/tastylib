@@ -27,7 +27,8 @@ set(TEST_EXEC_LIST
     test_LCS
     test_TextQuery
     test_SharedPtr
-    test_UniquePtr)
+    test_UniquePtr
+    test_Calculator)
 
 foreach (exec ${TEST_EXEC_LIST})
     add_executable(${exec} ${exec}.cpp ${TASTYLIB_SRCS} ${TASTYLIB_HEADERS})

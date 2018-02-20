@@ -15,6 +15,7 @@
 - [TextQuery](#textquery)
 - [SharedPtr](#sharedptr)
 - [UniquePtr](#uniqueptr)
+- [Calculator](#calculator)
 
 <!-- /TOC -->
 
@@ -750,3 +751,108 @@ int main() {
     return 0;
 }
 ```
+
+<a id="markdown-calculator" name="calculator"></a>
+## Calculator
+
+### Usage
+
+```c++
+#include "tastylib/Calculator.h"
+#include <sstream>
+
+using namespace tastylib;
+
+int main() {
+
+    std::istringstream iss("-3*20-(5+10/2)")
+    auto res = Calculator(iss).calculate();  // res == -70
+
+    return 0;
+}
+```
+
+### Grammar
+
+CFG (context-free grammar):
+
+```
+expr -> expr + A
+      | expr - A
+      | A
+
+A -> A * B
+   | A / B
+   | B
+
+B -> + B
+   | - B
+   | factor
+
+factor -> ( expr )
+        | num
+```
+
+SDT (syntax-directed translation scheme):
+
+```
+expr -> expr + A  { append('+'); }
+      | expr - A  { append('-'); }
+      | A
+
+A -> A * B  { append('*'); }
+   | A / B  { append('/'); }
+   | B
+
+B -> + B  { append('@'); }
+   | - B  { append('#'); }
+   | factor
+
+factor -> ( expr )
+        | num  { append(num); }
+```
+
+Eliminate left recursion:
+
+```
+expr -> A tmpA
+
+tmpA -> + A  { append('+'); }  tmpA
+      | - A  { append('-'); }  tmpA
+      | ε
+
+A -> B tmpB
+
+tmpB -> * B  { append('*'); }  tmpB
+      | / B  { append('/'); }  tmpB
+      | ε
+
+B -> + B  { append('@'); }
+   | - B  { append('#'); }
+   | factor
+
+factor -> ( expr )
+        | num  { append(num); }
+```
+
+First and Follow:
+
+| Nonterminal | First | Follow |
+|:-----------:|-------|--------|
+|expr|+, -, (, num|$, )|
+|A|+, -, (, num|$, ), +, -|
+|tmpA|+, -, ε|$, )|
+|B|+, -, (, num|$, ), +, -, *, /|
+|tmpB|*, /, ε|$, ), +, -, |
+|factor|(, num|$, ), +, -, *, /|
+
+Predictive table (white-blanks denote error):
+
+|   | + | - | * | / | ( | ) | num | $ |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:---:|:-:|
+|expr|expr -> A tmpA|expr -> A tmpA| | |expr -> A tmpA| |expr -> A tmpA| |
+|A|A -> B tmpB|A -> B tmpB| | |A -> B tmpB| |A -> B tmpB| |
+|tmpA|tmpA -> + A tmpA|tmpA -> - A tmpA| | | |tmpA -> ε| |tmpA -> ε|
+|B|B -> + B|B -> - B| | |B -> factor| |B -> factor| |
+|tmpB|tmpB -> ε|tmpB -> ε|tmpB -> * B tmpB|tmpB -> / B tmpB| |tmpB -> ε| |tmpB -> ε|
+|factor| | | | |factor -> ( expr )| |factor -> num| |
