@@ -68,7 +68,7 @@ public:
 
     // Safe bool conversion
     explicit operator bool() const {
-        return ptr;
+        return ptr != nullptr;
     }
 
     // Dereference operator

@@ -28,7 +28,7 @@ class PuzzleNode {
 
 public:
     using Container = std::vector<int>;
-    using SizeType = typename Container::size_type;
+    using SizeType = Container::size_type;
 
     /*
     Initialize the node. The node value is stored in an one-dimension array.
