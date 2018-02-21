@@ -2,10 +2,9 @@
 #include "tastylib/Graph.h"
 #include <string>
 
-using namespace tastylib;
-using std::string;
+using tastylib::Graph;
 
-typedef Graph<string> G;
+typedef Graph<std::string> G;
 typedef G::NumType NumType;
 typedef G::WeightType WeightType;
 

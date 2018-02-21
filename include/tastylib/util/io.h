@@ -6,9 +6,14 @@
 
 TASTYLIB_NS_BEGIN
 
-template<typename T>
-void printLn(const T &line) {
-    std::cout << line << std::endl;
+void printLn() {
+    std::cout << std::endl;
+}
+
+template<typename T, typename... Args>
+void printLn(const T &first, const Args... rest) {
+    std::cout << first;
+    printLn(rest...);
 }
 
 TASTYLIB_NS_END

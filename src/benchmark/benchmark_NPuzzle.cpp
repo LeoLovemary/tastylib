@@ -1,35 +1,36 @@
 #include "tastylib/util/io.h"
 #include "tastylib/util/timer.h"
-#include "tastylib/util/convert.h"
 #include "tastylib/NPuzzle.h"
-#include <string>
 
-using namespace tastylib;
-using std::string;
+using tastylib::printLn;
+using tastylib::timing;
+using tastylib::PuzzleNode;
+using tastylib::NPuzzle;
 
-typedef PuzzleNode<>::Container Container;
-typedef PuzzleNode<>::SizeType SizeType;
+typedef PuzzleNode::Container Container;
+typedef PuzzleNode::SizeType SizeType;
 
-void benchmark(PuzzleNode<> &beg, PuzzleNode<> &end) {
-    printLn("Benchmarking " + toString(beg.getRowCount()) + "*" + toString(end.getRowCount()) + " puzzle...");
-    NPuzzle<> puzzle(beg, end);
-    printLn("Beg: " + beg.toString());
-    printLn("End: " + end.toString());
+
+void benchmark(PuzzleNode &beg, PuzzleNode &end) {
+    printLn("Benchmarking ", beg.getRowCount(), "*", end.getRowCount(), " puzzle...");
+    NPuzzle puzzle(beg, end);
+    printLn("Beg: ", beg.toString());
+    printLn("End: ", end.toString());
     printLn("Searching...");
     auto time = timing([&]() {
         puzzle.solve();
     });
     auto &path = puzzle.getPath();
     auto searchCnt = puzzle.getSearchCount();
-    printLn("Searched nodes: " + toString(searchCnt));
-    printLn("     Time cost: " + toString((int)time) + " ms");
-    printLn("    Efficiency: " + toString(searchCnt / time) + " node/ms");
-    printLn("   Path length: " + toString(path.size()));
+    printLn("Searched nodes: ", searchCnt);
+    printLn("     Time cost: ", (int)time, " ms");
+    printLn("    Efficiency: ", searchCnt / time, " node/ms");
+    printLn("   Path length: ", path.size());
     for (const auto &d : path) {
         beg.move(d);
     }
-    printLn("Solution check: " + string(beg == end ? "pass" : "fail"));
-    printLn("Benchmark of " + toString(beg.getRowCount()) + "*" + toString(end.getRowCount()) + " puzzle finished.\n");
+    printLn("Solution check: ", beg == end ? "pass" : "fail");
+    printLn("Benchmark of ", beg.getRowCount(), "*", end.getRowCount(), " puzzle finished.\n");
 }
 
 Container defVal(const SizeType size) {
@@ -46,8 +47,8 @@ int main() {
         {   // Benchmark 3*3 puzzle
             const SizeType SIZE = 3;
             auto val = defVal(SIZE);
-            PuzzleNode<> beg(val, SIZE, SIZE);
-            PuzzleNode<> end(val, SIZE, SIZE);
+            PuzzleNode beg(val, SIZE, SIZE);
+            PuzzleNode end(val, SIZE, SIZE);
             beg.shuffle();
             end.shuffle();
             benchmark(beg, end);
@@ -56,8 +57,8 @@ int main() {
         {   // Benchmark 4*4 puzzle
             const SizeType SIZE = 4;
             auto val = defVal(SIZE);
-            PuzzleNode<> beg(val, SIZE, SIZE);
-            PuzzleNode<> end(val, SIZE, SIZE);
+            PuzzleNode beg(val, SIZE, SIZE);
+            PuzzleNode end(val, SIZE, SIZE);
             beg.shuffle();
             end.shuffle();
             benchmark(beg, end);
@@ -66,8 +67,8 @@ int main() {
         {   // Benchmark 5*5 puzzle
             const SizeType SIZE = 5;
             auto val = defVal(SIZE);
-            PuzzleNode<> beg(val, SIZE, SIZE);
-            PuzzleNode<> end(val, SIZE, SIZE);
+            PuzzleNode beg(val, SIZE, SIZE);
+            PuzzleNode end(val, SIZE, SIZE);
             beg.shuffle();
             end.shuffle();
             benchmark(beg, end);
@@ -76,8 +77,8 @@ int main() {
         {   // Benchmark 6*6 puzzle
             const SizeType SIZE = 6;
             auto val = defVal(SIZE);
-            PuzzleNode<> beg(val, SIZE, SIZE);
-            PuzzleNode<> end(val, SIZE, SIZE);
+            PuzzleNode beg(val, SIZE, SIZE);
+            PuzzleNode end(val, SIZE, SIZE);
             beg.shuffle();
             end.shuffle();
             benchmark(beg, end);

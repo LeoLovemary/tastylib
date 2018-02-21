@@ -4,10 +4,7 @@
 #include "tastylib/internal/base.h"
 #include <string>
 #include <iostream>
-#include <cstddef>
-#include <cctype>
 #include <vector>
-#include <sstream>
 
 TASTYLIB_NS_BEGIN
 
@@ -63,9 +60,7 @@ class Lexer {
 public:
     Lexer(std::istream &i) : cur(' '), is(i) {}
 
-    /*
-    Read and parser one token from input stream.
-    */
+    // Read and parser one token from input stream
     Token scan();
 
 private:
@@ -90,9 +85,7 @@ private:
         cur = lexer.scan();
     }
     
-    /*
-    Recursive descent of nonterminals.
-    */
+    // Recursive descent of nonterminals
     void expr();
     void A();
     void tmpA();

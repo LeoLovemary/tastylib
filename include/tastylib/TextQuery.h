@@ -17,9 +17,7 @@ TASTYLIB_NS_BEGIN
 
 class QueryResult;
 
-/*
-Search words from a given input stream.
-*/
+// Search words from a given input stream
 class TextQuery {
 public:
     using LineNo = std::vector<std::string>::size_type;
@@ -40,9 +38,7 @@ private:
 
 class QueryBase;
 
-/*
-Public interface for query.
-*/
+// Public interface for query
 class Query {
     friend Query operator~(const Query &q);
     friend Query operator&(const Query &lhs, const Query &rhs);
@@ -62,9 +58,7 @@ private:
     std::shared_ptr<QueryBase> p;
 };
 
-/*
-Base class for different query types.
-*/
+// Base class for different query types
 class QueryBase {
     friend class Query;
 
@@ -78,9 +72,7 @@ private:
     virtual std::string rep() const = 0;
 };
 
-/*
-Query for words.
-*/
+// Query for words
 class WordQuery: public QueryBase {
     friend class Query;
 
@@ -95,9 +87,7 @@ private:
     std::string word;
 };
 
-/*
-NOT logic query.
-*/
+// NOT logic query
 class NotQuery: public QueryBase {
     friend Query operator~(const Query &q);
 
@@ -112,9 +102,7 @@ private:
     Query query;
 };
 
-/*
-Base class for two-operand query.
-*/
+// Base class for two-operand query
 class BinaryQuery: public QueryBase {
 protected:
     BinaryQuery(const Query &l, const Query &r, const std::string &o);
@@ -127,9 +115,7 @@ protected:
     std::string op;
 };
 
-/*
-OR logic query.
-*/
+// OR logic query
 class OrQuery: public BinaryQuery {
     friend Query operator|(const Query &lhs, const Query &rhs);
 
@@ -139,9 +125,7 @@ private:
     virtual QueryResult eval(const TextQuery &tq) const;
 };
 
-/*
-AND logic query.
-*/
+// AND logic query
 class AndQuery: public BinaryQuery {
     friend Query operator&(const Query &lhs, const Query &rhs);
 
@@ -151,9 +135,7 @@ private:
     virtual QueryResult eval(const TextQuery &tq) const;
 };
 
-/*
-Query result from TextQuery.
-*/
+// Query result from TextQuery
 class QueryResult {
     friend class NotQuery;
     friend class OrQuery;

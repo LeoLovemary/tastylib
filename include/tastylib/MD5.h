@@ -4,29 +4,24 @@
 #include "tastylib/internal/base.h"
 #include <string>
 #include <vector>
+#include <cstdint>
 
 TASTYLIB_NS_BEGIN
 
-/*
-Class to run a standard MD5 algorithm.
-
-@param UInt32 Type of 32-bit unsigned integer
-@param UInt64 Type of 64-bit unsigned integer
-*/
-template<typename UInt32 = std::uint32_t,
-         typename UInt64 = std::uint64_t>
 class MD5 {
 public:
-    MD5(const MD5 &md5) = delete;
+    using UInt32 = std::uint32_t;
+    using UInt64 = std::uint64_t;
 
-    MD5(MD5 &&md5) = delete;
+    // Forbid copy
+    MD5(const MD5 &) = delete;
+    MD5& operator=(const MD5 &) = delete;
 
-    MD5& operator=(const MD5 &md5) = delete;
+    // Forbid move
+    MD5(MD5 &&) = delete;
+    MD5& operator=(MD5 &&) = delete;
 
-    MD5& operator=(MD5 &&md5) = delete;
-
-    ~MD5() = default;
-
+    // Return the singleton instance
     static MD5* getInstance() {
         static MD5 instance;
         return &instance;
@@ -55,9 +50,7 @@ public:
     }
 
 private:
-    /*
-    Initialize params related to MD5.
-    */
+    // Default ctor
     MD5() : hex("0123456789abcdef"), s({
         7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
         5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20,

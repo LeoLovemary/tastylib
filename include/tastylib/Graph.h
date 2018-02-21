@@ -4,6 +4,8 @@
 #include "tastylib/internal/base.h"
 #include <vector>
 #include <list>
+#include <cstddef>
+#include <cstdint>
 
 TASTYLIB_NS_BEGIN
 
@@ -17,21 +19,17 @@ list or matrix.
 template<typename Value = int>
 class Graph {
 public:
-    typedef std::size_t NumType;
-    typedef std::int32_t WeightType;
+    using NumType = std::size_t;
+    using WeightType = std::int32_t;
 
     static const WeightType MAX_WEIGHT = INT32_MAX;
     static const WeightType MIN_WEIGHT = INT32_MIN;
 
-    /*
-    The type of storage: adjacency list or matrix.
-    */
+    // Type of storage: adjacency list or matrix
     enum StorageType {
         LIST,
         MATRIX
     };
-
-    Graph() = delete;
 
     /*
     Initialize the graph.
@@ -50,35 +48,17 @@ public:
         }
     }
 
-    Graph(const Graph &g) = default;
-
-    Graph(Graph &&g) = default;
-
-    Graph& operator=(const Graph &g) = default;
-
-    Graph& operator=(Graph &&g) = default;
-
-    ~Graph() = default;
-
-    /*
-    Return the amount of vertices in the graph.
-    */
+    // Return the amount of vertices in the graph
     NumType getSize() const {
         return vertices.size();
     }
     
-    /*
-    Return true if the weight of an edge is infinity.
-    */
+    // Return true if the weight of an edge is infinity
     static bool isINF(const WeightType w) {
         return w == MAX_WEIGHT || w == MIN_WEIGHT;
     }
 
-    /*
-    Return the reference of the a vertex's value.
-
-    @param v The number of the vertex
-    */
+    // Return the value of a given vertex
     Value& operator[](const NumType v) {
         return vertices[v].val;
     }

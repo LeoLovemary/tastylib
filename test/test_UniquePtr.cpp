@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "tastylib/UniquePtr.h"
 #include <string>
+#include <functional>
 
 using tastylib::UniquePtr;
 

@@ -5,6 +5,8 @@
 #include <functional>
 #include <string>
 #include <sstream>
+#include <utility>
+#include <cstddef>
 
 TASTYLIB_NS_BEGIN
 
@@ -36,69 +38,71 @@ private:
     };
 
 public:
-    typedef std::size_t SizeType;
+    using SizeType = std::size_t;
 
+    // Default ctor
     AVLTree() : root(nullptr), size(0) {}
 
-    AVLTree(const AVLTree &tree) = delete;
+    // Forbid copy
+    AVLTree(const AVLTree &) = delete;
+    AVLTree& operator=(const AVLTree &) = delete;
 
-    AVLTree(AVLTree &&tree) = delete;
+    // Move ctor
+    AVLTree(AVLTree &&other) : root(other.root), size(other.size),
+                               predEq(std::move(other.predEq)),
+                               predCmp(std::move(other.predCmp)) {
+        other.root = nullptr;
+        other.size = 0;
+    }
 
-    AVLTree& operator=(const AVLTree &tree) = delete;
+    // Move assignment
+    AVLTree& operator=(AVLTree &&other) {
+        if (this != &other) {
+            clear();
+            root = other.root;
+            size = other.size;
+            predEq = std::move(other.predEq);
+            predCmp = std::move(other.predCmp);
+            other.root = nullptr;
+            other.size = 0;
+        }
+        return *this;
+    }
 
-    AVLTree& operator=(AVLTree &&tree) = delete;
-
+    // Dtor
     ~AVLTree() {
         clear();
     }
 
-    /*
-    Return true if there are no elements in the tree.
-    */
+    // Return true if there are no elements in the tree
     bool isEmpty() const {
         return size == 0;
     }
 
-    /*
-    Return the amount of elements in the tree.
-    */
+    // Return the amount of elements in the tree
     SizeType getSize() const {
         return size;
     }
 
-    /*
-    Remove all nodes and free the resources.
-    */
+    // Remove all nodes and free the resources
     void clear() {
         release(root);
         size = 0;
         root = nullptr;
     }
 
-    /*
-    Return true if a value exists in the tree.
-
-    @param val The value to be found
-    */
+    // Return true if a given value is in the tree
     bool has(const Value &val) const {
         return !!find(val, root);
     }
 
-    /*
-    Insert a value into the tree.
-
-    @param val The value to be inserted
-    */
+    // Insert a value
     void insert(const Value &val) {
         root = insertBalance(val, root);
         ++size;
     }
 
-    /*
-    Remove all nodes that has a given value in the tree.
-
-    @param val The given value
-    */
+    // Remove all nodes with a given value in the tree
     void remove(const Value &val) {
         while (has(val)) {
             root = removeBalance(val, root);
@@ -164,16 +168,12 @@ public:
     }
 
 private:
-    /*
-    Remove all nodes of a tree and free the resources.
-
-    @param r The root of the tree
-    */
-    void release(Node *const r) {
-        if (r) {
-            release(r->left);
-            release(r->right);
-            delete r;
+    // Remove all nodes of a tree and free the resources.
+    void release(Node *const root) {
+        if (root) {
+            release(root->left);
+            release(root->right);
+            delete root;
         }
     }
 
@@ -318,36 +318,24 @@ private:
         return r;
     }
 
-    /*
-    Return the leftmost node in a tree.
-
-    @param r The root of the tree
-    */
-    Node* leftmost(Node *const r) const {
-        if (!r || !r->left) {
-            return r;
+    // Return the leftmost node in a tree
+    Node* leftmost(Node *const root) const {
+        if (!root || !root->left) {
+            return root;
         } else {
-            return leftmost(r->left);
+            return leftmost(root->left);
         }
     }
 
-    /*
-    Return the height of a tree. The height of the empty tree is -1.
-
-    @param r The root of the tree
-    */
-    int height(const Node *const r) const {
-        return r ? r->height : -1;
+    // Return the height of a tree. (height of the empty tree equals -1)
+    int height(const Node *const root) const {
+        return root ? root->height : -1;
     }
 
-    /*
-    Update the height of a tree.
-
-    @param r The root of the tree
-    */
-    void updateHeight(Node *const r) {
-        int lh = height(r->left), rh = height(r->right);
-        r->height = 1 + (lh > rh ? lh : rh);
+    // Update the height of a tree
+    void updateHeight(Node *const root) {
+        int lh = height(root->left), rh = height(root->right);
+        root->height = 1 + (lh > rh ? lh : rh);
     }
 
     /*

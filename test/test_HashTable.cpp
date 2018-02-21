@@ -1,16 +1,13 @@
 #include "gtest/gtest.h"
 #include "tastylib/HashTable.h"
-#include "tastylib/util/convert.h"
 #include <string>
 
 using tastylib::HashTable;
-using tastylib::toString;
-using std::string;
 
-typedef HashTable<string>::SizeType SizeType;
+typedef HashTable<std::string>::SizeType SizeType;
 
 TEST(HashTableTest, Basic) {
-    HashTable<string> table;
+    HashTable<std::string> table;
     table.clear();
     EXPECT_TRUE(table.isEmpty());
     table.insert("Alice");
@@ -29,9 +26,9 @@ TEST(HashTableTest, Basic) {
 }
 
 TEST(HashTableTest, Rehash) {
-    HashTable<string> table(100);
+    HashTable<std::string> table(100);
     for (int i = 0; i < 100; ++i) {
-        table.insert(toString(i));
+        table.insert(std::to_string(i));
     }
     EXPECT_EQ(table.getSize(), (SizeType)100);
 
@@ -40,7 +37,7 @@ TEST(HashTableTest, Rehash) {
         EXPECT_EQ(table.getSize(), (SizeType)100);
         bool res = true;
         for (int i = 0; i < 100; ++i) {
-            if (!table.has(toString(i))) {
+            if (!table.has(std::to_string(i))) {
                 res = false;
                 break;
             }
@@ -53,7 +50,7 @@ TEST(HashTableTest, Rehash) {
         EXPECT_EQ(table.getSize(), (SizeType)100);
         bool res = true;
         for (int i = 0; i < 100; ++i) {
-            if (!table.has(toString(i))) {
+            if (!table.has(std::to_string(i))) {
                 res = false;
                 break;
             }

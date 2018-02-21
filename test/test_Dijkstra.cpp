@@ -1,13 +1,11 @@
 #include "gtest/gtest.h"
 #include "tastylib/Dijkstra.h"
-#include <vector>
 #include <string>
 
-using namespace tastylib;
-using std::vector;
-using std::string;
+using tastylib::DijkGraph;
+using tastylib::dijkstra;
 
-typedef DijkGraph<string> G;
+typedef DijkGraph<std::string> G;
 typedef G::NumType NumType;
 typedef G::WeightType WeightType;
 
@@ -20,11 +18,11 @@ TEST(DijkstraTest, Simple) {
     graph.setWeight(0, 2, 20);
     graph.setWeight(1, 2, 5);
     dijkstra(graph, 0);
-    vector<WeightType> expectDist = {0, 5, 10};
+    std::vector<WeightType> expectDist = {0, 5, 10};
     for (NumType i = 0; i < graph.getSize(); ++i) {
         EXPECT_EQ(graph[i].dist, expectDist[i]);
     }
-    vector<NumType> expectPrev = {4, 0, 1};
+    std::vector<NumType> expectPrev = {4, 0, 1};
     for (NumType i = 0; i < graph.getSize(); ++i) {
         EXPECT_EQ(graph[i].prev, expectPrev[i]);
     }
@@ -51,11 +49,11 @@ TEST(DijkstraTest, Complex) {
 
     {
         dijkstra(graph, 1);
-        vector<WeightType> expectDist = {1, 0, 2, 3, 1, 3, 6, 5};
+        std::vector<WeightType> expectDist = {1, 0, 2, 3, 1, 3, 6, 5};
         for (NumType i = 0; i < graph.getSize(); ++i) {
             EXPECT_EQ(graph[i].dist, expectDist[i]);
         }
-        vector<NumType> expectPrev = {1, 9, 1, 4, 1, 4, 7, 4};
+        std::vector<NumType> expectPrev = {1, 9, 1, 4, 1, 4, 7, 4};
         for (NumType i = 0; i < graph.getSize(); ++i) {
             EXPECT_EQ(graph[i].prev, expectPrev[i]);
         }
@@ -63,11 +61,11 @@ TEST(DijkstraTest, Complex) {
 
     {
         dijkstra(graph, 2);
-        vector<WeightType> expectDist = {10, 9, 0, 5, 3, 5, 8, 7};
+        std::vector<WeightType> expectDist = {10, 9, 0, 5, 3, 5, 8, 7};
         for (NumType i = 0; i < graph.getSize(); ++i) {
             EXPECT_EQ(graph[i].dist, expectDist[i]);
         }
-        vector<NumType> expectPrev = {1, 3, 9, 4, 2, 4, 7, 4};
+        std::vector<NumType> expectPrev = {1, 3, 9, 4, 2, 4, 7, 4};
         for (NumType i = 0; i < graph.getSize(); ++i) {
             EXPECT_EQ(graph[i].prev, expectPrev[i]);
         }

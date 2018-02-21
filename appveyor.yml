@@ -13,6 +13,10 @@ configuration:
 
 environment:
   matrix:
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+      VS_PLATFORM: win32
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+      VS_PLATFORM: x64
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       VS_PLATFORM: win32
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015

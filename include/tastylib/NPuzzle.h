@@ -3,38 +3,32 @@
 
 #include "tastylib/internal/base.h"
 #include "tastylib/util/random.h"
-#include "tastylib/util/swap.h"
 #include "tastylib/HashTable.h"
 #include "tastylib/BinaryHeap.h"
 #include <vector>
 #include <sstream>
 #include <string>
-#include <functional>
 #include <list>
-#include <math.h>
+#include <utility>
 
 TASTYLIB_NS_BEGIN
 
-/*
-Definition of puzzle nodes.
+enum Direc {
+    NONE,
+    LEFT,
+    UP,
+    RIGHT,
+    DOWN
+};
 
-@param Int Type of signed integer
-*/
-template<typename Int = short>
+class NPuzzle;
+
 class PuzzleNode {
+    friend class NPuzzle;
+
 public:
-    typedef std::vector<Int> Container;
-    typedef typename Container::size_type SizeType;
-
-    enum Direction {
-        NONE,
-        LEFT,
-        UP,
-        RIGHT,
-        DOWN
-    };
-
-    PuzzleNode() = delete;
+    using Container = std::vector<int>;
+    using SizeType = typename Container::size_type;
 
     /*
     Initialize the node. The node value is stored in an one-dimension array.
@@ -56,43 +50,18 @@ public:
         }
     }
 
-    PuzzleNode(const PuzzleNode &n) = default;
-
-    PuzzleNode(PuzzleNode &&n) = default;
-
-    PuzzleNode& operator=(const PuzzleNode &n) = default;
-
-    PuzzleNode& operator=(PuzzleNode &&n) = default;
-
-    ~PuzzleNode() = default;
-
-    /*
-    Return the node value.
-    */
-    const Container& getVal() const {
-        return val;
-    }
-
-    /*
-    Return the amount of rows.
-    */
+    // Return the amount of rows
     SizeType getRowCount() const {
         return row;
     }
 
-    /*
-    Return the amount of columns.
-    */
+    // Return the amount of columns
     SizeType getColCount() const {
         return col;
     }
 
-    /*
-    Return true if the empty grid can move one step along a given direction.
-
-    @param d The given direction
-    */
-    bool canMove(const Direction d) const {
+    // Return true if the empty grid can move one step along a given direction
+    bool canMove(const Direc d) const {
         switch (d) {
             case LEFT:
                 return getCol(emptyPos) != 0;
@@ -109,12 +78,8 @@ public:
         }
     }
 
-    /*
-    Move the empty grid along a given direction
-
-    @param d The given direction
-    */
-    void move(const Direction d) {
+    // Move the empty grid along a given direction
+    void move(const Direc d) {
         SizeType goalPos = emptyPos;
         switch (d) {
             case LEFT:
@@ -129,14 +94,98 @@ public:
             case DOWN:
                 goalPos += col;
                 break;
-            case NONE:
             default:
                 break;
         }
         if (emptyPos != goalPos) {
-            swap(val[emptyPos], val[goalPos]);
+            std::swap(val[emptyPos], val[goalPos]);
             emptyPos = goalPos;
         }
+    }
+
+    // Randomly rearrange the node value (ensuring a solution exists)
+    void shuffle() {
+        Random *random = Random::getInstance();
+        for (SizeType i = 0; i < SHUFFLE_TIMES; ++i) {
+            Direc d = Direc(random->nextInt(1, 4));
+            if (canMove(d)) {
+                move(d);
+            }
+        }
+    }
+
+    /*
+    Return a string description of the node value.
+    */
+    std::string toString() const {
+        std::ostringstream oss;
+        oss << "{";
+        for (SizeType i = 0; i < val.size(); ++i) {
+            if (i) oss << ", ";
+            oss << val[i];
+        }
+        oss << "}";
+        return oss.str();
+    }
+
+    /*
+    Return the direction of this node relelative to a given adjacent node.
+
+    @param n The given adjacent node
+    */
+    Direc getDirectionTo(const PuzzleNode *const n) const {
+        if (n) {
+            int offset = (int)emptyPos - (int)n->emptyPos;
+            if (offset == -1) {
+                return LEFT;
+            } else if (offset == 1) {
+                return RIGHT;
+            } else if (offset == (int)col) {
+                return DOWN;
+            } else if (offset == -(int)col) {
+                return UP;
+            }
+        }
+        return NONE;
+    }
+
+    bool operator==(const PuzzleNode &n) const {
+        return getVal() == n.getVal();
+    }
+
+    bool operator>=(const PuzzleNode &n) const {
+        return getF() >= n.getF();
+    }
+
+private:
+    // Return the node value
+    const Container& getVal() const {
+        return val;
+    }
+
+    // Return the hash value of the node
+    SizeType hash() const {
+        return std::hash<std::string>()(toString());
+    }
+
+    /*
+    Compute the row number according to a given index of one-dimension array.
+
+    @param i The given index
+    @return  The row number in interval [0, row - 1]
+    */
+    SizeType getRow(const SizeType i) const {
+        return i / col;
+    }
+
+    /*
+    Compute the column number according to a given index of one-dimension array.
+
+    @param i The given index
+    @return  The row number in interval [0, col - 1]
+    */
+    SizeType getCol(const SizeType i) const {
+        return i % col;
     }
 
     /*
@@ -145,23 +194,10 @@ public:
 
     @param d The given direction
     */
-    PuzzleNode* getNeighbor(const Direction d) const {
+    PuzzleNode* getNeighbor(const Direc d) const {
         PuzzleNode* n = new PuzzleNode(*this);
         n->move(d);
         return n;
-    }
-
-    /*
-    Randomly rearrange the node value. The function ensures that a solution exists.
-    */
-    void shuffle() {
-        Random<> *random = Random<>::getInstance();
-        for (SizeType i = 0; i < SHUFFLE_TIMES; ++i) {
-            Direction d = Direction(random->nextInt(1, 4));
-            if (canMove(d)) {
-                move(d);
-            }
-        }
     }
 
     /*
@@ -199,56 +235,6 @@ public:
         return 5 * (1 * wrong + 2 * manhatten + 1 * geometric);
     }
 
-    /*
-    Return the hash value of the node.
-    */
-    SizeType hash() const {
-        return std::hash<std::string>()(toString());
-    }
-
-    /*
-    Return a string description of the node value.
-    */
-    std::string toString() const {
-        std::ostringstream oss;
-        oss << "{";
-        for (SizeType i = 0; i < val.size(); ++i) {
-            if (i) oss << ", ";
-            oss << val[i];
-        }
-        oss << "}";
-        return oss.str();
-    }
-
-    /*
-    Return the direction of this node relelative to a given adjacent node.
-
-    @param n The given adjacent node
-    */
-    Direction getDirectionTo(const PuzzleNode *const n) const {
-        if (n) {
-            Int offset = (Int)emptyPos - (Int)n->emptyPos;
-            if (offset == -1) {
-                return LEFT;
-            } else if (offset == 1) {
-                return RIGHT;
-            } else if (offset == (Int)col) {
-                return DOWN;
-            } else if (offset == -(Int)col) {
-                return UP;
-            }
-        }
-        return NONE;
-    }
-
-    bool operator==(const PuzzleNode &n) const {
-        return getVal() == n.getVal();
-    }
-
-    bool operator>=(const PuzzleNode &n) const {
-        return getF() >= n.getF();
-    }
-
     void setG(const SizeType g_) {
         g = g_;
     }
@@ -278,27 +264,6 @@ public:
     }
 
 private:
-    /*
-    Compute the row number according to a given index of one-dimension array.
-
-    @param i The given index
-    @return  The row number in interval [0, row - 1]
-    */
-    SizeType getRow(const SizeType i) const {
-        return i / col;
-    }
-
-    /*
-    Compute the column number according to a given index of one-dimension array.
-
-    @param i The given index
-    @return  The row number in interval [0, col - 1]
-    */
-    SizeType getCol(const SizeType i) const {
-        return i % col;
-    }
-
-private:
     static const SizeType SHUFFLE_TIMES = 1000;
 
     Container val;
@@ -312,41 +277,15 @@ private:
     PuzzleNode *parent = nullptr;
 };
 
-/*
-Class to solve the n-puzzle problem.
-@param Int Type of signed integer
-*/
-template<typename Int = short>
+
 class NPuzzle {
 public:
-    typedef PuzzleNode<Int> Node;
-    typedef typename Node::SizeType SizeType;
-    typedef typename Node::Direction Direction;
+    using Node = PuzzleNode;
+    using SizeType = Node::SizeType;
 
-    NPuzzle() = delete;
-
-    /*
-    Initialize the beginning node and the ending node.
-
-    @param src_ The beginning node
-    @param des_ The ending node
-    */
     NPuzzle(const Node &beg_, const Node &end_)
         : beg(beg_), end(end_), closeList(1000000) {}
 
-    NPuzzle(const NPuzzle &p) = delete;
-
-    NPuzzle(NPuzzle &&p) = delete;
-
-    NPuzzle& operator=(const NPuzzle &p) = delete;
-
-    NPuzzle& operator=(NPuzzle &&p) = delete;
-
-    ~NPuzzle() = default;
-
-    /*
-    Solve the problem using A* searching.
-    */
     void solve() {
         std::vector<SizeType> index = buildIndex();
         searchCnt = 0;
@@ -372,8 +311,8 @@ public:
                 freeResources();
                 return;
             }
-            for (Int i = 1; i < 5; ++i) {
-                Direction d = Direction(i);
+            for (int i = 1; i < 5; ++i) {
+                Direc d = Direc(i);
                 if (cur->canMove(d)) {
                     Node *adj = cur->getNeighbor(d);
                     alloc.push_back(adj);
@@ -388,35 +327,19 @@ public:
         }
     }
 
-    /*
-    Return the solution path.
-    */
-    const std::list<Direction>& getPath() const {
+    const std::list<Direc>& getPath() const {
         return path;
     }
 
-    /*
-    Return the amount of nodes searched.
-    */
     SizeType getSearchCount() const {
         return searchCnt;
     }
 
-    /*
-    Shuffle the beginning node.
-
-    @return The beginning node shuffled
-    */
     const Node& shuffleBeg() {
         beg.shuffle();
         return beg;
     }
 
-    /*
-    Shuffle the ending node.
-
-    @return The ending node shuffled
-    */
     const Node& shuffleEnd() {
         end.shuffle();
         return end;
@@ -439,9 +362,7 @@ public:
     }
 
 private:
-    /*
-    Return the index of the grid numbers in the ending node value.
-    */
+    // Return the index of the grid numbers in the ending node value.
     std::vector<SizeType> buildIndex() const {
         const auto &endVal = end.getVal();
         std::vector<SizeType> index(endVal.size());
@@ -451,26 +372,19 @@ private:
         return index;
     }
 
-    /*
-    Build a path from the beginning node to the destination node.
-
-    @param n The destination node
-    */
-    void buildPath(const Node *n) {
+    // Build a path from the beginning node to the destination node
+    void buildPath(const Node *des) {
         path.clear();
-        while (n) {
-            auto parent = n->getParent();
-            Direction d = n->getDirectionTo(parent);
-            if (d != Direction::NONE) {
+        while (des) {
+            auto parent = des->getParent();
+            Direc d = des->getDirectionTo(parent);
+            if (d != Direc::NONE) {
                 path.push_front(d);
             }
-            n = parent;
+            des = parent;
         }
     }
 
-    /*
-    Free allocated resources.
-    */
     void freeResources() {
         for (const auto &n : alloc) {
             delete n;
@@ -507,7 +421,7 @@ private:
     BinaryHeap<Node*, GreaterEqual> openList;
     HashTable<Node*, Equal, Hash> closeList;
 
-    std::list<Direction> path;
+    std::list<Direc> path;
     std::list<Node*> alloc;
 
     SizeType searchCnt = 0;

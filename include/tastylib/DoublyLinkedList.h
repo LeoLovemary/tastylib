@@ -3,6 +3,7 @@
 
 #include "tastylib/internal/base.h"
 #include <functional>
+#include <cstddef>
 
 TASTYLIB_NS_BEGIN
 
@@ -27,39 +28,53 @@ private:
     };
 
 public:
-    typedef std::size_t SizeType;
+    using SizeType = std::size_t;
 
+    // Default ctor
     DoublyLinkedList() : size(0), head(nullptr), tail(nullptr) {}
 
-    DoublyLinkedList(const DoublyLinkedList &l) = delete;
+    // Forbid copy
+    DoublyLinkedList(const DoublyLinkedList &) = delete;
+    DoublyLinkedList& operator=(const DoublyLinkedList &) = delete;
 
-    DoublyLinkedList(DoublyLinkedList &&l) = delete;
+    // Move ctor
+    DoublyLinkedList(DoublyLinkedList &&other)
+        : size(other.size), head(other.head), tail(other.tail) {
+        other.size = 0;
+        other.head = nullptr;
+        other.tail = nullptr;
+    }
 
-    DoublyLinkedList& operator=(const DoublyLinkedList &l) = delete;
+    // Move assignment
+    DoublyLinkedList& operator=(DoublyLinkedList &&other) {
+        if (this != &other) {
+            clear();
+            size = other.size;
+            head = other.head;
+            tail = other.tail;
+            other.size = 0;
+            other.head = nullptr;
+            other.tail = nullptr;
+        }
+        return *this;
+    }
 
-    DoublyLinkedList& operator=(DoublyLinkedList &&l) = delete;
-
+    // Dtor
     ~DoublyLinkedList() {
         clear();
     }
 
-    /*
-    Return the amount of nodes in the list.
-    */
+    // Return the amount of nodes in the list
     SizeType getSize() const {
         return size;
     }
 
-    /*
-    Return true if the list is empty.
-    */
+    // Return true if the list is empty
     bool isEmpty() const {
         return size == 0;
     }
 
-    /*
-    Clear the content of the list.
-    */
+    // Clear the content of the list
     void clear() {
         Node *tmp = head, *del;
         while (tmp) {
@@ -78,8 +93,8 @@ public:
              @param pos The position of the current traversing node
              @param val The value of the current traversing node
     */
-    void traverse(const std::function<void(const SizeType pos,
-                                           const Value &val)> &f) const {
+    void traverse(const std::function<
+                  void(const SizeType pos, const Value &val)> &f) const {
         SizeType pos = 0;
         for (Node *tmp = head; tmp; tmp = tmp->next, ++pos) {
             f(pos, tmp->val);
@@ -140,11 +155,7 @@ public:
         }
     }
 
-    /*
-    Insert a node at the front of the list.
-
-    @param val The value of the node to be inserted
-    */
+    // Insert a node at the front of the list
     void insertFront(const Value &val) {
         Node *newNode = new Node(val, nullptr, head);
         if (head) {
@@ -156,11 +167,7 @@ public:
         }
     }
 
-    /*
-    Insert a node at the back of the list.
-
-    @param val The value of the node to be inserted
-    */
+    // Insert a node at the back of the list
     void insertBack(const Value &val) {
         Node *newNode = new Node(val, tail, nullptr);
         if (tail) {
@@ -208,9 +215,7 @@ public:
         }
     }
 
-    /*
-    Remove the first node of the list.
-    */
+    // Remove the first node of the list
     void removeFront() {
         if (isEmpty()) {
             return;
@@ -225,9 +230,7 @@ public:
         delete del;
     }
 
-    /*
-    Remove the last node of the list.
-    */
+    // Remove the last node of the list
     void removeBack() {
         if (isEmpty()) {
             return;
@@ -242,9 +245,7 @@ public:
         delete del;
     }
 
-    /*
-    Sort the list nodes in ascending order.
-    */
+    // Sort the list nodes in ascending order
     void sort() {
         sort(std::less<Value>());
     }

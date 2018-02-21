@@ -8,10 +8,10 @@
 - [AVLTree](#avltree)
 - [Graph](#graph)
 - [MD5](#md5)
-- [NPuzzle](#npuzzle)
 - [Sort](#sort)
 - [Dijkstra](#dijkstra)
 - [LCS](#lcs)
+- [NPuzzle](#npuzzle)
 - [TextQuery](#textquery)
 - [SharedPtr](#sharedptr)
 - [UniquePtr](#uniqueptr)
@@ -60,18 +60,18 @@ int main() {
 
 | Operation | Time |
 |:---------:|:----:|
-|[insertFront()](../include/tastylib/DoublyLinkedList.h#L148-L157)|O(1)|
-|[removeFront()](../include/tastylib/DoublyLinkedList.h#L214-L226)|O(1)|
-|[insertBack()](../include/tastylib/DoublyLinkedList.h#L164-L173)|O(1)|
-|[removeBack()](../include/tastylib/DoublyLinkedList.h#L231-L243)|O(1)|
-|[insert()](../include/tastylib/DoublyLinkedList.h#L114-L141)|O(n)|
-|[remove()](../include/tastylib/DoublyLinkedList.h#L181-L209)|O(n)|
-|[find()](../include/tastylib/DoublyLinkedList.h#L96-L105)|O(n)|
-|[sort()](../include/tastylib/DoublyLinkedList.h#L304-L353) (merge sort)|O(nlogn)|
+|[insertFront()](../include/tastylib/DoublyLinkedList.h)|O(1)|
+|[removeFront()](../include/tastylib/DoublyLinkedList.h)|O(1)|
+|[insertBack()](../include/tastylib/DoublyLinkedList.h)|O(1)|
+|[removeBack()](../include/tastylib/DoublyLinkedList.h)|O(1)|
+|[insert()](../include/tastylib/DoublyLinkedList.h)|O(n)|
+|[remove()](../include/tastylib/DoublyLinkedList.h)|O(n)|
+|[find()](../include/tastylib/DoublyLinkedList.h)|O(n)|
+|[sort()](../include/tastylib/DoublyLinkedList.h) (merge sort)|O(nlogn)|
 
 #### Cost in practice
 
-Source: [benchmark_DoublyLinkedList.cpp](../src/benchmark_DoublyLinkedList.cpp)
+Source: [benchmark_DoublyLinkedList.cpp](../src/benchmark/benchmark_DoublyLinkedList.cpp)
 
 The program compares the time cost of `DoublyLinkedList` with `std::list`. When benchmarking `find()` and `sort()`, the size of the list is **100,000** and **5,000,000**, respectively. Here are the results under different environments:
 
@@ -156,14 +156,14 @@ int main() {
 
 | Operation | Time |
 |:---------:|:----:|
-|[push()](../include/tastylib/BinaryHeap.h#L88-L98)|O(logn)|
-|[top()](../include/tastylib/BinaryHeap.h#L104-L106)|O(1)|
-|[pop()](../include/tastylib/BinaryHeap.h#L112-L128)|O(logn)|
-|[makeHeap()](../include/tastylib/BinaryHeap.h#L42-L60)|O(n)|
+|[push()](../include/tastylib/BinaryHeap.h)|O(logn)|
+|[top()](../include/tastylib/BinaryHeap.h)|O(1)|
+|[pop()](../include/tastylib/BinaryHeap.h)|O(logn)|
+|[makeHeap()](../include/tastylib/BinaryHeap.h)|O(n)|
 
 #### Cost in practice
 
-Source: [benchmark_BinaryHeap.cpp](../src/benchmark_BinaryHeap.cpp)
+Source: [benchmark_BinaryHeap.cpp](../src/benchmark/benchmark_BinaryHeap.cpp)
 
 The program compares the time cost of `BinaryHeap` with `std::priority_queue` and `std::make_heap`. It calculates the average time cost of each operation. Here are the results under different environments:
 
@@ -224,10 +224,10 @@ int main() {
 
 | Operation | Time |
 |:---------:|:----:|
-|[insert()](../include/tastylib/HashTable.h#L93-L99)|O(1)|
-|[has()/find()](../include/tastylib/HashTable.h#L81-L84)|O(1)|
-|[remove()](../include/tastylib/HashTable.h#L107-L114)|O(1)|
-|[rehash()](../include/tastylib/HashTable.h#L122-L139)|O(n)|
+|[insert()](../include/tastylib/HashTable.h)|O(1)|
+|[has()/find()](../include/tastylib/HashTable.h)|O(1)|
+|[remove()](../include/tastylib/HashTable.h)|O(1)|
+|[rehash()](../include/tastylib/HashTable.h)|O(n)|
 
 #### Cost in practice
 
@@ -278,13 +278,13 @@ int main() {
 
 | Operation | Time |
 |:---------:|:----:|
-|[find()](../include/tastylib/AVLTree.h#L188-L196)|O(logn)|
-|[insert()](../include/tastylib/AVLTree.h#L250-L274)|O(logn)|
-|[remove()](../include/tastylib/AVLTree.h#L284-L319)|O(logn)|
+|[find()](../include/tastylib/AVLTree.h)|O(logn)|
+|[insert()](../include/tastylib/AVLTree.h)|O(logn)|
+|[remove()](../include/tastylib/AVLTree.h)|O(logn)|
 
 #### Cost in practice
 
-Source: [benchmark_AVLTree.cpp](../src/benchmark_AVLTree.cpp)
+Source: [benchmark_AVLTree.cpp](../src/benchmark/benchmark_AVLTree.cpp)
 
 The program compares the time cost of `AVLTree` with `std::multiset`. It calculates the average time cost of each operation. Note that the `std::multiset` is implemented as a [red-black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), which is faster than the AVL tree when performing `insert()` and `remove()` operations but slower when performing `find()`. Here are the results under different environments:
 
@@ -367,7 +367,7 @@ int main() {
 
 ### Benchmark
 
-Source: [benchmark_MD5.cpp](../src/benchmark_MD5.cpp)
+Source: [benchmark_MD5.cpp](../src/benchmark/benchmark_MD5.cpp)
 
 The program uses the MD5 algorithm to hash a fixed message of 200 MB for several times and calculates the average time cost. Here are the results:
 
@@ -375,93 +375,6 @@ The program uses the MD5 algorithm to hash a fixed message of 200 MB for several
 |-------------|:------------:|
 |Ubuntu 16.04 64-bit / g++ 5.4|834 ms|
 |Windows 10 64-bit / Visual Studio 14 2015|1140 ms|
-
-<a id="markdown-npuzzle" name="npuzzle"></a>
-## NPuzzle
-
-### Usage
-
-```c++
-#include "tastylib/NPuzzle.h"
-
-using namespace tastylib;
-
-int main() {
-
-    // The beginning node and the ending node of a 3*3 puzzle problem.
-    // Number '0' indicates the empty grid and number '1-8' denote other eight grids.
-    PuzzleNode<> beg({0, 2, 3, 1, 4, 5, 6, 7, 8}, 3, 3);
-    PuzzleNode<> end({1, 2, 3, 4, 0, 5, 6, 7, 8}, 3, 3);
-
-    // Solve the problem
-    NPuzzle<> puzzle(beg, end);
-    puzzle.solve();
-
-    // List 'path' stores the move directions from the beginning node
-    // to the ending node. Its contents must be [DOWN, RIGHT].
-    std::list<Direction> path = puzzle.getPath();
-
-    return 0;
-}
-```
-
-### Benchmark
-
-Source: [benchmark_NPuzzle.cpp](../src/benchmark_NPuzzle.cpp)
-
-The program solves `3*3`, `4*4`, `5*5` and `6*6` puzzle problems respectively and generates the information of overheads. Here are the outputs of the benchmark under different environments:
-
-##### Ubuntu 16.04 64-bit / g++ 5.4
-
-```
-Benchmark of NPuzzle running...
-
-Benchmarking 3*3 puzzle...
-Beg: {1, 4, 3, 8, 6, 5, 2, 7, 0}
-End: {5, 8, 2, 0, 4, 3, 6, 7, 1}
-Searching...
-Searched nodes: 278
-     Time cost: 3 ms
-    Efficiency: 72.245322 node/ms
-   Path length: 69
-Solution check: pass
-Benchmark of 3*3 puzzle finished.
-
-Benchmarking 4*4 puzzle...
-Beg: {5, 15, 2, 14, 4, 11, 12, 7, 6, 10, 3, 8, 0, 9, 1, 13}
-End: {6, 15, 14, 7, 11, 13, 10, 3, 4, 8, 12, 1, 0, 5, 2, 9}
-Searching...
-Searched nodes: 842
-     Time cost: 12 ms
-    Efficiency: 68.433030 node/ms
-   Path length: 100
-Solution check: pass
-Benchmark of 4*4 puzzle finished.
-
-Benchmarking 5*5 puzzle...
-Beg: {1, 22, 7, 2, 3, 0, 15, 17, 14, 4, 12, 23, 21, 9, 10, 8, 13, 16, 19, 24, 20, 11, 5, 18, 6}
-End: {6, 5, 10, 4, 14, 12, 2, 3, 8, 18, 7, 15, 0, 22, 21, 13, 1, 11, 16, 9, 19, 20, 23, 24, 17}
-Searching...
-Searched nodes: 3869
-     Time cost: 51 ms
-    Efficiency: 75.225541 node/ms
-   Path length: 213
-Solution check: pass
-Benchmark of 5*5 puzzle finished.
-
-Benchmarking 6*6 puzzle...
-Beg: {15, 12, 3, 0, 11, 8, 26, 29, 25, 4, 28, 1, 14, 13, 30, 5, 16, 17, 18, 7, 24, 32, 10, 21, 27, 20, 34, 31, 22, 9, 19, 2, 33, 6, 23, 35}
-End: {8, 6, 9, 7, 11, 10, 22, 27, 4, 19, 1, 5, 18, 12, 25, 3, 14, 16, 30, 2, 35, 13, 15, 23, 32, 24, 31, 34, 33, 0, 21, 20, 26, 29, 28, 17}
-Searching...
-Searched nodes: 93068
-     Time cost: 1478 ms
-    Efficiency: 62.968877 node/ms
-   Path length: 588
-Solution check: pass
-Benchmark of 6*6 puzzle finished.
-
-Benchmark of NPuzzle finished.
-```
 
 <a id="markdown-sort" name="sort"></a>
 ## Sort
@@ -503,16 +416,16 @@ int main() {
 
 | Operation | Time | Stable |
 |:---------:|:----:|:------:|
-|[insertionSort()](../include/tastylib/Sort.h#L17-L31)|O(n^2)|Yes|
-|[selectionSort()](../include/tastylib/Sort.h#L39-L53)|O(n^2)|No|
-|[heapSort()](../include/tastylib/Sort.h#L61-L71)|O(nlogn)|No|
-|[mergeSort()](../include/tastylib/DoublyLinkedList.h#L304-L353)|O(nlogn)|Yes|
-|[quickSort()](../include/tastylib/Sort.h#L109-L131)|O(nlogn)|No|
-|[quickSelect()](../include/tastylib/Sort.h#L143-L171)|O(n)|-|
+|[insertionSort()](../include/tastylib/Sort.h)|O(n^2)|Yes|
+|[selectionSort()](../include/tastylib/Sort.h)|O(n^2)|No|
+|[heapSort()](../include/tastylib/Sort.h)|O(nlogn)|No|
+|[mergeSort()](../include/tastylib/DoublyLinkedList.h)|O(nlogn)|Yes|
+|[quickSort()](../include/tastylib/Sort.h)|O(nlogn)|No|
+|[quickSelect()](../include/tastylib/Sort.h)|O(n)|-|
 
 #### Cost in practice
 
-Source: [benchmark_Sort.cpp](../src/benchmark_Sort.cpp)
+Source: [benchmark_Sort.cpp](../src/benchmark/benchmark_Sort.cpp)
 
 The program calculates the average time cost to sort or find the kth element in an array of `100000` elements. Here are the results under different environments:
 
@@ -597,6 +510,93 @@ int main() {
 
     return 0;
 }
+```
+
+<a id="markdown-npuzzle" name="npuzzle"></a>
+## NPuzzle
+
+### Usage
+
+```c++
+#include "tastylib/NPuzzle.h"
+
+using namespace tastylib;
+
+int main() {
+
+    // The beginning node and the ending node of a 3*3 puzzle problem.
+    // Number '0' indicates the empty grid and number '1-8' denote other eight grids.
+    PuzzleNode<> beg({0, 2, 3, 1, 4, 5, 6, 7, 8}, 3, 3);
+    PuzzleNode<> end({1, 2, 3, 4, 0, 5, 6, 7, 8}, 3, 3);
+
+    // Solve the problem
+    NPuzzle<> puzzle(beg, end);
+    puzzle.solve();
+
+    // List 'path' stores the move directions from the beginning node
+    // to the ending node. Its contents must be [DOWN, RIGHT].
+    std::list<Direction> path = puzzle.getPath();
+
+    return 0;
+}
+```
+
+### Benchmark
+
+Source: [benchmark_NPuzzle.cpp](../src/benchmark/benchmark_NPuzzle.cpp)
+
+The program solves `3*3`, `4*4`, `5*5` and `6*6` puzzle problems respectively and generates the information of overheads. Here are the outputs of the benchmark under different environments:
+
+##### Ubuntu 16.04 64-bit / g++ 5.4
+
+```
+Benchmark of NPuzzle running...
+
+Benchmarking 3*3 puzzle...
+Beg: {1, 4, 3, 8, 6, 5, 2, 7, 0}
+End: {5, 8, 2, 0, 4, 3, 6, 7, 1}
+Searching...
+Searched nodes: 278
+     Time cost: 3 ms
+    Efficiency: 72.245322 node/ms
+   Path length: 69
+Solution check: pass
+Benchmark of 3*3 puzzle finished.
+
+Benchmarking 4*4 puzzle...
+Beg: {5, 15, 2, 14, 4, 11, 12, 7, 6, 10, 3, 8, 0, 9, 1, 13}
+End: {6, 15, 14, 7, 11, 13, 10, 3, 4, 8, 12, 1, 0, 5, 2, 9}
+Searching...
+Searched nodes: 842
+     Time cost: 12 ms
+    Efficiency: 68.433030 node/ms
+   Path length: 100
+Solution check: pass
+Benchmark of 4*4 puzzle finished.
+
+Benchmarking 5*5 puzzle...
+Beg: {1, 22, 7, 2, 3, 0, 15, 17, 14, 4, 12, 23, 21, 9, 10, 8, 13, 16, 19, 24, 20, 11, 5, 18, 6}
+End: {6, 5, 10, 4, 14, 12, 2, 3, 8, 18, 7, 15, 0, 22, 21, 13, 1, 11, 16, 9, 19, 20, 23, 24, 17}
+Searching...
+Searched nodes: 3869
+     Time cost: 51 ms
+    Efficiency: 75.225541 node/ms
+   Path length: 213
+Solution check: pass
+Benchmark of 5*5 puzzle finished.
+
+Benchmarking 6*6 puzzle...
+Beg: {15, 12, 3, 0, 11, 8, 26, 29, 25, 4, 28, 1, 14, 13, 30, 5, 16, 17, 18, 7, 24, 32, 10, 21, 27, 20, 34, 31, 22, 9, 19, 2, 33, 6, 23, 35}
+End: {8, 6, 9, 7, 11, 10, 22, 27, 4, 19, 1, 5, 18, 12, 25, 3, 14, 16, 30, 2, 35, 13, 15, 23, 32, 24, 31, 34, 33, 0, 21, 20, 26, 29, 28, 17}
+Searching...
+Searched nodes: 93068
+     Time cost: 1478 ms
+    Efficiency: 62.968877 node/ms
+   Path length: 588
+Solution check: pass
+Benchmark of 6*6 puzzle finished.
+
+Benchmark of NPuzzle finished.
 ```
 
 <a id="markdown-textquery" name="textquery"></a>

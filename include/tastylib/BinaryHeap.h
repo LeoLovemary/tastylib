@@ -2,9 +2,8 @@
 #define TASTYLIB_BINARYHEAP_H_
 
 #include "tastylib/internal/base.h"
-#include <functional>
 #include <vector>
-#include <stdexcept>
+#include <functional>
 
 TASTYLIB_NS_BEGIN
 
@@ -21,24 +20,13 @@ A heap data structure taking the form of a complete binary tree.
 template<typename Value, typename Pred = std::greater_equal<Value>>
 class BinaryHeap {
 public:
-    typedef std::vector<Value> Container;
-    typedef typename Container::size_type SizeType;
+    using Container = std::vector<Value>;
+    using SizeType = typename Container::size_type;
 
+    // Default ctor
     BinaryHeap() : size(0), tree(1, 0) {}
 
-    BinaryHeap(const BinaryHeap &h) = default;
-
-    BinaryHeap(BinaryHeap &&h) = default;
-
-    BinaryHeap& operator=(const BinaryHeap &h) = default;
-
-    BinaryHeap& operator=(BinaryHeap &&h) = default;
-
-    ~BinaryHeap() = default;
-
-    /*
-    Build heap with a given array of values.
-    */
+    // Build heap with a given array of values
     explicit BinaryHeap(const Container &vals) : size(vals.size()), tree(vals) {
         tree.push_back(tree[0]);
         for (SizeType i = size / 2; i > 0; --i) {
@@ -59,32 +47,22 @@ public:
         }
     }
 
-    /*
-    Return the amount of elements in the heap.
-    */
+    // Return the amount of elements in the heap
     SizeType getSize() const {
         return size;
     }
 
-    /*
-    Return true if the heap has no elements.
-    */
+    // Return true if the heap has no elements
     bool isEmpty() const {
         return size == 0;
     }
 
-    /*
-    Clear the elements in the heap.
-    */
+    // Clear the elements in the heap
     void clear() {
         size = 0;
     }
 
-    /*
-    Insert a new element to the heap.
-
-    @param val The value of the element to be inserted
-    */
+    // Insert a new element to the heap
     void push(const Value &val) {
         if (size + 1 == tree.size()) {  // The tree array is full
             tree.resize(tree.size() << 1);  // Expand space

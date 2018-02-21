@@ -1,9 +1,8 @@
 #include "gtest/gtest.h"
 #include "tastylib/LCS.h"
-#include <string>
 
-using namespace tastylib;
-using std::string;
+using tastylib::LCSubstr;
+using tastylib::LCSubseq;
 
 TEST(LCSTest, subsequence) {
     EXPECT_EQ((std::size_t)0, LCSubseq("", ""));

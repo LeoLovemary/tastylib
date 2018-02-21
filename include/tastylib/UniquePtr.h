@@ -3,8 +3,6 @@
 
 #include "tastylib/internal/base.h"
 #include <utility>
-#include <cstddef>
-#include <functional>
 
 TASTYLIB_NS_BEGIN
 
@@ -24,40 +22,28 @@ public:
     }
 };
 
-/*
-Simplified version of std::unique_ptr.
-*/
+// Simplified version of std::unique_ptr
 template<typename T, typename D = DefaultDeleter>
 class UniquePtr {
     friend void swap<T, D>(UniquePtr<T, D> &lhs, UniquePtr<T, D> &rhs);
 
 public:
-    /*
-    Default ctor (optional custom deleter).
-    */
+    // Default ctor (optional custom deleter)
     UniquePtr(const D &d = D()) : UniquePtr(nullptr, d) {}
 
-    /*
-    Construct from raw pointer (optional custom deleter).
-    */
+    // Construct from raw pointer (optional custom deleter)
     explicit UniquePtr(T *p, const D &d = D()) : ptr(p), deleter(d) {}
 
-    /*
-    Forbid copy.
-    */
+    // Forbid copy
     UniquePtr(const UniquePtr &) = delete;
     UniquePtr& operator=(const UniquePtr &) = delete;
 
-    /*
-    Move ctor.
-    */
+    // Move ctor
     UniquePtr(UniquePtr &&other) : ptr(other.ptr), deleter(std::move(other.deleter)) {
         other.ptr = nullptr;
     }
 
-    /*
-    Move assignment.
-    */
+    // Move assignment
     UniquePtr& operator=(UniquePtr &&rhs) {
         if (this != &rhs) {
             del();
@@ -68,70 +54,52 @@ public:
         return *this;
     }
 
-    /*
-    Nullptr assignment.
-    */
+    //Nullptr assignment
     UniquePtr& operator=(std::nullptr_t) {
         del();
         return *this;
     }
 
-    /*
-    Dtor. 
-    */
+    // Dtor
     ~UniquePtr() {
         del();
     }
 
-    /*
-    Swap members with another UniquePtr.
-    */
+    // Swap members with another UniquePtr
     void swap(UniquePtr &rhs) {
         using std::swap;
         swap(ptr, rhs.ptr);
         swap(deleter, rhs.deleter);
     }
 
-    /*
-    Safe bool conversion.
-    */
+    // Safe bool conversion
     explicit operator bool() const {
         return ptr;
     }
 
-    /*
-    Dereference operator.
-    */
+    // Dereference operator
     T& operator*() const {
         return *ptr;
     }
 
-    /*
-    Member access operator.
-    */
+    // Member access operator
     T* operator->() const {
         return ptr;
     }
 
-    /*
-    Return underlying pointer.
-    */
+    // Return underlying pointer
     T* get() const {
         return ptr;
     }
 
-    /*
-    Relinquish control of the underlying pointer.
-    */
+    // Relinquish control of the underlying pointer
     T* release() {
         T *ret = ptr;
         ptr = nullptr;
         return ret;
     }
 
-    /*
-    Reset underlying pointer.
-    */
+    // Reset underlying pointer
     void reset(T *p = nullptr) {
         del();
         ptr = p;

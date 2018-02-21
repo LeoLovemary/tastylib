@@ -2,8 +2,8 @@
 #include "tastylib/util/random.h"
 #include "tastylib/BinaryHeap.h"
 
-using namespace tastylib;
-using std::vector;
+using tastylib::Random;
+using tastylib::BinaryHeap;
 
 typedef BinaryHeap<int>::SizeType SizeType;
 
@@ -28,12 +28,12 @@ TEST(BinaryHeapTest, Basic) {
 }
 
 TEST(BinaryHeapTest, MinRoot) {
-    vector<int> ans;
+    std::vector<int> ans;
     for (int i = 0; i < 30; ++i) {
         ans.push_back(i);
     }
-    vector<int> test(ans);
-    Random<>::getInstance()->shuffle(test.begin(), test.end());
+    std::vector<int> test(ans);
+    Random::getInstance()->shuffle(test.begin(), test.end());
     BinaryHeap<int> heap(test);
     for (const auto &x : ans) {
         EXPECT_EQ(heap.top(), x);
@@ -43,12 +43,12 @@ TEST(BinaryHeapTest, MinRoot) {
 }
 
 TEST(BinaryHeapTest, MaxRoot) {
-    vector<int> ans;
+    std::vector<int> ans;
     for (int i = 29; i >= 0; --i) {
         ans.push_back(i);
     }
-    vector<int> test(ans);
-    Random<>::getInstance()->shuffle(test.begin(), test.end());
+    std::vector<int> test(ans);
+    Random::getInstance()->shuffle(test.begin(), test.end());
     BinaryHeap<int, std::less_equal<int>> heap(test);
     for (const auto &x : ans) {
         EXPECT_EQ(heap.top(), x);

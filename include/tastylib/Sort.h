@@ -2,9 +2,9 @@
 #define TASTYLIB_SORT_H_
 
 #include "tastylib/internal/base.h"
-#include "tastylib/util/swap.h"
 #include "tastylib/BinaryHeap.h"
-#include <functional>
+#include <cstddef>
+#include <utility>
 
 TASTYLIB_NS_BEGIN
 
@@ -47,7 +47,7 @@ void selectionSort(Ele *const arr, const std::size_t n) {
             }
         }
         if (minOrMax != i) {
-            swap(arr[i], arr[minOrMax]);
+            std::swap(arr[i], arr[minOrMax]);
         }
     }
 }
@@ -87,15 +87,15 @@ Ele pivot(Ele *const arr, const std::size_t left, std::size_t right) {
     Pred pred;
     std::size_t mid = (left + right) / 2;
     if (pred(arr[mid], arr[left])) {
-        swap(arr[mid], arr[left]);
+        std::swap(arr[mid], arr[left]);
     }
     if (pred(arr[right], arr[left])) {
-        swap(arr[right], arr[left]);
+        std::swap(arr[right], arr[left]);
     }
     if (pred(arr[right], arr[mid])) {
-        swap(arr[right], arr[mid]);
+        std::swap(arr[right], arr[mid]);
     }
-    swap(arr[mid], arr[right - 1]);  // Store pivot at arr[right - 1]
+    std::swap(arr[mid], arr[right - 1]);  // Store pivot at arr[right - 1]
     return arr[right - 1];
 }
 
@@ -116,12 +116,12 @@ void quickSort(Ele *const arr, const std::size_t left, const std::size_t right) 
             while (pred(arr[++i], p)) {}
             while (pred(p, arr[--j])) {}
             if (i < j) {
-                swap(arr[i], arr[j]);
+                std::swap(arr[i], arr[j]);
             } else {
                 break;
             }
         }
-        swap(arr[i], arr[right - 1]);  // Restore pivot
+        std::swap(arr[i], arr[right - 1]);  // Restore pivot
         quickSort<Ele, Pred>(arr, left, i - 1);
         quickSort<Ele, Pred>(arr, i + 1, right);
     } else {
@@ -153,12 +153,12 @@ void quickSelect(Ele *const arr,
             while (pred(arr[++i], p)) {}
             while (pred(p, arr[--j])) {}
             if (i < j) {
-                swap(arr[i], arr[j]);
+                std::swap(arr[i], arr[j]);
             } else {
                 break;
             }
         }
-        swap(arr[i], arr[right - 1]);  // Restore pivot
+        std::swap(arr[i], arr[right - 1]);  // Restore pivot
         if (k < i) {
             quickSelect<Ele, Pred>(arr, left, i - 1, k);
         } else if (k > i) {

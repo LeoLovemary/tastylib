@@ -1,6 +1,5 @@
 #include "gtest/gtest.h"
 #include "tastylib/TextQuery.h"
-#include <string>
 #include <sstream>
 
 using tastylib::Query;

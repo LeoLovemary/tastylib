@@ -1,6 +1,8 @@
 #include "tastylib/Calculator.h"
 #include <stdexcept>
 #include <stack>
+#include <cstddef>
+#include <cctype>
 
 TASTYLIB_NS_BEGIN
 

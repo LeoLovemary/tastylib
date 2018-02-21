@@ -3,13 +3,13 @@
 
 using tastylib::PuzzleNode;
 using tastylib::NPuzzle;
+using tastylib::Direc;
 
-typedef PuzzleNode<>::Direction Direc;
-typedef PuzzleNode<>::SizeType SizeType;
+typedef PuzzleNode::SizeType SizeType;
 
 TEST(PuzzleNodeTest, Basic) {
-    PuzzleNode<> oriNode({1, 2, 3, 4, 0, 5, 6, 7, 8}, 3, 3);
-    PuzzleNode<> node({1, 2, 3, 4, 0, 5, 6, 7, 8}, 3, 3);
+    PuzzleNode oriNode({1, 2, 3, 4, 0, 5, 6, 7, 8}, 3, 3);
+    PuzzleNode node({1, 2, 3, 4, 0, 5, 6, 7, 8}, 3, 3);
     EXPECT_EQ(node.getRowCount(), (SizeType)3);
     EXPECT_EQ(node.getColCount(), (SizeType)3);
     EXPECT_TRUE(node.canMove(Direc::NONE));
@@ -63,9 +63,9 @@ TEST(PuzzleNodeTest, Basic) {
 }
 
 TEST(NPuzzleTest, Basic) {
-    PuzzleNode<> oriBeg({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, 4, 4);
-    PuzzleNode<> oriEnd({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, 4, 4);
-    NPuzzle<> puzzle(oriBeg, oriEnd);
+    PuzzleNode oriBeg({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, 4, 4);
+    PuzzleNode oriEnd({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, 4, 4);
+    NPuzzle puzzle(oriBeg, oriEnd);
     auto beg = puzzle.shuffleBeg();
     auto end = puzzle.shuffleEnd();
     EXPECT_TRUE(beg == puzzle.getBeg());
@@ -76,11 +76,11 @@ TEST(NPuzzleTest, Basic) {
 }
 
 TEST(NPuzzleTest, AStar) {
-    PuzzleNode<> beg({0, 1, 2, 3, 4, 5, 6, 7, 8}, 3, 3);
-    PuzzleNode<> end({0, 1, 2, 3, 4, 5, 6, 7, 8}, 3, 3);
+    PuzzleNode beg({0, 1, 2, 3, 4, 5, 6, 7, 8}, 3, 3);
+    PuzzleNode end({0, 1, 2, 3, 4, 5, 6, 7, 8}, 3, 3);
     beg.shuffle();
     end.shuffle();
-    NPuzzle<> puzzle(beg, end);
+    NPuzzle puzzle(beg, end);
     puzzle.solve();
     const auto &path = puzzle.getPath();
     for (const auto &d : path) {

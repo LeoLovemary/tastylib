@@ -3,6 +3,7 @@
 
 #include "tastylib/internal/base.h"
 #include <string>
+#include <cstddef>
 #include <vector>
 #include <algorithm>
 

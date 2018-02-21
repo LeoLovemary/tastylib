@@ -25,7 +25,6 @@ C++ implementations of data structures, algorithms and useful designs.
 | Name | Source | Benchmarked | Note | Definition |
 |:----:|:------:|:-----------:|------|:----------:|
 |[MD5][md5-details]|[Tests][md5-tests]<br>[.h][md5-src]|Yes|A widely used hash function producing a 128-bit hash value.|[Wikipedia][md5-wiki]|
-|[NPuzzle][npuzzle-details]|[Tests][npuzzle-tests]<br>[.h][npuzzle-src]|Yes|A classic searching problem solved with [A* search][astar-wiki]. A [GUI demo][npuzzle-demo] is provided.|[Wikipedia][npuzzle-wiki]|
 |[Sort][sort-details]|[Tests][sort-tests]<br>[.h][sort-src]|Yes|Including [insertion sort][sort-wiki-insertion], [selection sort][sort-wiki-selection], [heapsort][sort-wiki-heap], [quicksort][sort-wiki-quick], [quickselect][sort-wiki-quickselect]. For [merge sort][sort-wiki-merge], please refer to [DoublyLinkedList.sort()][doublylist-details].|[Wikipedia][sort-wiki]|
 |[Dijkstra][dijkstra-details]|[Tests][dijkstra-tests]<br>[.h][dijkstra-src]|No|An algorithm to find the shortest paths between vertices in a graph.|[Wikipedia][dijkstra-wiki]|
 |[LCS][lcs-details]|[Tests][lcs-tests]<br>[.h][lcs-src]|No|A dynamic programming solution to find the longest subsequence or substring common to two sequences.|[Wikipedia (substring)][lcs-wiki-substr]<br>[Wikipedia (subsequence)][lcs-wiki-subseq]|
@@ -34,6 +33,7 @@ C++ implementations of data structures, algorithms and useful designs.
 
 | Name | Source | Benchmarked | Note | Reference |
 |:----:|:------:|:-----------:|------|:---------:|
+|[NPuzzle][npuzzle-details]|[Tests][npuzzle-tests]<br>[.h][npuzzle-src]|Yes|A classic searching problem solved with [A* search][astar-wiki]. [[GUI]][npuzzle-demo]|[Wikipedia][npuzzle-wiki]|
 |[TextQuery][textquery-details]|[Tests][textquery-tests]<br>[.h][textquery-h] [.cpp][textquery-cpp]|No|Search a given input stream for words. (OOP practice)|§12.3 & §15.9, C++ Primer, 5th Edition|
 |[SharedPtr][sharedptr-details]|[Tests][sharedptr-tests]<br>[.h][sharedptr-src]|No|My own version of [std::shared_ptr][sharedptr-std].|§12.1 & §16.1.6, C++ Primer, 5th Edition|
 |[UniquePtr][uniqueptr-details]|[Tests][uniqueptr-tests]<br>[.h][uniqueptr-src]|No|My own version of [std::unique_ptr][uniqueptr-std].|§12.1 & §16.1.6, C++ Primer, 5th Edition|
@@ -122,13 +122,6 @@ See the [LICENSE](./LICENSE) file for license rights and limitations.
 [md5-src]: ./include/tastylib/MD5.h
 [md5-wiki]: https://en.wikipedia.org/wiki/MD5
 
-[npuzzle-details]: ./docs/details.md#npuzzle
-[npuzzle-tests]: ./test/test_NPuzzle.cpp
-[npuzzle-src]: ./include/tastylib/NPuzzle.h
-[npuzzle-wiki]: https://en.wikipedia.org/wiki/15_puzzle
-[astar-wiki]: https://en.wikipedia.org/wiki/A*_search_algorithm
-[npuzzle-demo]: https://github.com/chuyangliu/Puzzle
-
 [sort-details]: ./docs/details.md#sort
 [sort-tests]: ./test/test_Sort.cpp
 [sort-src]: ./include/tastylib/Sort.h
@@ -150,6 +143,13 @@ See the [LICENSE](./LICENSE) file for license rights and limitations.
 [lcs-src]: ./include/tastylib/LCS.h
 [lcs-wiki-substr]: https://en.wikipedia.org/wiki/Longest_common_substring_problem
 [lcs-wiki-subseq]: https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
+
+[npuzzle-details]: ./docs/details.md#npuzzle
+[npuzzle-tests]: ./test/test_NPuzzle.cpp
+[npuzzle-src]: ./include/tastylib/NPuzzle.h
+[npuzzle-wiki]: https://en.wikipedia.org/wiki/15_puzzle
+[astar-wiki]: https://en.wikipedia.org/wiki/A*_search_algorithm
+[npuzzle-demo]: https://github.com/chuyangliu/Puzzle
 
 [textquery-details]: ./docs/details.md#textquery
 [textquery-tests]: ./test/test_TextQuery.cpp

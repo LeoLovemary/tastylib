@@ -2,12 +2,16 @@
 #include "tastylib/Sort.h"
 #include "tastylib/util/random.h"
 #include <algorithm>
-#include <functional>
 
-using namespace tastylib;
+using tastylib::Random;
+using tastylib::insertionSort;
+using tastylib::selectionSort;
+using tastylib::heapSort;
+using tastylib::quickSort;
+using tastylib::quickSelect;
 
 TEST(SortTest, InsertionSort) {
-    Random<> *random = Random<>::getInstance();
+    Random *random = Random::getInstance();
     const int n = 3000;
     int arr1[n], arr2[n];
     for (int i = 0; i < n; ++i) {
@@ -23,7 +27,7 @@ TEST(SortTest, InsertionSort) {
 }
 
 TEST(SortTest, SelectionSort) {
-    Random<> *random = Random<>::getInstance();
+    Random *random = Random::getInstance();
     const int n = 3000;
     int arr1[n], arr2[n];
     for (int i = 0; i < n; ++i) {
@@ -39,7 +43,7 @@ TEST(SortTest, SelectionSort) {
 }
 
 TEST(SortTest, HeapSort) {
-    Random<> *random = Random<>::getInstance();
+    Random *random = Random::getInstance();
     const int n = 3000;
     int arr1[n], arr2[n];
     for (int i = 0; i < n; ++i) {
@@ -55,7 +59,7 @@ TEST(SortTest, HeapSort) {
 }
 
 TEST(SortTest, QuickSort) {
-    Random<> *random = Random<>::getInstance();
+    Random *random = Random::getInstance();
     const int n = 3000;
     int arr1[n], arr2[n];
     for (int i = 0; i < n; ++i) {
@@ -71,7 +75,7 @@ TEST(SortTest, QuickSort) {
 }
 
 TEST(SortTest, QuickSelect) {
-    Random<> *random = Random<>::getInstance();
+    Random *random = Random::getInstance();
     const int n = 3000;
     for (int i = 0; i < 5; ++i) {
         int arr1[n], arr2[n];

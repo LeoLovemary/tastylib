@@ -1,15 +1,18 @@
 #include "tastylib/util/io.h"
 #include "tastylib/util/timer.h"
 #include "tastylib/util/random.h"
-#include "tastylib/util/convert.h"
 #include "tastylib/Sort.h"
 #include <algorithm>
-#include <vector>
-#include <string>
 
-using namespace tastylib;
-using std::string;
-using std::vector;
+using tastylib::printLn;
+using tastylib::timing;
+using tastylib::Random;
+using tastylib::insertionSort;
+using tastylib::selectionSort;
+using tastylib::heapSort;
+using tastylib::quickSort;
+using tastylib::quickSelect;
+
 
 int main() {
     printLn("Benchmark of Sort running...\n");
@@ -18,22 +21,22 @@ int main() {
         const int CASES = 10;
         const int METHOD_NUM = 7;
 
-        Random<> *random = Random<>::getInstance();
+        Random *random = Random::getInstance();
 
         // Total time cost of each sorting method
-        vector<double> time(METHOD_NUM, 0);
+        std::vector<double> time(METHOD_NUM, 0);
 
         // Array of each sorting method
-        vector<int *> method(METHOD_NUM, nullptr);
+        std::vector<int *> method(METHOD_NUM, nullptr);
         for (int i = 0; i < METHOD_NUM; ++i) {
             method[i] = new int[SIZE];
         }
 
         // Running sorting cases
-        printLn("Running " + toString(CASES) + " cases...\n");
+        printLn("Running ", CASES, " cases...\n");
         for (int i = 0; i < CASES; ++i) {
-            printLn("Case #" + toString(i + 1) + ":");
-            printLn("Preparing " + toString(SIZE) + " elements to sort...");
+            printLn("Case #", i + 1, ":");
+            printLn("Preparing ", SIZE, " elements to sort...");
             for (int j = 0; j < SIZE; ++j) {
                 int e = random->nextInt(0, SIZE);
                 for (int k = 0; k < METHOD_NUM; ++k) {
@@ -77,17 +80,17 @@ int main() {
             if (method[5][k] != method[6][k]) {
                 correct = false;
             }
-            printLn("Correctness check: " + string(correct ? "pass\n" : "fail\n"));
+            printLn("Correctness check: ", correct ? "pass" : "fail", "\n");
         }
-        printLn(toString(CASES) + " cases finished.\n");
+        printLn(CASES, " cases finished.\n");
         printLn("Avg time cost:");
-        printLn("       std::sort: " + toString(time[0] / CASES) + " ms");
-        printLn("  insertion sort: " + toString(time[1] / CASES) + " ms");
-        printLn("  selection sort: " + toString(time[2] / CASES) + " ms");
-        printLn("       heap sort: " + toString(time[3] / CASES) + " ms");
-        printLn("      quick sort: " + toString(time[4] / CASES) + " ms");
-        printLn("std::nth_element: " + toString(time[5] / CASES) + " ms");
-        printLn("    quick select: " + toString(time[6] / CASES) + " ms");
+        printLn("       std::sort: ", time[0] / CASES, " ms");
+        printLn("  insertion sort: ", time[1] / CASES, " ms");
+        printLn("  selection sort: ", time[2] / CASES, " ms");
+        printLn("       heap sort: ", time[3] / CASES, " ms");
+        printLn("      quick sort: ", time[4] / CASES, " ms");
+        printLn("std::nth_element: ", time[5] / CASES, " ms");
+        printLn("    quick select: ", time[6] / CASES, " ms");
 
         // Free resources
         for (int i = 0; i < METHOD_NUM; ++i) {

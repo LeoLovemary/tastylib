@@ -1,16 +1,17 @@
 #include "tastylib/util/io.h"
 #include "tastylib/util/timer.h"
-#include "tastylib/util/convert.h"
 #include "tastylib/util/random.h"
 #include "tastylib/DoublyLinkedList.h"
 #include <list>
 #include <algorithm>
 
-using namespace tastylib;
-using std::string;
-using std::list;
+using tastylib::printLn;
+using tastylib::timing;
+using tastylib::Random;
+using tastylib::DoublyLinkedList;
 
 typedef DoublyLinkedList<int>::SizeType SizeType;
+
 
 /*
 If the contents of the two lists are the same, print
@@ -33,7 +34,7 @@ void checkCorrect(const std::list<T> &stdList,
             ++it;
         });
     }
-    printLn("Correctness check: " + std::string(correct ? "pass" : "fail"));
+    printLn("Correctness check: ", correct ? "pass" : "fail");
 }
 
 int main() {
@@ -44,14 +45,14 @@ int main() {
         const int SIZE_FIND = 100000;
         const int SIZE_OTHER = 40000000;
 
-        Random<> *random = Random<>::getInstance();
+        Random *random = Random::getInstance();
 
-        list<int> stdList;
+        std::list<int> stdList;
         DoublyLinkedList<int> libList;
 
         {   // Benchmark insertFront()
             printLn("Benchmarking insertFront()...");
-            printLn("Inserting " + toString(SIZE_OTHER) + " elements at the FRONT of the list...");
+            printLn("Inserting ", SIZE_OTHER, " elements at the FRONT of the list...");
             auto stdTime = timing([&]() {
                 for (int i = 0; i < SIZE_OTHER; ++i) {
                     stdList.push_front(i);
@@ -65,14 +66,13 @@ int main() {
             });
             printLn("lib finished.");
             checkCorrect(stdList, libList);
-            printLn("Avg time of std VS TastyLib: " + toString(stdTime / SIZE_OTHER) + " ms / "
-                    + toString(libTime / SIZE_OTHER) + " ms");
+            printLn("Avg time of std VS TastyLib: ", stdTime / SIZE_OTHER, " ms / ", libTime / SIZE_OTHER, " ms");
             printLn("Benchmark of insertFront() finished.\n");
         }
 
         {   // Benchmark removeFront()
             printLn("Benchmarking removeFront()...");
-            printLn("Removing " + toString(SIZE_OTHER) + " elements from the FRONT of the list...");
+            printLn("Removing ", SIZE_OTHER, " elements from the FRONT of the list...");
             auto stdTime = timing([&]() {
                 for (int i = 0; i < SIZE_OTHER; ++i) {
                     stdList.pop_front();
@@ -86,14 +86,13 @@ int main() {
             });
             printLn("lib finished.");
             checkCorrect(stdList, libList);
-            printLn("Avg time of std VS TastyLib: " + toString(stdTime / SIZE_OTHER) + " ms / "
-                    + toString(libTime / SIZE_OTHER) + " ms");
+            printLn("Avg time of std VS TastyLib: ", stdTime / SIZE_OTHER, " ms / ", libTime / SIZE_OTHER, " ms");
             printLn("Benchmark of removeFront() finished.\n");
         }
 
         {   // Benchmark insertBack()
             printLn("Benchmarking insertBack()...");
-            printLn("Inserting " + toString(SIZE_OTHER) + " elements at the BACK of the list...");
+            printLn("Inserting ", SIZE_OTHER, " elements at the BACK of the list...");
             auto stdTime = timing([&]() {
                 for (int i = 0; i < SIZE_OTHER; ++i) {
                     stdList.push_back(i);
@@ -107,14 +106,13 @@ int main() {
             });
             printLn("lib finished.");
             checkCorrect(stdList, libList);
-            printLn("Avg time of std VS TastyLib: " + toString(stdTime / SIZE_OTHER) + " ms / "
-                    + toString(libTime / SIZE_OTHER) + " ms");
+            printLn("Avg time of std VS TastyLib: ", stdTime / SIZE_OTHER, " ms / ", libTime / SIZE_OTHER, " ms");
             printLn("Benchmark of insertBack() finished.\n");
         }
 
         {   // Benchmark removeBack()
             printLn("Benchmarking removeBack()...");
-            printLn("Removing " + toString(SIZE_OTHER) + " elements from the BACK of the list...");
+            printLn("Removing ", SIZE_OTHER, " elements from the BACK of the list...");
             auto stdTime = timing([&]() {
                 for (int i = 0; i < SIZE_OTHER; ++i) {
                     stdList.pop_back();
@@ -128,8 +126,7 @@ int main() {
             });
             printLn("lib finished.");
             checkCorrect(stdList, libList);
-            printLn("Avg time of std VS TastyLib: " + toString(stdTime / SIZE_OTHER) + " ms / "
-                    + toString(libTime / SIZE_OTHER) + " ms");
+            printLn("Avg time of std VS TastyLib: ", stdTime / SIZE_OTHER, " ms / ", libTime / SIZE_OTHER, " ms");
             printLn("Benchmark of removeBack() finished.\n");
         }
 
@@ -137,7 +134,7 @@ int main() {
             printLn("Benchmarking find()...");
 
             // Generate random list contents
-            printLn("Inserting " + toString(SIZE_FIND) + " random elements to the list...");
+            printLn("Inserting ", SIZE_FIND, " random elements to the list...");
             for (int i = 0; i < SIZE_FIND; ++i) {
                 int val = random->nextInt(0, SIZE_FIND << 2);
                 stdList.push_back(val);
@@ -146,7 +143,7 @@ int main() {
             printLn("Finished.");
 
             // Find
-            printLn("Finding " + toString(SIZE_FIND) + " elements...");
+            printLn("Finding ", SIZE_FIND, " elements...");
             unsigned dontCare = 0;  // Suppress compiler optimization
             auto stdTime = timing([&]() {
                 auto it = stdList.begin();
@@ -170,21 +167,20 @@ int main() {
             UNUSED(dontCare);
             printLn("lib finished.");
             checkCorrect(stdList, libList);
-            printLn("Avg time of std VS TastyLib: " + toString(stdTime / SIZE_FIND) + " ms / "
-                    + toString(libTime / SIZE_FIND) + " ms");
+            printLn("Avg time of std VS TastyLib: ", stdTime / SIZE_FIND, " ms / ", libTime / SIZE_FIND, " ms");
             printLn("Benchmark of find() finished.\n");
         }
 
         {   // Benchmark sort()
-            printLn("Benchmarking sort() for " + toString(CASES_SORT) + " cases...");
+            printLn("Benchmarking sort() for ", CASES_SORT, " cases...");
             double stdTot = 0, libTot = 0;
             for (int i = 0; i < CASES_SORT; ++i) {
-                printLn("Case #" + toString(i + 1) + ":");
+                printLn("Case #", i + 1, ":");
                 stdList.clear();
                 libList.clear();
 
                 // Generate random list contents
-                printLn("Inserting " + toString(SIZE_SORT) + " random elements to the list...");
+                printLn("Inserting ", SIZE_SORT, " random elements to the list...");
                 for (int i = 0; i < SIZE_SORT; ++i) {
                     int e = random->nextInt(0, SIZE_SORT - 1);
                     stdList.push_back(e);
@@ -204,11 +200,10 @@ int main() {
                 stdTot += stdTime;
                 libTot += libTime;
                 checkCorrect(stdList, libList);
-                printLn("Time of std VS TastyLib: " + toString(stdTime) + " ms / " + toString(libTime) + " ms\n");
+                printLn("Time of std VS TastyLib: ", stdTime, " ms / ", libTime, " ms\n");
             }
-            printLn(toString(CASES_SORT) + " cases finished.");
-            printLn("Avg time of std VS TastyLib: " + toString(stdTot / CASES_SORT) + " ms / "
-                    + toString(libTot / CASES_SORT) + " ms");
+            printLn(CASES_SORT, " cases finished.");
+            printLn("Avg time of std VS TastyLib: ", stdTot / CASES_SORT, " ms / ", libTot / CASES_SORT, " ms");
             printLn("Benchmark of sort() finished.\n");
         }
     }

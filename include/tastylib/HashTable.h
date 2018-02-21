@@ -3,8 +3,8 @@
 
 #include "tastylib/internal/base.h"
 #include "tastylib/DoublyLinkedList.h"
-#include <functional>
 #include <vector>
+#include <utility>
 
 TASTYLIB_NS_BEGIN
 
@@ -23,8 +23,8 @@ template<typename Value, typename Pred = std::equal_to<Value>,
          typename Hash = std::hash<Value>>
 class HashTable {
 public:
-    typedef std::size_t SizeType;
-    typedef std::vector<DoublyLinkedList<Value, Pred>> Container;
+    using SizeType = std::size_t;
+    using Container = std::vector<DoublyLinkedList<Value, Pred>>;
 
     /*
     Initialize the hash table.
@@ -32,57 +32,33 @@ public:
     @param n Expected buckets amount. In practice, the
              amount of buckets may be greater than 'n'.
     */
-    explicit HashTable(const SizeType n = MIN_BUCKET)
-        : size(0), bucketNum(0), buckets(nullptr) {
+    explicit HashTable(const SizeType n = MIN_BUCKET) : size(0), bucketNum(0) {
         rehash(n);
     }
 
-    HashTable(const HashTable &tbl) = delete;
-
-    HashTable(HashTable &&tbl) = delete;
-
-    HashTable& operator=(const HashTable &tbl) = delete;
-
-    HashTable& operator=(HashTable &&tbl) = delete;
-
-    ~HashTable() {
-        delete buckets;
-    }
-
-    /*
-    Return the amount of elements in the hash table.
-    */
+    // Return the amount of elements in the hash table
     SizeType getSize() const {
         return size;
     }
 
-    /*
-    Return true if the hash table has no elements.
-    */
+    // Return true if the hash table has no elements
     bool isEmpty() const {
         return size == 0;
     }
 
-    /*
-    Remove all elements from the hash table.
-    */
+    // Remove all elements from the hash table
     void clear() {
         size = 0;
         for (SizeType i = 0; i < bucketNum; ++i) {
-            (*buckets)[i].clear();
+            buckets[i].clear();
         }
     }
 
-    /*
-    Check if a value is in the hash table.
-
-    @param val The value to be checked
-    */
+    // Return true if a given value is in the hash table
     bool has(const Value &val) const {
-        const auto &list = (*buckets)[hash(val)];
+        const auto &list = buckets[hash(val)];
         return list.find(val) != -1;
     }
-
 
     /*
     Insert a value to the hash table. If the
@@ -91,7 +67,7 @@ public:
     @param val The value to be inserted
     */
     void insert(const Value &val) {
-        auto &list = (*buckets)[hash(val)];
+        auto &list = buckets[hash(val)];
         if (list.find(val) == -1) {
             list.insertBack(val);
             ++size;
@@ -105,7 +81,7 @@ public:
     @param val The value to be removed
     */
     void remove(const Value &val) {
-        auto &list = (*buckets)[hash(val)];
+        auto &list = buckets[hash(val)];
         auto pos = list.find(val);
         if (pos != -1) {
             list.remove(pos);
@@ -126,16 +102,14 @@ public:
         while (bucketNum < n) {
             bucketNum <<= 1;
         }
-        Container *oldBuckets = buckets;
-        buckets = new Container(bucketNum);
+        Container oldBuckets = std::move(buckets);
+        buckets.resize(bucketNum);
         for (SizeType i = 0; i < oldNum; ++i) {
-            const auto &list = (*oldBuckets)[i];
-            list.traverse([&](const SizeType pos, const Value &val) {
+            oldBuckets[i].traverse([&](const SizeType pos, const Value &val) {
                 UNUSED(pos);
                 insert(val);
             });
         }
-        delete oldBuckets;
     }
 
 private:
@@ -156,7 +130,7 @@ private:
 
     SizeType size;
     SizeType bucketNum;
-    Container *buckets;
+    Container buckets;
 };
 
 TASTYLIB_NS_END
