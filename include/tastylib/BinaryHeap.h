@@ -27,7 +27,7 @@ public:
     BinaryHeap() : size(0), tree(1, 0) {}
 
     // Build heap with a given array of values
-    explicit BinaryHeap(const Container &vals) : size(vals.size()), tree(vals) {
+    explicit BinaryHeap(const Container& vals) : size(vals.size()), tree(vals) {
         tree.push_back(tree[0]);
         for (SizeType i = size / 2; i > 0; --i) {
             Value ele = tree[i];
@@ -63,7 +63,7 @@ public:
     }
 
     // Insert a new element to the heap
-    void push(const Value &val) {
+    void push(const Value& val) {
         if (size + 1 == tree.size()) {  // The tree array is full
             tree.resize(tree.size() << 1);  // Expand space
         }

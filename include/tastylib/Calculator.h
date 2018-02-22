@@ -10,11 +10,11 @@ TASTYLIB_NS_BEGIN
 
 
 class Token {
-    friend bool operator==(const Token &lhs, const Token &rhs) {
+    friend bool operator==(const Token& lhs, const Token& rhs) {
         return lhs.type_ == rhs.type_ && lhs.val_ == rhs.val_;
     }
 
-    friend bool operator!=(const Token &lhs, const Token &rhs) {
+    friend bool operator!=(const Token& lhs, const Token& rhs) {
         return !(lhs == rhs);
     }
 
@@ -30,11 +30,11 @@ public:
         return Token(Type::END_INPUT, "$");
     }
 
-    static Token num(const std::string &v) {
+    static Token num(const std::string& v) {
         return Token(Type::NUMBER, v);
     }
 
-    static Token oper(const std::string &v) {
+    static Token oper(const std::string& v) {
         return Token(Type::OPERATOR, v);
     }
 
@@ -47,7 +47,7 @@ public:
     }
 
 private:
-    Token(const Type t, const std::string &v)
+    Token(const Type t, const std::string& v)
         : type_(t), val_(v) {}
 
 private:
@@ -58,7 +58,7 @@ private:
 
 class Lexer {
 public:
-    Lexer(std::istream &i) : cur(' '), is(i) {}
+    Lexer(std::istream& i) : cur(' '), is(i) {}
 
     // Read and parser one token from input stream
     Token scan();
@@ -71,7 +71,7 @@ private:
 
 class Parser {
 public:
-    Parser(std::istream &i) : cur(Token::end()), lexer(i) {}
+    Parser(std::istream& i) : cur(Token::end()), lexer(i) {}
 
     /*
     Parse an infix arithmetic expression and return its postfix tokens.
@@ -102,7 +102,7 @@ private:
 
 class Calculator {
 public:
-    Calculator(std::istream &i) : parser(i) {}
+    Calculator(std::istream& i) : parser(i) {}
 
     /*
     Return the result of an infix arithmetic expression.

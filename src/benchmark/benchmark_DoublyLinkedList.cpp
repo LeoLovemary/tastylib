@@ -18,14 +18,14 @@ If the contents of the two lists are the same, print
 passing message. Otherwise print failing message.
 */
 template<typename T>
-void checkCorrect(const std::list<T> &stdList,
-                  const DoublyLinkedList<T> &libList) {
+void checkCorrect(const std::list<T>& stdList,
+                  const DoublyLinkedList<T>& libList) {
     bool correct = true;
     if (stdList.size() != libList.getSize()) {
         correct = false;
     } else {
         auto it = stdList.begin();
-        libList.traverse([&](const SizeType pos, const int &val) {
+        libList.traverse([&](const SizeType pos, const int& val) {
             UNUSED(pos);
             if (val != *it) {
                 correct = false;

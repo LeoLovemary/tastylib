@@ -8,9 +8,9 @@ using tastylib::DoublyLinkedList;
 typedef DoublyLinkedList<int>::SizeType SizeType;
 
 template<typename T>
-std::string getListContent(const DoublyLinkedList<T> &list) {
+std::string getListContent(const DoublyLinkedList<T>& list) {
     std::string str;
-    list.traverse([&](const SizeType pos, const T &val) {
+    list.traverse([&](const SizeType pos, const T& val) {
         UNUSED(pos);
         str += std::to_string(val);
     });

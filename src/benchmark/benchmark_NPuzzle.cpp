@@ -11,7 +11,7 @@ typedef PuzzleNode::Container Container;
 typedef PuzzleNode::SizeType SizeType;
 
 
-void benchmark(PuzzleNode &beg, PuzzleNode &end) {
+void benchmark(PuzzleNode& beg, PuzzleNode& end) {
     printLn("Benchmarking ", beg.getRowCount(), "*", end.getRowCount(), " puzzle...");
     NPuzzle puzzle(beg, end);
     printLn("Beg: ", beg.toString());

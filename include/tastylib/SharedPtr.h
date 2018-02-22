@@ -12,36 +12,36 @@ template<typename>
 class SharedPtr;
 
 template<typename T>
-void swap(SharedPtr<T> &lhs, SharedPtr<T> &rhs) {
+void swap(SharedPtr<T>& lhs, SharedPtr<T>& rhs) {
     lhs.swap(rhs);
 }
 
 template<typename T>
-void defaultDeleter(T *p) {
+void defaultDeleter(T* p) {
     delete p;
 }
 
 // Simplified version of std::shared_ptr.
 template<typename T>
 class SharedPtr {
-    friend void swap<T>(SharedPtr<T> &lhs, SharedPtr<T> &rhs);
+    friend void swap<T>(SharedPtr<T>& lhs, SharedPtr<T>& rhs);
 
 public:
     // Default ctor
     SharedPtr() : ptr(nullptr), refCnt(nullptr), deleter(defaultDeleter<T>) {}
 
     // Contruct from raw pointer (optional custom deleter)
-    explicit SharedPtr(T *p, const std::function<void(T*)> &d = defaultDeleter<T>)
+    explicit SharedPtr(T* p, const std::function<void(T*)>& d = defaultDeleter<T>)
         : ptr(p), refCnt(new std::size_t(1)), deleter(d) {}
 
     // Copy ctor
-    SharedPtr(const SharedPtr &other) : ptr(other.ptr), refCnt(other.refCnt),
+    SharedPtr(const SharedPtr& other) : ptr(other.ptr), refCnt(other.refCnt),
                                         deleter(other.deleter) {
         ++*refCnt;
     }
 
     // Move ctor
-    SharedPtr(SharedPtr &&other) : ptr(other.ptr), refCnt(other.refCnt),
+    SharedPtr(SharedPtr&& other) : ptr(other.ptr), refCnt(other.refCnt),
                                    deleter(std::move(other.deleter)) {
         other.ptr = nullptr;
         other.refCnt = nullptr;
@@ -59,7 +59,7 @@ public:
     }
 
     // Swap members with another SharedPtr
-    void swap(SharedPtr &rhs) {
+    void swap(SharedPtr& rhs) {
         using std::swap;
         swap(ptr, rhs.ptr);
         swap(refCnt, rhs.refCnt);
@@ -97,7 +97,7 @@ public:
     }
 
     // Reset pointer
-    void reset(T *p = nullptr) {
+    void reset(T* p = nullptr) {
         decreaseAndDestory();
         if (p) {
             ptr = p;
@@ -106,7 +106,7 @@ public:
     }
 
     // Reset pointer with custom deleter
-    void reset(T *p, const std::function<void(T*)> &d) {
+    void reset(T* p, const std::function<void(T*)>& d) {
         reset(p);
         deleter = d;
     }

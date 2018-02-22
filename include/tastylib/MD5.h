@@ -14,12 +14,12 @@ public:
     using UInt64 = std::uint64_t;
 
     // Forbid copy
-    MD5(const MD5 &) = delete;
-    MD5& operator=(const MD5 &) = delete;
+    MD5(const MD5&) = delete;
+    MD5& operator=(const MD5&) = delete;
 
     // Forbid move
-    MD5(MD5 &&) = delete;
-    MD5& operator=(MD5 &&) = delete;
+    MD5(MD5&&) = delete;
+    MD5& operator=(MD5&&) = delete;
 
     // Return the singleton instance
     static MD5* getInstance() {
@@ -33,7 +33,7 @@ public:
     @param msg The message to be hashed
     @return    The hashed string result
     */
-    std::string hash(const std::string &msg) {
+    std::string hash(const std::string& msg) {
         UInt32 a = 0x67452301, b = 0xefcdab89;
         UInt32 c = 0x98badcfe, d = 0x10325476;
         UInt32 groupNum = 0;
@@ -75,7 +75,7 @@ private:
     @param groupNum The number of the groups
     @return         The filled string stored in an array of 32-bit integer.
     */
-    UInt32* pad(const std::string &str, UInt32 &groupNum) {
+    UInt32* pad(const std::string& str, UInt32& groupNum) {
         UInt32 strLen = (UInt32)str.length();
 
         // Each group has 64 bytes = 512 bits.
@@ -108,7 +108,7 @@ private:
     @param group   The group to be processed
     @param a/b/c/d The four 32-bit integer of hashed text
     */
-    void loop(const UInt32 *const group, UInt32 &a, UInt32 &b, UInt32 &c, UInt32 &d) {
+    void loop(const UInt32 *const group, UInt32& a, UInt32& b, UInt32& c, UInt32& d) {
         UInt32 f, g;
         UInt32 A = a, B = b, C = c, D = d;
         for (int i = 0; i < 64; ++i) {  // Loop for 4 turns, process 16 times in each turn

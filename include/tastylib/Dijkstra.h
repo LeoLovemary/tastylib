@@ -38,7 +38,7 @@ If 'i' is the starting vertex, then graph[i].prev == graph.getSize() + 1.
 @param src   The starting vertex number
 */
 template<typename Value>
-void dijkstra(DijkGraph<Value> &graph,
+void dijkstra(DijkGraph<Value>& graph,
               const typename DijkGraph<Value>::NumType src) {
     using G          = DijkGraph<Value>;
     using NumType    = typename DijkGraph<Value>::NumType;

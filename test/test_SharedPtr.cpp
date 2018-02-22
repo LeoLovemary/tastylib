@@ -11,7 +11,7 @@ protected:
     static void SetUpTestCase() {
         deleteCnt = new std::size_t(0);
         deleter = new std::function<void(std::string*)>(
-            [](std::string *p) {
+            [](std::string* p) {
                 ++*deleteCnt;
                 delete p;
             }

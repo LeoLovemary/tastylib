@@ -29,11 +29,11 @@ class AVLTree {
 private:
     struct Node {
         Value val;
-        Node* left;
-        Node* right;
+        Node *left;
+        Node *right;
         int height;
 
-        Node(const Value &v, Node *const l = nullptr, Node *const r = nullptr)
+        Node(const Value& v, Node *const l = nullptr, Node *const r = nullptr)
             : val(v), left(l), right(r), height(0) {}
     };
 
@@ -44,11 +44,11 @@ public:
     AVLTree() : root(nullptr), size(0) {}
 
     // Forbid copy
-    AVLTree(const AVLTree &) = delete;
-    AVLTree& operator=(const AVLTree &) = delete;
+    AVLTree(const AVLTree&) = delete;
+    AVLTree& operator=(const AVLTree&) = delete;
 
     // Move ctor
-    AVLTree(AVLTree &&other) : root(other.root), size(other.size),
+    AVLTree(AVLTree&& other) : root(other.root), size(other.size),
                                predEq(std::move(other.predEq)),
                                predCmp(std::move(other.predCmp)) {
         other.root = nullptr;
@@ -56,7 +56,7 @@ public:
     }
 
     // Move assignment
-    AVLTree& operator=(AVLTree &&other) {
+    AVLTree& operator=(AVLTree&& other) {
         if (this != &other) {
             clear();
             root = other.root;
@@ -92,18 +92,18 @@ public:
     }
 
     // Return true if a given value is in the tree
-    bool has(const Value &val) const {
+    bool has(const Value& val) const {
         return !!find(val, root);
     }
 
     // Insert a value
-    void insert(const Value &val) {
+    void insert(const Value& val) {
         root = insertBalance(val, root);
         ++size;
     }
 
     // Remove all nodes with a given value in the tree
-    void remove(const Value &val) {
+    void remove(const Value& val) {
         while (has(val)) {
             root = removeBalance(val, root);
             --size;
@@ -118,7 +118,7 @@ public:
         bool first = true;
         std::ostringstream oss;
         oss << "{";
-        traversePostorder(root, [&](const Value &val) {
+        traversePostorder(root, [&](const Value& val) {
             if (!first) {
                 oss << ", ";
             }
@@ -137,7 +137,7 @@ public:
         bool first = true;
         std::ostringstream oss;
         oss << "{";
-        traverseInorder(root, [&](const Value &val) {
+        traverseInorder(root, [&](const Value& val) {
             if (!first) {
                 oss << ", ";
             }
@@ -156,7 +156,7 @@ public:
         bool first = true;
         std::ostringstream oss;
         oss << "{";
-        traversePreorder(root, [&](const Value &val) {
+        traversePreorder(root, [&](const Value& val) {
             if (!first) {
                 oss << ", ";
             }
@@ -185,7 +185,7 @@ private:
     @return    The pointer of the node that has the given value.
                Return nullptr if the node does not exist.
     */
-    Node* find(const Value &val, Node *const r) const {
+    Node* find(const Value& val, Node *const r) const {
         if (!r || predEq(val, r->val)) {
             return r;
         } else if (predCmp(val, r->val)) {
@@ -202,7 +202,7 @@ private:
     @param f The function to manipulate each node value.
     */
     void traversePostorder(const Node *const r,
-                           const std::function<void(const Value&)> &f) const {
+                           const std::function<void(const Value&)>& f) const {
         if (r) {
             traversePostorder(r->left, f);
             traversePostorder(r->right, f);
@@ -217,7 +217,7 @@ private:
     @param f The function to manipulate each node value.
     */
     void traverseInorder(const Node *const r,
-                         const std::function<void(const Value&)> &f) const {
+                         const std::function<void(const Value&)>& f) const {
         if (r) {
             traverseInorder(r->left, f);
             f(r->val);
@@ -232,7 +232,7 @@ private:
     @param f The function to manipulate each node value.
     */
     void traversePreorder(const Node *const r,
-                          const std::function<void(const Value&)> &f) const {
+                          const std::function<void(const Value&)>& f) const {
         if (r) {
             f(r->val);
             traversePreorder(r->left, f);
@@ -247,7 +247,7 @@ private:
     @param r   The root of the tree
     @return    The new root of the tree that has been inserted
     */
-    Node* insertBalance(const Value &val, Node *r) {
+    Node* insertBalance(const Value& val, Node* r) {
         if (!r) {
             r = new Node(val);
         } else if (predCmp(val, r->val)) {
@@ -281,14 +281,14 @@ private:
     @param r   The root of the tree
     @return    The new root of the tree that has been removed
     */
-    Node* removeBalance(const Value &val, Node *r) {
+    Node* removeBalance(const Value& val, Node* r) {
         if (predEq(val, r->val)) {
             if (r->left && r->right) {  // Two child
-                Node* node = leftmost(r->right);
+                Node *node = leftmost(r->right);
                 r->val = node->val;
                 r->right = removeBalance(node->val, r->right);
             } else {  // One or zero child
-                Node* del = r;
+                Node *del = r;
                 r = !r->left ? r->right : r->left;
                 delete del;
             }
@@ -346,7 +346,7 @@ private:
     @return  The new root of the rotated tree
     */
     Node* rotateSingleLeft(Node *const r) {
-        Node* leftChild = r->left;
+        Node *leftChild = r->left;
         r->left = leftChild->right;
         leftChild->right = r;
         updateHeight(r);
@@ -362,7 +362,7 @@ private:
     @return  The new root of the rotated tree
     */
     Node* rotateSingleRight(Node *const r) {
-        Node* rightChild = r->right;
+        Node *rightChild = r->right;
         r->right = rightChild->left;
         rightChild->left = r;
         updateHeight(r);

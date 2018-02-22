@@ -55,7 +55,7 @@ public:
     }
 
     // Return true if a given value is in the hash table
-    bool has(const Value &val) const {
+    bool has(const Value& val) const {
         const auto &list = buckets[hash(val)];
         return list.find(val) != -1;
     }
@@ -66,7 +66,7 @@ public:
 
     @param val The value to be inserted
     */
-    void insert(const Value &val) {
+    void insert(const Value& val) {
         auto &list = buckets[hash(val)];
         if (list.find(val) == -1) {
             list.insertBack(val);
@@ -80,7 +80,7 @@ public:
 
     @param val The value to be removed
     */
-    void remove(const Value &val) {
+    void remove(const Value& val) {
         auto &list = buckets[hash(val)];
         auto pos = list.find(val);
         if (pos != -1) {
@@ -105,7 +105,7 @@ public:
         Container oldBuckets = std::move(buckets);
         buckets.resize(bucketNum);
         for (SizeType i = 0; i < oldNum; ++i) {
-            oldBuckets[i].traverse([&](const SizeType pos, const Value &val) {
+            oldBuckets[i].traverse([&](const SizeType pos, const Value& val) {
                 UNUSED(pos);
                 insert(val);
             });
@@ -119,7 +119,7 @@ private:
     @param val The element
     @return The hash value of the element
     */
-    SizeType hash(const Value &val) const {
+    SizeType hash(const Value& val) const {
         return (SizeType)(hasher(val) & (bucketNum - 1));
     }
 

@@ -41,7 +41,7 @@ public:
     @param row_ The row amount
     @param col_ The column amount
     */
-    PuzzleNode(const Container &val_, const SizeType row_, const SizeType col_)
+    PuzzleNode(const Container& val_, const SizeType row_, const SizeType col_)
         : val(val_), row(row_), col(col_) {
         for (SizeType i = 0; i < val.size(); ++i) {
             if (val[i] == 0) {
@@ -149,11 +149,11 @@ public:
         return NONE;
     }
 
-    bool operator==(const PuzzleNode &n) const {
+    bool operator==(const PuzzleNode& n) const {
         return getVal() == n.getVal();
     }
 
-    bool operator>=(const PuzzleNode &n) const {
+    bool operator>=(const PuzzleNode& n) const {
         return getF() >= n.getF();
     }
 
@@ -206,7 +206,7 @@ private:
     @param des   The destination node
     @param index The index of each number in the destination node value array
     */
-    SizeType heuristic(const PuzzleNode *const des, const std::vector<SizeType> &index) const {
+    SizeType heuristic(const PuzzleNode *const des, const std::vector<SizeType>& index) const {
         SizeType size = val.size();
 
         // Number of nodes which are in a wrong position
@@ -243,7 +243,7 @@ private:
         h = h_;
     }
 
-    void setParent(PuzzleNode *p) {
+    void setParent(PuzzleNode* p) {
         parent = p;
     }
 
@@ -283,7 +283,7 @@ public:
     using Node = PuzzleNode;
     using SizeType = Node::SizeType;
 
-    NPuzzle(const Node &beg_, const Node &end_)
+    NPuzzle(const Node& beg_, const Node& end_)
         : beg(beg_), end(end_), closeList(1000000) {}
 
     void solve() {
@@ -373,7 +373,7 @@ private:
     }
 
     // Build a path from the beginning node to the destination node
-    void buildPath(const Node *des) {
+    void buildPath(const Node* des) {
         path.clear();
         while (des) {
             auto parent = des->getParent();

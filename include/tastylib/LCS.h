@@ -15,7 +15,7 @@ Return the length of the longest common subsequence of two subsequences.
 @param s1 The first subsequence
 @param s2 The second subsequence
 */
-inline std::size_t LCSubseq(const std::string &s1, const std::string &s2) {
+inline std::size_t LCSubseq(const std::string& s1, const std::string& s2) {
     if (s1.empty() || s2.empty()) {
         return 0;
     }
@@ -38,7 +38,7 @@ Return the length of the longest common substring of two subsequences.
 @param s1 The first subsequence
 @param s2 The second subsequence
 */
-inline std::size_t LCSubstr(const std::string &s1, const std::string &s2) {
+inline std::size_t LCSubstr(const std::string& s1, const std::string& s2) {
     if (s1.empty() || s2.empty()) {
         return 0;
     }

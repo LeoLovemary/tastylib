@@ -11,7 +11,7 @@ void printLn() {
 }
 
 template<typename T, typename... Args>
-void printLn(const T &first, const Args... rest) {
+void printLn(const T& first, const Args&... rest) {
     std::cout << first;
     printLn(rest...);
 }

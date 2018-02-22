@@ -1,7 +1,6 @@
 /*
- * Implementations of the Text-Query program
- * from §12.3 & §15.9, C++ Primer, 5th Edition.
- */
+Implementations of the Text-Query program from §12.3 & §15.9, C++ Primer, 5th Edition.
+*/
 #ifndef TASTYLIB_TEXTQUERY_H_
 #define TASTYLIB_TEXTQUERY_H_
 
@@ -22,9 +21,9 @@ class TextQuery {
 public:
     using LineNo = std::vector<std::string>::size_type;
 
-    explicit TextQuery(std::istream &is);
+    explicit TextQuery(std::istream& is);
 
-    QueryResult query(const std::string &word) const;
+    QueryResult query(const std::string& word) const;
 
 private:
     static bool isPunc(const char c);
@@ -40,14 +39,14 @@ class QueryBase;
 
 // Public interface for query
 class Query {
-    friend Query operator~(const Query &q);
-    friend Query operator&(const Query &lhs, const Query &rhs);
-    friend Query operator|(const Query &lhs, const Query &rhs);
+    friend Query operator~(const Query& q);
+    friend Query operator&(const Query& lhs, const Query& rhs);
+    friend Query operator|(const Query& lhs, const Query& rhs);
 
 public:
-    explicit Query(const std::string &word);  // Create a WordQuery
+    explicit Query(const std::string& word);  // Create a WordQuery
 
-    QueryResult eval(const TextQuery &tq) const;
+    QueryResult eval(const TextQuery& tq) const;
 
     std::string rep() const;
 
@@ -68,7 +67,7 @@ protected:
     virtual ~QueryBase() = default;
 
 private:
-    virtual QueryResult eval(const TextQuery &tq) const = 0;
+    virtual QueryResult eval(const TextQuery& tq) const = 0;
     virtual std::string rep() const = 0;
 };
 
@@ -77,9 +76,9 @@ class WordQuery: public QueryBase {
     friend class Query;
 
 private:
-    explicit WordQuery(const std::string &w);
+    explicit WordQuery(const std::string& w);
 
-    virtual QueryResult eval(const TextQuery &tq) const;
+    virtual QueryResult eval(const TextQuery& tq) const;
 
     virtual std::string rep() const;
 
@@ -89,12 +88,12 @@ private:
 
 // NOT logic query
 class NotQuery: public QueryBase {
-    friend Query operator~(const Query &q);
+    friend Query operator~(const Query& q);
 
 private:
-    explicit NotQuery(const Query &q);
+    explicit NotQuery(const Query& q);
 
-    virtual QueryResult eval(const TextQuery &tq) const;
+    virtual QueryResult eval(const TextQuery& tq) const;
 
     virtual std::string rep() const;
 
@@ -105,7 +104,7 @@ private:
 // Base class for two-operand query
 class BinaryQuery: public QueryBase {
 protected:
-    BinaryQuery(const Query &l, const Query &r, const std::string &o);
+    BinaryQuery(const Query& l, const Query& r, const std::string& o);
 
     virtual std::string rep() const;
 
@@ -117,22 +116,22 @@ protected:
 
 // OR logic query
 class OrQuery: public BinaryQuery {
-    friend Query operator|(const Query &lhs, const Query &rhs);
+    friend Query operator|(const Query& lhs, const Query& rhs);
 
 private:
-    OrQuery(const Query &l, const Query &r);
+    OrQuery(const Query& l, const Query& r);
 
-    virtual QueryResult eval(const TextQuery &tq) const;
+    virtual QueryResult eval(const TextQuery& tq) const;
 };
 
 // AND logic query
 class AndQuery: public BinaryQuery {
-    friend Query operator&(const Query &lhs, const Query &rhs);
+    friend Query operator&(const Query& lhs, const Query& rhs);
 
 private:
-    AndQuery(const Query &l, const Query &r);
+    AndQuery(const Query& l, const Query& r);
 
-    virtual QueryResult eval(const TextQuery &tq) const;
+    virtual QueryResult eval(const TextQuery& tq) const;
 };
 
 // Query result from TextQuery
@@ -141,12 +140,12 @@ class QueryResult {
     friend class OrQuery;
     friend class AndQuery;
 
-    friend std::ostream& operator<<(std::ostream &os, const QueryResult &res);
+    friend std::ostream& operator<<(std::ostream& os, const QueryResult& res);
 
 public:
     using LineNo = TextQuery::LineNo;
 
-    QueryResult(const std::string &s,
+    QueryResult(const std::string& s,
                 std::shared_ptr<std::vector<std::string>> t,
                 std::shared_ptr<std::set<LineNo>> l);
 

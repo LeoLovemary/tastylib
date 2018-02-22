@@ -10,14 +10,14 @@ template<typename, typename>
 class UniquePtr;
 
 template<typename T, typename D>
-void swap(UniquePtr<T, D> &lhs, UniquePtr<T, D> &rhs) {
+void swap(UniquePtr<T, D>& lhs, UniquePtr<T, D>& rhs) {
     lhs.swap(rhs);
 }
 
 class DefaultDeleter {
 public:
     template<typename T>
-    void operator()(T *p) const {
+    void operator()(T* p) const {
         delete p;
     }
 };
@@ -25,26 +25,26 @@ public:
 // Simplified version of std::unique_ptr
 template<typename T, typename D = DefaultDeleter>
 class UniquePtr {
-    friend void swap<T, D>(UniquePtr<T, D> &lhs, UniquePtr<T, D> &rhs);
+    friend void swap<T, D>(UniquePtr<T, D>& lhs, UniquePtr<T, D>& rhs);
 
 public:
     // Default ctor (optional custom deleter)
-    UniquePtr(const D &d = D()) : UniquePtr(nullptr, d) {}
+    UniquePtr(const D& d = D()) : UniquePtr(nullptr, d) {}
 
     // Construct from raw pointer (optional custom deleter)
-    explicit UniquePtr(T *p, const D &d = D()) : ptr(p), deleter(d) {}
+    explicit UniquePtr(T* p, const D& d = D()) : ptr(p), deleter(d) {}
 
     // Forbid copy
-    UniquePtr(const UniquePtr &) = delete;
-    UniquePtr& operator=(const UniquePtr &) = delete;
+    UniquePtr(const UniquePtr&) = delete;
+    UniquePtr& operator=(const UniquePtr&) = delete;
 
     // Move ctor
-    UniquePtr(UniquePtr &&other) : ptr(other.ptr), deleter(std::move(other.deleter)) {
+    UniquePtr(UniquePtr&& other) : ptr(other.ptr), deleter(std::move(other.deleter)) {
         other.ptr = nullptr;
     }
 
     // Move assignment
-    UniquePtr& operator=(UniquePtr &&rhs) {
+    UniquePtr& operator=(UniquePtr&& rhs) {
         if (this != &rhs) {
             del();
             ptr = rhs.ptr;
@@ -66,7 +66,7 @@ public:
     }
 
     // Swap members with another UniquePtr
-    void swap(UniquePtr &rhs) {
+    void swap(UniquePtr& rhs) {
         using std::swap;
         swap(ptr, rhs.ptr);
         swap(deleter, rhs.deleter);
@@ -100,7 +100,7 @@ public:
     }
 
     // Reset underlying pointer
-    void reset(T *p = nullptr) {
+    void reset(T* p = nullptr) {
         del();
         ptr = p;
     }

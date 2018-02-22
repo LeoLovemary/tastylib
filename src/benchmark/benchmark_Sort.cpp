@@ -27,7 +27,7 @@ int main() {
         std::vector<double> time(METHOD_NUM, 0);
 
         // Array of each sorting method
-        std::vector<int *> method(METHOD_NUM, nullptr);
+        std::vector<int*> method(METHOD_NUM, nullptr);
         for (int i = 0; i < METHOD_NUM; ++i) {
             method[i] = new int[SIZE];
         }

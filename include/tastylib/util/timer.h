@@ -13,7 +13,7 @@ inline double elapse(const std::clock_t start) {
 }
 
 // Run a function and compute its execution time
-inline double timing(const std::function<void()> &f) {
+inline double timing(const std::function<void()>& f) {
     auto start = clock();
     f();
     return elapse(start);

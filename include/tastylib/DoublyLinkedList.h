@@ -23,7 +23,7 @@ private:
         Node *prev;
         Node *next;
 
-        Node(const Value &v, Node *p = nullptr, Node *n = nullptr)
+        Node(const Value& v, Node *p = nullptr, Node *n = nullptr)
             : val(v), prev(p), next(n) {}
     };
 
@@ -34,11 +34,11 @@ public:
     DoublyLinkedList() : size(0), head(nullptr), tail(nullptr) {}
 
     // Forbid copy
-    DoublyLinkedList(const DoublyLinkedList &) = delete;
-    DoublyLinkedList& operator=(const DoublyLinkedList &) = delete;
+    DoublyLinkedList(const DoublyLinkedList&) = delete;
+    DoublyLinkedList& operator=(const DoublyLinkedList&) = delete;
 
     // Move ctor
-    DoublyLinkedList(DoublyLinkedList &&other)
+    DoublyLinkedList(DoublyLinkedList&& other)
         : size(other.size), head(other.head), tail(other.tail) {
         other.size = 0;
         other.head = nullptr;
@@ -46,7 +46,7 @@ public:
     }
 
     // Move assignment
-    DoublyLinkedList& operator=(DoublyLinkedList &&other) {
+    DoublyLinkedList& operator=(DoublyLinkedList&& other) {
         if (this != &other) {
             clear();
             size = other.size;
@@ -76,7 +76,7 @@ public:
 
     // Clear the content of the list
     void clear() {
-        Node *tmp = head, *del;
+        Node *tmp = head, *del = nullptr;
         while (tmp) {
             del = tmp;
             tmp = tmp->next;
@@ -94,7 +94,7 @@ public:
              @param val The value of the current traversing node
     */
     void traverse(const std::function<
-                  void(const SizeType pos, const Value &val)> &f) const {
+                  void(const SizeType pos, const Value& val)>& f) const {
         SizeType pos = 0;
         for (Node *tmp = head; tmp; tmp = tmp->next, ++pos) {
             f(pos, tmp->val);
@@ -108,7 +108,7 @@ public:
     @return     The first matching position of the node with value 'val_'.
                 If the node does not exist, return -1.
     */
-    int find(const Value &val_) const {
+    int find(const Value& val_) const {
         Pred pred;
         SizeType pos = 0;
         for (Node *tmp = head; tmp; tmp = tmp->next, ++pos) {
@@ -126,7 +126,7 @@ public:
     @param pos The position to insert the node
     @param val The value of the node to be inserted
     */
-    void insert(SizeType pos, const Value &val) {
+    void insert(SizeType pos, const Value& val) {
         pos = (pos > size ? size : pos);
         if (pos == 0) {
             insertFront(val);
@@ -156,7 +156,7 @@ public:
     }
 
     // Insert a node at the front of the list
-    void insertFront(const Value &val) {
+    void insertFront(const Value& val) {
         Node *newNode = new Node(val, nullptr, head);
         if (head) {
             head->prev = newNode;
@@ -168,7 +168,7 @@ public:
     }
 
     // Insert a node at the back of the list
-    void insertBack(const Value &val) {
+    void insertBack(const Value& val) {
         Node *newNode = new Node(val, tail, nullptr);
         if (tail) {
             tail->next = newNode;
@@ -259,7 +259,7 @@ public:
                cmp(A.value, B.value) == true.
     */
     template<typename Comparator>
-    void sort(const Comparator &cmp) {
+    void sort(const Comparator& cmp) {
         head = mergeSort(head, size, cmp);
     }
 
@@ -274,7 +274,7 @@ private:
                     node at the given position.
     @return         The pointer to the best node.
     */
-    Node* getBestNode(const SizeType &pos, bool &prevNode) const {
+    Node* getBestNode(const SizeType& pos, bool& prevNode) const {
         Node *res = nullptr;
         SizeType distToHead = pos - 1, distToTail = size - pos - 1;
         if (distToHead < distToTail) {
@@ -302,7 +302,7 @@ private:
     @return      The head pointer of the sorted list
     */
     template<typename Comparator>
-    Node* mergeSort(Node *h, const SizeType size_, const Comparator &cmp) {
+    Node* mergeSort(Node* h, const SizeType size_, const Comparator& cmp) {
         if (size_ < 2) {
             return h;
         }
