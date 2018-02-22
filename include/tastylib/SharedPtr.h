@@ -21,6 +21,11 @@ void defaultDeleter(T* p) {
     delete p;
 }
 
+template<typename T, typename... Args>
+SharedPtr<T> makeShared(Args&&... args) {
+    return SharedPtr<T>(new T(std::forward<Args>(args)...));
+}
+
 // Simplified version of std::shared_ptr.
 template<typename T>
 class SharedPtr {

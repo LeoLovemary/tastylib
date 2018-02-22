@@ -3,6 +3,7 @@
 #include <string>
 
 using tastylib::SharedPtr;
+using tastylib::makeShared;
 
 
 class SharedPtrTest: public ::testing::Test {
@@ -38,7 +39,7 @@ TEST_F(SharedPtrTest, Basic) {
     EXPECT_EQ(p1.unique(), false);
     EXPECT_EQ(p1.useCount(), 0);
 
-    SharedPtr<std::string> p2(new std::string("hello world"));
+    auto p2 = makeShared<std::string>("hello world");
     EXPECT_EQ(static_cast<bool>(p2), true);
     EXPECT_EQ(p2.unique(), true);
     EXPECT_EQ(p2.useCount(), 1);
@@ -59,7 +60,7 @@ TEST_F(SharedPtrTest, Basic) {
 TEST_F(SharedPtrTest, Reset) {
     *deleteCnt = 0;
 
-    SharedPtr<std::string> p1(new std::string("hello world"));
+    auto p1 = makeShared<std::string>("hello world");
     EXPECT_EQ(p1.useCount(), 1);
     EXPECT_EQ(*p1.get(), "hello world");
 
@@ -83,7 +84,7 @@ TEST_F(SharedPtrTest, CopyControl1) {
     SharedPtr<std::string> p1;
     EXPECT_EQ(p1.useCount(), 0);
 
-    p1 = SharedPtr<std::string>(new std::string("hello world"));
+    p1 = makeShared<std::string>("hello world");
     EXPECT_EQ(p1.useCount(), 1);
 
     SharedPtr<std::string> p2 = p1;
