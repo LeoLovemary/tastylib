@@ -16,13 +16,13 @@ public:
     }
 
     // Return a random real number in [min, max)
-    template<typename RealType>
-    RealType nextReal(const RealType min = 0, const RealType max = 1) {
+    template<typename RealType = double>
+    RealType nextReal(const RealType min = 0.0, const RealType max = 1.0) {
         return std::uniform_real_distribution<RealType>(min, max)(engine);
     }
 
     // Return a random integer in [min, max]
-    template<typename IntType>
+    template<typename IntType = int>
     IntType nextInt(const IntType min, const IntType max) {
         return std::uniform_int_distribution<IntType>(min, max)(engine);
     }

@@ -51,8 +51,12 @@
 
 #include <type_traits>
 
-using namespace tastylib;
+#include <tuple>
+#include <bitset>
+#include <regex>
+#include <random>
 
+using namespace tastylib;
 
 int main() {
     return 0;
