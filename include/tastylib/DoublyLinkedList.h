@@ -23,7 +23,7 @@ private:
         Node *prev;
         Node *next;
 
-        Node(const Value& v, Node *p = nullptr, Node *n = nullptr)
+        Node(const Value& v, Node *p = nullptr, Node *n = nullptr) noexcept
             : val(v), prev(p), next(n) {}
     };
 
@@ -31,14 +31,14 @@ public:
     using SizeType = std::size_t;
 
     // Default ctor
-    DoublyLinkedList() : size(0), head(nullptr), tail(nullptr) {}
+    DoublyLinkedList() noexcept : size(0), head(nullptr), tail(nullptr) {}
 
     // Forbid copy
     DoublyLinkedList(const DoublyLinkedList&) = delete;
     DoublyLinkedList& operator=(const DoublyLinkedList&) = delete;
 
     // Move ctor
-    DoublyLinkedList(DoublyLinkedList&& other)
+    DoublyLinkedList(DoublyLinkedList&& other) noexcept
         : size(other.size), head(other.head), tail(other.tail) {
         other.size = 0;
         other.head = nullptr;
@@ -46,7 +46,7 @@ public:
     }
 
     // Move assignment
-    DoublyLinkedList& operator=(DoublyLinkedList&& other) {
+    DoublyLinkedList& operator=(DoublyLinkedList&& other) noexcept {
         if (this != &other) {
             clear();
             size = other.size;
@@ -60,22 +60,22 @@ public:
     }
 
     // Dtor
-    ~DoublyLinkedList() {
+    ~DoublyLinkedList() noexcept {
         clear();
     }
 
     // Return the amount of nodes in the list
-    SizeType getSize() const {
+    SizeType getSize() const noexcept {
         return size;
     }
 
     // Return true if the list is empty
-    bool isEmpty() const {
+    bool isEmpty() const noexcept {
         return size == 0;
     }
 
     // Clear the content of the list
-    void clear() {
+    void clear() noexcept {
         Node *tmp = head, *del = nullptr;
         while (tmp) {
             del = tmp;
@@ -185,7 +185,7 @@ public:
 
     @param pos The position of the node to be removed
     */
-    void remove(SizeType pos) {
+    void remove(SizeType pos) noexcept {
         if (pos >= size) {
             return;
         }
@@ -216,7 +216,7 @@ public:
     }
 
     // Remove the first node of the list
-    void removeFront() {
+    void removeFront() noexcept {
         if (isEmpty()) {
             return;
         }
@@ -231,7 +231,7 @@ public:
     }
 
     // Remove the last node of the list
-    void removeBack() {
+    void removeBack() noexcept {
         if (isEmpty()) {
             return;
         }
@@ -274,7 +274,7 @@ private:
                     node at the given position.
     @return         The pointer to the best node.
     */
-    Node* getBestNode(const SizeType& pos, bool& prevNode) const {
+    Node* getBestNode(const SizeType& pos, bool& prevNode) const noexcept {
         Node *res = nullptr;
         SizeType distToHead = pos - 1, distToTail = size - pos - 1;
         if (distToHead < distToTail) {

@@ -108,7 +108,7 @@ private:
     @param group   The group to be processed
     @param a/b/c/d The four 32-bit integer of hashed text
     */
-    void loop(const UInt32 *const group, UInt32& a, UInt32& b, UInt32& c, UInt32& d) {
+    void loop(const UInt32 *const group, UInt32& a, UInt32& b, UInt32& c, UInt32& d) noexcept {
         UInt32 f, g;
         UInt32 A = a, B = b, C = c, D = d;
         for (int i = 0; i < 64; ++i) {  // Loop for 4 turns, process 16 times in each turn
@@ -161,7 +161,7 @@ private:
     @param shiftCnt The shift count
     @return         The number after shifted
     */
-    UInt32 cycleShiftLeft(const UInt32 num, const UInt32 shiftCnt) {
+    UInt32 cycleShiftLeft(const UInt32 num, const UInt32 shiftCnt) noexcept {
         return (num << shiftCnt) | (num >> (32 - shiftCnt));
     }
 

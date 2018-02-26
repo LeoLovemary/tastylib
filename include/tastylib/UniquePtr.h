@@ -17,7 +17,7 @@ void swap(UniquePtr<T, D>& lhs, UniquePtr<T, D>& rhs) {
 class DefaultDeleter {
 public:
     template<typename T>
-    void operator()(T* p) const {
+    void operator()(T* p) const noexcept {
         delete p;
     }
 };
@@ -54,14 +54,14 @@ public:
         return *this;
     }
 
-    //Nullptr assignment
-    UniquePtr& operator=(std::nullptr_t) {
+    // Nullptr assignment
+    UniquePtr& operator=(std::nullptr_t) noexcept {
         del();
         return *this;
     }
 
     // Dtor
-    ~UniquePtr() {
+    ~UniquePtr() noexcept {
         del();
     }
 
@@ -73,40 +73,40 @@ public:
     }
 
     // Safe bool conversion
-    explicit operator bool() const {
+    explicit operator bool() const noexcept {
         return ptr != nullptr;
     }
 
     // Dereference operator
-    T& operator*() const {
+    T& operator*() const noexcept {
         return *ptr;
     }
 
     // Member access operator
-    T* operator->() const {
+    T* operator->() const noexcept {
         return ptr;
     }
 
     // Return underlying pointer
-    T* get() const {
+    T* get() const noexcept {
         return ptr;
     }
 
     // Relinquish control of the underlying pointer
-    T* release() {
+    T* release() noexcept {
         T *ret = ptr;
         ptr = nullptr;
         return ret;
     }
 
     // Reset underlying pointer
-    void reset(T* p = nullptr) {
+    void reset(T* p = nullptr) noexcept {
         del();
         ptr = p;
     }
 
 private:
-    void del() {
+    void del() noexcept {
         if (ptr) {
             deleter(ptr);
             ptr = nullptr;

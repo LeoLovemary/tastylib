@@ -48,17 +48,17 @@ public:
     }
 
     // Return the amount of elements in the heap
-    SizeType getSize() const {
+    SizeType getSize() const noexcept {
         return size;
     }
 
     // Return true if the heap has no elements
-    bool isEmpty() const {
+    bool isEmpty() const noexcept {
         return size == 0;
     }
 
     // Clear the elements in the heap
-    void clear() {
+    void clear() noexcept {
         size = 0;
     }
 

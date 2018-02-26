@@ -35,7 +35,7 @@ QueryResult TextQuery::query(const std::string& word) const {
     }
 }
 
-bool TextQuery::isPunc(const char c) {
+bool TextQuery::isPunc(const char c) noexcept {
     return c == '.' || c == ',' || c == '?' || c == '\'' || c == '\"';
 }
 
@@ -43,7 +43,7 @@ bool TextQuery::isPunc(const char c) {
 
 Query::Query(const std::string& word) : p(new WordQuery(word)) {}
 
-Query::Query(const std::shared_ptr<QueryBase> p_) : p(p_) {}
+Query::Query(const std::shared_ptr<QueryBase> p_) noexcept : p(p_) {}
 
 QueryResult Query::eval(const TextQuery& tq) const {
     return p->eval(tq);

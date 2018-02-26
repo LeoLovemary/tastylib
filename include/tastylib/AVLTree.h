@@ -33,7 +33,7 @@ private:
         Node *right;
         int height;
 
-        Node(const Value& v, Node *const l = nullptr, Node *const r = nullptr)
+        Node(const Value& v, Node *const l = nullptr, Node *const r = nullptr) noexcept
             : val(v), left(l), right(r), height(0) {}
     };
 
@@ -41,7 +41,7 @@ public:
     using SizeType = std::size_t;
 
     // Default ctor
-    AVLTree() : root(nullptr), size(0) {}
+    AVLTree() noexcept : root(nullptr), size(0) {}
 
     // Forbid copy
     AVLTree(const AVLTree&) = delete;
@@ -70,22 +70,22 @@ public:
     }
 
     // Dtor
-    ~AVLTree() {
+    ~AVLTree() noexcept {
         clear();
     }
 
     // Return true if there are no elements in the tree
-    bool isEmpty() const {
+    bool isEmpty() const noexcept {
         return size == 0;
     }
 
     // Return the amount of elements in the tree
-    SizeType getSize() const {
+    SizeType getSize() const noexcept {
         return size;
     }
 
     // Remove all nodes and free the resources
-    void clear() {
+    void clear() noexcept {
         release(root);
         size = 0;
         root = nullptr;
@@ -169,7 +169,7 @@ public:
 
 private:
     // Remove all nodes of a tree and free the resources.
-    void release(Node *const root) {
+    void release(Node *const root) noexcept {
         if (root) {
             release(root->left);
             release(root->right);
@@ -319,7 +319,7 @@ private:
     }
 
     // Return the leftmost node in a tree
-    Node* leftmost(Node *const root) const {
+    Node* leftmost(Node *const root) const noexcept {
         if (!root || !root->left) {
             return root;
         } else {
@@ -328,12 +328,12 @@ private:
     }
 
     // Return the height of a tree. (height of the empty tree equals -1)
-    int height(const Node *const root) const {
+    int height(const Node *const root) const noexcept {
         return root ? root->height : -1;
     }
 
     // Update the height of a tree
-    void updateHeight(Node *const root) {
+    void updateHeight(Node *const root) noexcept {
         int lh = height(root->left), rh = height(root->right);
         root->height = 1 + (lh > rh ? lh : rh);
     }
@@ -345,7 +345,7 @@ private:
     @param r The root of the tree
     @return  The new root of the rotated tree
     */
-    Node* rotateSingleLeft(Node *const r) {
+    Node* rotateSingleLeft(Node *const r) noexcept {
         Node *leftChild = r->left;
         r->left = leftChild->right;
         leftChild->right = r;
@@ -361,7 +361,7 @@ private:
     @param r The root of the tree
     @return  The new root of the rotated tree
     */
-    Node* rotateSingleRight(Node *const r) {
+    Node* rotateSingleRight(Node *const r) noexcept {
         Node *rightChild = r->right;
         r->right = rightChild->left;
         rightChild->left = r;
@@ -377,7 +377,7 @@ private:
     @param r The root of the tree
     @return  The new root of the rotated tree
     */
-    Node* rotateDoubleLeft(Node *const r) {
+    Node* rotateDoubleLeft(Node *const r) noexcept {
         r->left = rotateSingleRight(r->left);
         return rotateSingleLeft(r);
     }
@@ -389,7 +389,7 @@ private:
     @param r The root of the tree
     @return  The new root of the rotated tree
     */
-    Node* rotateDoubleRight(Node *const r) {
+    Node* rotateDoubleRight(Node *const r) noexcept {
         r->right = rotateSingleLeft(r->right);
         return rotateSingleRight(r);
     }

@@ -8,7 +8,7 @@
 TASTYLIB_NS_BEGIN
 
 // Return elapsed milliseconds from the starting clock time
-inline double elapse(const std::clock_t start) {
+inline double elapse(const std::clock_t start) noexcept {
     return 1000 * (clock() - start) / (double)CLOCKS_PER_SEC;
 }
 

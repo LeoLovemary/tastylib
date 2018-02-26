@@ -51,17 +51,17 @@ public:
     }
 
     // Return the amount of rows
-    SizeType getRowCount() const {
+    SizeType getRowCount() const noexcept {
         return row;
     }
 
     // Return the amount of columns
-    SizeType getColCount() const {
+    SizeType getColCount() const noexcept {
         return col;
     }
 
     // Return true if the empty grid can move one step along a given direction
-    bool canMove(const Direc d) const {
+    bool canMove(const Direc d) const noexcept {
         switch (d) {
             case LEFT:
                 return getCol(emptyPos) != 0;
@@ -133,7 +133,7 @@ public:
 
     @param n The given adjacent node
     */
-    Direc getDirectionTo(const PuzzleNode *const n) const {
+    Direc getDirectionTo(const PuzzleNode *const n) const noexcept {
         if (n) {
             int offset = (int)emptyPos - (int)n->emptyPos;
             if (offset == -1) {
@@ -149,17 +149,17 @@ public:
         return NONE;
     }
 
-    bool operator==(const PuzzleNode& n) const {
+    bool operator==(const PuzzleNode& n) const noexcept {
         return getVal() == n.getVal();
     }
 
-    bool operator>=(const PuzzleNode& n) const {
+    bool operator>=(const PuzzleNode& n) const noexcept {
         return getF() >= n.getF();
     }
 
 private:
     // Return the node value
-    const Container& getVal() const {
+    const Container& getVal() const noexcept {
         return val;
     }
 
@@ -174,7 +174,7 @@ private:
     @param i The given index
     @return  The row number in interval [0, row - 1]
     */
-    SizeType getRow(const SizeType i) const {
+    SizeType getRow(const SizeType i) const noexcept {
         return i / col;
     }
 
@@ -184,7 +184,7 @@ private:
     @param i The given index
     @return  The row number in interval [0, col - 1]
     */
-    SizeType getCol(const SizeType i) const {
+    SizeType getCol(const SizeType i) const noexcept {
         return i % col;
     }
 
@@ -235,27 +235,27 @@ private:
         return 5 * (1 * wrong + 2 * manhatten + 1 * geometric);
     }
 
-    void setG(const SizeType g_) {
+    void setG(const SizeType g_) noexcept {
         g = g_;
     }
 
-    void setH(const SizeType h_) {
+    void setH(const SizeType h_) noexcept {
         h = h_;
     }
 
-    void setParent(PuzzleNode* p) {
+    void setParent(PuzzleNode* p) noexcept {
         parent = p;
     }
 
-    SizeType getG() const {
+    SizeType getG() const noexcept {
         return g;
     }
 
-    SizeType getH() const {
+    SizeType getH() const noexcept {
         return h;
     }
 
-    SizeType getF() const {
+    SizeType getF() const noexcept {
         return getG() + getH();
     }
 

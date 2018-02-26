@@ -49,12 +49,12 @@ public:
     }
 
     // Return the amount of vertices in the graph
-    NumType getSize() const {
+    NumType getSize() const noexcept {
         return vertices.size();
     }
     
     // Return true if the weight of an edge is infinity
-    static bool isINF(const WeightType w) {
+    static bool isINF(const WeightType w) noexcept {
         return w == MAX_WEIGHT || w == MIN_WEIGHT;
     }
 

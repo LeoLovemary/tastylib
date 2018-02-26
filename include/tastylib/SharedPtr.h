@@ -17,7 +17,7 @@ void swap(SharedPtr<T>& lhs, SharedPtr<T>& rhs) {
 }
 
 template<typename T>
-void defaultDeleter(T* p) {
+void defaultDeleter(T* p) noexcept {
     delete p;
 }
 
@@ -33,7 +33,7 @@ class SharedPtr {
 
 public:
     // Default ctor
-    SharedPtr() : ptr(nullptr), refCnt(nullptr), deleter(defaultDeleter<T>) {}
+    SharedPtr() noexcept : ptr(nullptr), refCnt(nullptr), deleter(defaultDeleter<T>) {}
 
     // Contruct from raw pointer (optional custom deleter)
     explicit SharedPtr(T* p, const std::function<void(T*)>& d = defaultDeleter<T>)
@@ -59,7 +59,7 @@ public:
     }
 
     // Dtor
-    ~SharedPtr() {
+    ~SharedPtr() noexcept {
         decreaseAndDestory();
     }
 
@@ -72,32 +72,32 @@ public:
     }
 
     // Safe bool conversion
-    explicit operator bool() const {
+    explicit operator bool() const noexcept {
         return ptr != nullptr;
     }
 
     // Dereference operator
-    T& operator*() const {
+    T& operator*() const noexcept {
         return *ptr;
     }
 
     // Member access operator
-    T* operator->() const {
+    T* operator->() const noexcept {
         return ptr;
     }
 
     // Return underlying pointer
-    T* get() const {
+    T* get() const noexcept {
         return ptr;
     }
 
     // Whether reference count is one
-    bool unique() const {
+    bool unique() const noexcept {
         return 1 == useCount();
     }
 
     // Return reference count
-    std::size_t useCount() const {
+    std::size_t useCount() const noexcept {
         return refCnt ? *refCnt : 0;
     }
 
@@ -117,7 +117,7 @@ public:
     }
 
 private:
-    void decreaseAndDestory() {
+    void decreaseAndDestory() noexcept {
         if (refCnt && --*refCnt == 0) {
             delete refCnt;
             deleter(ptr);
@@ -129,7 +129,7 @@ private:
 private:
     T *ptr;
     std::size_t *refCnt;
-    std::function<void(T*)> deleter;
+    std::function<void(T*) noexcept> deleter;
 };
 
 TASTYLIB_NS_END

@@ -37,12 +37,12 @@ public:
     }
 
     // Return the amount of elements in the hash table
-    SizeType getSize() const {
+    SizeType getSize() const noexcept {
         return size;
     }
 
     // Return true if the hash table has no elements
-    bool isEmpty() const {
+    bool isEmpty() const noexcept {
         return size == 0;
     }
 

@@ -26,7 +26,7 @@ public:
     QueryResult query(const std::string& word) const;
 
 private:
-    static bool isPunc(const char c);
+    static bool isPunc(const char c) noexcept;
 
 private:
     // Store each line in the text
@@ -51,7 +51,7 @@ public:
     std::string rep() const;
 
 private:
-    explicit Query(const std::shared_ptr<QueryBase> p_);
+    explicit Query(const std::shared_ptr<QueryBase> p_) noexcept;
 
 private:
     std::shared_ptr<QueryBase> p;
