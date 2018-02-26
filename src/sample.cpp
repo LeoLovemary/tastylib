@@ -19,6 +19,8 @@
 #include "tastylib/UniquePtr.h"
 #include "tastylib/Calculator.h"
 
+#include <cstdlib>
+#include <cmath>
 #include <ctime>
 #include <cctype>
 #include <cstddef>
@@ -27,6 +29,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 
 #include <string>
 
