@@ -18,13 +18,10 @@ A self-balancing binary search tree.
                The tree ensures that for each node N,
                PredCmp(N.leftchild.value, N.value) == true AND
                PredCmp(N.value, N.rightchild.value) == true.
-@param PredEq  A binary predicate that checks if two values are equal.
-               If PredEq(a, b) == true, then value 'a' and value 'b' are
-               considered equal.
+               (must ensure strict weak ordering and should not
+                throw any exceptions when copy or move)
 */
-template<typename Value,
-         typename PredCmp = std::less<Value>,
-         typename PredEq = std::equal_to<Value>>
+template<typename Value, typename PredCmp = std::less<Value>>
 class AVLTree {
 private:
     struct Node {
@@ -34,34 +31,33 @@ private:
         int height;
 
         Node(const Value& v, Node *const l = nullptr, Node *const r = nullptr) noexcept
-            : val(v), left(l), right(r), height(0) {}
+        : val(v), left(l), right(r), height(0) {}
     };
 
 public:
     using SizeType = std::size_t;
 
     // Default ctor
-    AVLTree() noexcept : root(nullptr), size(0) {}
+    AVLTree(const PredCmp& cmp = PredCmp()) noexcept
+    : root(nullptr), size(0), predCmp(cmp) {}
 
     // Forbid copy
     AVLTree(const AVLTree&) = delete;
     AVLTree& operator=(const AVLTree&) = delete;
 
     // Move ctor
-    AVLTree(AVLTree&& other) : root(other.root), size(other.size),
-                               predEq(std::move(other.predEq)),
-                               predCmp(std::move(other.predCmp)) {
+    AVLTree(AVLTree&& other) noexcept
+    : root(other.root), size(other.size), predCmp(std::move(other.predCmp)) {
         other.root = nullptr;
         other.size = 0;
     }
 
     // Move assignment
-    AVLTree& operator=(AVLTree&& other) {
+    AVLTree& operator=(AVLTree&& other) noexcept {
         if (this != &other) {
             clear();
             root = other.root;
             size = other.size;
-            predEq = std::move(other.predEq);
             predCmp = std::move(other.predCmp);
             other.root = nullptr;
             other.size = 0;
@@ -168,6 +164,11 @@ public:
     }
 
 private:
+    // Equality check ensured by strict weak ordering
+    bool isEqual(const Value& lhs, const Value& rhs) const {
+        return !predCmp(lhs, rhs) && !predCmp(rhs, lhs);
+    }
+
     // Remove all nodes of a tree and free the resources.
     void release(Node *const root) noexcept {
         if (root) {
@@ -186,7 +187,7 @@ private:
                Return nullptr if the node does not exist.
     */
     Node* find(const Value& val, Node *const r) const {
-        if (!r || predEq(val, r->val)) {
+        if (!r || isEqual(val, r->val)) {
             return r;
         } else if (predCmp(val, r->val)) {
             return find(val, r->left);
@@ -282,7 +283,7 @@ private:
     @return    The new root of the tree that has been removed
     */
     Node* removeBalance(const Value& val, Node* r) {
-        if (predEq(val, r->val)) {
+        if (isEqual(val, r->val)) {
             if (r->left && r->right) {  // Two child
                 Node *node = leftmost(r->right);
                 r->val = node->val;
@@ -398,7 +399,6 @@ private:
     Node *root;
     SizeType size;
 
-    PredEq predEq;
     PredCmp predCmp;
 };
 

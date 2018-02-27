@@ -153,8 +153,8 @@ public:
         return getVal() == n.getVal();
     }
 
-    bool operator>=(const PuzzleNode& n) const noexcept {
-        return getF() >= n.getF();
+    bool operator<(const PuzzleNode& n) const noexcept {
+        return getF() < n.getF();
     }
 
 private:
@@ -397,20 +397,20 @@ private:
 private:
     struct Equal {
         bool operator()(const Node *const &n1,
-                        const Node *const &n2) const {
+                        const Node *const &n2) const noexcept {
             return *n1 == *n2;
         }
     };
 
-    struct GreaterEqual {
+    struct Less {
         bool operator()(const Node *const &n1,
-                        const Node *const &n2) const {
-            return *n1 >= *n2;
+                        const Node *const &n2) const noexcept {
+            return *n1 < *n2;
         }
     };
 
     struct Hash {
-        SizeType operator()(const Node *const &n) const {
+        SizeType operator()(const Node *const &n) const noexcept {
             return n->hash();
         }
     };
@@ -418,7 +418,7 @@ private:
     Node beg;
     Node end;
 
-    BinaryHeap<Node*, GreaterEqual> openList;
+    BinaryHeap<Node*, Less> openList;
     HashTable<Node*, Equal, Hash> closeList;
 
     std::list<Direc> path;

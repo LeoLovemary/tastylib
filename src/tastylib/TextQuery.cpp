@@ -103,7 +103,8 @@ std::string NotQuery::rep() const {
 
 // BinaryQuery
 
-BinaryQuery::BinaryQuery(const Query& l, const Query& r, const std::string& o) : lhs(l), rhs(r), op(o) {}
+BinaryQuery::BinaryQuery(const Query& l, const Query& r, const std::string& o)
+: lhs(l), rhs(r), op(o) {}
 
 std::string BinaryQuery::rep() const {
     return "(" + lhs.rep() + " " + op + " " + rhs.rep() + ")";

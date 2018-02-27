@@ -11,11 +11,8 @@ TASTYLIB_NS_BEGIN
 Doubly linked list data structure.
 
 @param Value The type of list node value.
-@param Pred  A binary predicate that checks if two node values
-             are equal. If Pred(a, b) == true, then value 'a'
-             and value 'b' are considered equal.
 */
-template<typename Value, typename Pred = std::equal_to<Value>>
+template<typename Value>
 class DoublyLinkedList {
 private:
     struct Node {
@@ -24,7 +21,7 @@ private:
         Node *next;
 
         Node(const Value& v, Node *p = nullptr, Node *n = nullptr) noexcept
-            : val(v), prev(p), next(n) {}
+        : val(v), prev(p), next(n) {}
     };
 
 public:
@@ -39,7 +36,7 @@ public:
 
     // Move ctor
     DoublyLinkedList(DoublyLinkedList&& other) noexcept
-        : size(other.size), head(other.head), tail(other.tail) {
+    : size(other.size), head(other.head), tail(other.tail) {
         other.size = 0;
         other.head = nullptr;
         other.tail = nullptr;
@@ -104,15 +101,16 @@ public:
     /*
     Find a node in the list.
 
-    @param val_ The value of the node to be found
-    @return     The first matching position of the node with value 'val_'.
-                If the node does not exist, return -1.
+    @param val The value of the node to be found
+    @param cmp The comparator
+    @return    The first matching position of the node with value 'val_'.
+               If the node does not exist, return -1.
     */
-    int find(const Value& val_) const {
-        Pred pred;
+    template<typename PredCmp = std::equal_to<Value>>
+    int find(const Value& val, const PredCmp& cmp = PredCmp()) const {
         SizeType pos = 0;
         for (Node *tmp = head; tmp; tmp = tmp->next, ++pos) {
-            if (pred(tmp->val, val_)) {
+            if (cmp(tmp->val, val)) {
                 return (int)pos;
             }
         }
@@ -245,21 +243,16 @@ public:
         delete del;
     }
 
-    // Sort the list nodes in ascending order
-    void sort() {
-        sort(std::less<Value>());
-    }
-
     /*
-    Sort the list nodes in custom order.
+    Sort the list nodes.
 
     @param cmp A binary predicate to compare two node values. The sorting
                algorithm ensures that after its execution, for each node A
                and its next node B in the list, A.value == B.value OR
                cmp(A.value, B.value) == true.
     */
-    template<typename Comparator>
-    void sort(const Comparator& cmp) {
+    template<typename PredCmp = std::less<Value>>
+    void sort(const PredCmp& cmp = PredCmp()) {
         head = mergeSort(head, size, cmp);
     }
 
@@ -301,8 +294,8 @@ private:
     @param cmp   A binary predicate to compare two node values
     @return      The head pointer of the sorted list
     */
-    template<typename Comparator>
-    Node* mergeSort(Node* h, const SizeType size_, const Comparator& cmp) {
+    template<typename PredCmp>
+    Node* mergeSort(Node* h, const SizeType size_, const PredCmp& cmp) {
         if (size_ < 2) {
             return h;
         }

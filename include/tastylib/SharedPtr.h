@@ -12,7 +12,7 @@ template<typename>
 class SharedPtr;
 
 template<typename T>
-void swap(SharedPtr<T>& lhs, SharedPtr<T>& rhs) {
+void swap(SharedPtr<T>& lhs, SharedPtr<T>& rhs) noexcept {
     lhs.swap(rhs);
 }
 
@@ -29,31 +29,31 @@ SharedPtr<T> makeShared(Args&&... args) {
 // Simplified version of std::shared_ptr.
 template<typename T>
 class SharedPtr {
-    friend void swap<T>(SharedPtr<T>& lhs, SharedPtr<T>& rhs);
+    friend void swap<T>(SharedPtr<T>& lhs, SharedPtr<T>& rhs) noexcept;
 
 public:
     // Default ctor
     SharedPtr() noexcept : ptr(nullptr), refCnt(nullptr), deleter(defaultDeleter<T>) {}
 
     // Contruct from raw pointer (optional custom deleter)
-    explicit SharedPtr(T* p, const std::function<void(T*)>& d = defaultDeleter<T>)
-        : ptr(p), refCnt(new std::size_t(1)), deleter(d) {}
+    explicit SharedPtr(T* p, const std::function<void(T*) noexcept>& d = defaultDeleter<T>)
+    : ptr(p), refCnt(new std::size_t(1)), deleter(d) {}
 
-    // Copy ctor
-    SharedPtr(const SharedPtr& other) : ptr(other.ptr), refCnt(other.refCnt),
-                                        deleter(other.deleter) {
+    // Copy ctor (deleter copy shall not throw)
+    SharedPtr(const SharedPtr& other) noexcept
+    : ptr(other.ptr), refCnt(other.refCnt), deleter(other.deleter) {
         ++*refCnt;
     }
 
-    // Move ctor
-    SharedPtr(SharedPtr&& other) : ptr(other.ptr), refCnt(other.refCnt),
-                                   deleter(std::move(other.deleter)) {
+    // Move ctor (deleter move shall not throw)
+    SharedPtr(SharedPtr&& other) noexcept
+    : ptr(other.ptr), refCnt(other.refCnt), deleter(std::move(other.deleter)) {
         other.ptr = nullptr;
         other.refCnt = nullptr;
     }
 
-    // Move- and copy-assignment operator
-    SharedPtr& operator=(SharedPtr rhs) {
+    // Move- and copy-assignment operator (deleter swap shall not throw)
+    SharedPtr& operator=(SharedPtr rhs) noexcept {
         swap(rhs);
         return *this;
     }
@@ -63,8 +63,8 @@ public:
         decreaseAndDestory();
     }
 
-    // Swap members with another SharedPtr
-    void swap(SharedPtr& rhs) {
+    // Swap members with another SharedPtr (deleter swap shall not throw)
+    void swap(SharedPtr& rhs) noexcept {
         using std::swap;
         swap(ptr, rhs.ptr);
         swap(refCnt, rhs.refCnt);
@@ -111,7 +111,7 @@ public:
     }
 
     // Reset pointer with custom deleter
-    void reset(T* p, const std::function<void(T*)>& d) {
+    void reset(T* p, const std::function<void(T*) noexcept>& d) {
         reset(p);
         deleter = d;
     }

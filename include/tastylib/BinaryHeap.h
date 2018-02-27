@@ -10,40 +10,30 @@ TASTYLIB_NS_BEGIN
 /*
 A heap data structure taking the form of a complete binary tree.
 
-@param Value The type of the value stored in the heap
-@param Pred  The type of the binary predicate to arrange tree the nodes.
-             The heap ensures that for each node N in the tree,
-             N.value == N.parent.value OR Pred(N.value, N.parent.value) == true.
-             By default it uses operator '>=' as the predicate, which makes it
-             a min-root heap.
+@param Value    The type of the value stored in the heap
+@param PredCmp  The type of the binary predCmpicate to arrange tree the nodes.
+                The heap ensures that for each node N in the tree,
+                N.parent.value == N.value OR PredCmp(N.parent.value, N.value) == true.
+                By default it uses operator '>=' as the predCmpicate, which makes it
+                a min-root heap.
 */
-template<typename Value, typename Pred = std::greater_equal<Value>>
+template<typename Value, typename PredCmp = std::less<Value>>
 class BinaryHeap {
 public:
     using Container = std::vector<Value>;
     using SizeType = typename Container::size_type;
 
     // Default ctor
-    BinaryHeap() : size(0), tree(1, 0) {}
+    BinaryHeap(const PredCmp& cmp = PredCmp())
+    : size(0), predCmp(cmp), tree(1) {}
 
     // Build heap with a given array of values
-    explicit BinaryHeap(const Container& vals) : size(vals.size()), tree(vals) {
-        tree.push_back(tree[0]);
-        for (SizeType i = size / 2; i > 0; --i) {
-            Value ele = tree[i];
-            SizeType j, child;
-            for (j = i; (j << 1) <= size; j = child) {
-                child = j << 1;
-                if (child < size && pred(tree[child], tree[child + 1])) {
-                    ++child;
-                }
-                if (pred(tree[child], ele)) {
-                    break;
-                } else {
-                    tree[j] = tree[child];
-                }
-            }
-            tree[j] = ele;
+    explicit BinaryHeap(const Container& vals, const PredCmp& cmp = PredCmp())
+    : size(vals.size()), predCmp(cmp), tree(vals) {
+        tree.push_back(tree[0]);  // tree[0] has no use, index begins at 1
+        for (SizeType i = (size >> 1); i > 0; --i) {
+            Value val = tree[i];  // Make a copy
+            percolateDown(i, val);
         }
     }
 
@@ -68,11 +58,7 @@ public:
             tree.resize(tree.size() << 1);  // Expand space
         }
         // The new element percolates up in the heap
-        SizeType i;
-        for (i = ++size; i != 1 && !pred(val, tree[i >> 1]); i >>= 1) {
-            tree[i] = tree[i >> 1];
-        }
-        tree[i] = val;
+        percolateUp(++size, val);
     }
 
     /*
@@ -88,26 +74,38 @@ public:
     Precondition: The heap is non-empty.
     */
     void pop() {
-        Value last = tree[size--];
-        SizeType i, child;
-        // The empty hole(root) percolates down in the heap
-        for (i = 1; (i << 1) <= size; i = child) {
+        // The empty hole (root node) percolates down
+        percolateDown(1, tree[size--]);
+    }
+
+private:
+    void percolateUp(const SizeType start, const Value& val) {
+        auto i = start;
+        for (; i != 1 && predCmp(val, tree[i >> 1]); i >>= 1) {
+            tree[i] = tree[i >> 1];
+        }
+        tree[i] = val;
+    }
+
+    void percolateDown(const SizeType start, const Value& val) {
+        SizeType i = start, child;
+        for (; (i << 1) <= size; i = child) {
             child = i << 1;
-            if (child != size && pred(tree[child], tree[child + 1])) {
+            if (child != size && predCmp(tree[child + 1], tree[child])) {
                 ++child;
             }
-            if (pred(tree[child], last)) {
+            if (predCmp(val, tree[child])) {
                 break;
             } else {
                 tree[i] = tree[child];
             }
         }
-        tree[i] = last;
+        tree[i] = val;
     }
 
 private:
     SizeType size;
-    Pred pred;
+    PredCmp predCmp;
 
     /*
     Store the complete binary tree in an array named 'tree'.

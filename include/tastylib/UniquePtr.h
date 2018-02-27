@@ -10,7 +10,7 @@ template<typename, typename>
 class UniquePtr;
 
 template<typename T, typename D>
-void swap(UniquePtr<T, D>& lhs, UniquePtr<T, D>& rhs) {
+void swap(UniquePtr<T, D>& lhs, UniquePtr<T, D>& rhs) noexcept {
     lhs.swap(rhs);
 }
 
@@ -25,7 +25,7 @@ public:
 // Simplified version of std::unique_ptr
 template<typename T, typename D = DefaultDeleter>
 class UniquePtr {
-    friend void swap<T, D>(UniquePtr<T, D>& lhs, UniquePtr<T, D>& rhs);
+    friend void swap<T, D>(UniquePtr<T, D>& lhs, UniquePtr<T, D>& rhs) noexcept;
 
 public:
     // Default ctor (optional custom deleter)
@@ -38,13 +38,14 @@ public:
     UniquePtr(const UniquePtr&) = delete;
     UniquePtr& operator=(const UniquePtr&) = delete;
 
-    // Move ctor
-    UniquePtr(UniquePtr&& other) : ptr(other.ptr), deleter(std::move(other.deleter)) {
+    // Move ctor (deleter move shall not throw)
+    UniquePtr(UniquePtr&& other) noexcept
+    : ptr(other.ptr), deleter(std::move(other.deleter)) {
         other.ptr = nullptr;
     }
 
-    // Move assignment
-    UniquePtr& operator=(UniquePtr&& rhs) {
+    // Move assignment (deleter move shall not throw)
+    UniquePtr& operator=(UniquePtr&& rhs) noexcept {
         if (this != &rhs) {
             del();
             ptr = rhs.ptr;
@@ -65,8 +66,8 @@ public:
         del();
     }
 
-    // Swap members with another UniquePtr
-    void swap(UniquePtr& rhs) {
+    // Swap members with another UniquePtr (deleter swap shall not throw)
+    void swap(UniquePtr& rhs) noexcept {
         using std::swap;
         swap(ptr, rhs.ptr);
         swap(deleter, rhs.deleter);

@@ -13,26 +13,31 @@ A data structure that stores unique elements in no particular order,
 and which allows for fast retrieval of individual elements based on
 their values.
 
-@param Value The type of the values stored in the hash table.
-@param Pred  A binary predicate that checks if two values are equal.
-             If pred(a, b) == true, then value 'a' and value 'b' are
-             considered equal.
+@param Value    The type of the values stored in the hash table.
+@param PredCmp  A binary predicate that checks if two values are equal.
+                If PredCmp(a, b) == true, then value 'a' and value 'b' are
+                considered equal.
 @param Hash  A unary functor that computes the hash value of an element.
 */
-template<typename Value, typename Pred = std::equal_to<Value>,
+template<typename Value, typename PredCmp = std::equal_to<Value>,
          typename Hash = std::hash<Value>>
 class HashTable {
 public:
     using SizeType = std::size_t;
-    using Container = std::vector<DoublyLinkedList<Value, Pred>>;
+    using Container = std::vector<DoublyLinkedList<Value>>;
 
     /*
     Initialize the hash table.
 
-    @param n Expected buckets amount. In practice, the
-             amount of buckets may be greater than 'n'.
+    @param n   Expected buckets amount. In practice, the
+               amount of buckets may be greater than 'n'
+    @param cmp The comparator
+    @param h   The hash function
     */
-    explicit HashTable(const SizeType n = MIN_BUCKET) : size(0), bucketNum(0) {
+    explicit HashTable(const SizeType n = MIN_BUCKET,
+                       const PredCmp& cmp = PredCmp(),
+                       const Hash& h = Hash())
+    : size(0), bucketNum(0), predCmp(cmp), hasher(h) {
         rehash(n);
     }
 
@@ -57,7 +62,7 @@ public:
     // Return true if a given value is in the hash table
     bool has(const Value& val) const {
         const auto &list = buckets[hash(val)];
-        return list.find(val) != -1;
+        return list.find(val, predCmp) != -1;
     }
 
     /*
@@ -126,10 +131,12 @@ private:
 private:
     static const SizeType MIN_BUCKET = 8;
 
-    Hash hasher;
-
     SizeType size;
     SizeType bucketNum;
+
+    PredCmp predCmp;
+    Hash hasher;
+
     Container buckets;
 };
 

@@ -50,7 +50,7 @@ TEST(SortTest, HeapSort) {
         arr1[i] = arr2[i] = random->nextInt(1, 10000);
     }
     std::sort(arr1, arr1 + n, std::greater<int>());
-    heapSort<int, std::less<int>>(arr2, n);
+    heapSort<int, std::greater<int>>(arr2, n);
     EXPECT_TRUE(std::is_sorted(arr1, arr1 + n, std::greater<int>()));
     EXPECT_TRUE(std::is_sorted(arr2, arr2 + n, std::greater<int>()));
     for (int i = 0; i < n; ++i) {
