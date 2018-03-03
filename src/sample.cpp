@@ -53,6 +53,7 @@
 #include <functional>
 
 #include <type_traits>
+#include <typeinfo>
 
 #include <tuple>
 #include <bitset>
