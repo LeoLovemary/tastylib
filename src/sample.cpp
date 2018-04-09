@@ -20,6 +20,7 @@
 #include "tastylib/Calculator.h"
 
 #include <cstdlib>
+#include <cstring>
 #include <cmath>
 #include <ctime>
 #include <cctype>
@@ -50,6 +51,7 @@
 #include <memory>
 #include <utility>
 #include <algorithm>
+#include <numeric>
 #include <functional>
 
 #include <type_traits>
