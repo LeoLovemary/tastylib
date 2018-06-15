@@ -37,7 +37,7 @@ C++ implementations of data structures, algorithms and useful designs.
 |[TextQuery][textquery-details]|[Tests][textquery-tests]<br>[.h][textquery-h] [.cpp][textquery-cpp]|No|Search a given input stream for words. (OOP practice)|§12.3 & §15.9, C++ Primer, 5th Edition|
 |[SharedPtr][sharedptr-details]|[Tests][sharedptr-tests]<br>[.h][sharedptr-src]|No|My own version of [std::shared_ptr][sharedptr-std].|§12.1 & §16.1.6, C++ Primer, 5th Edition|
 |[UniquePtr][uniqueptr-details]|[Tests][uniqueptr-tests]<br>[.h][uniqueptr-src]|No|My own version of [std::unique_ptr][uniqueptr-std].|§12.1 & §16.1.6, C++ Primer, 5th Edition|
-|[Calculator][calculator-details]|[Tests][calculator-tests]<br>[.h][calculator-h] [.cpp][calculator-cpp]|No|Infix arithmetic expression calculator based on [recursive descent parser][calculator-parse-wiki].|Compilers: Principles, Techniques, and Tools, 2nd Edition|
+|[Calculator][calculator-details]|[Tests][calculator-tests]<br>[.h][calculator-h] [.cpp][calculator-cpp]|No|Infix arithmetic expression calculator based on [recursive descent parser][calculator-parse-wiki].|§4.2~4.4, Compilers: Principles, Techniques, and Tools, 2nd Edition|
 
 ## Installation
 
