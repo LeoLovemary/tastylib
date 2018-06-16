@@ -105,7 +105,7 @@ See the [LICENSE](./LICENSE) file for license rights and limitations.
 [hashtbl-tests]: ./test/test_HashTable.cpp
 [hashtbl-src]: ./include/tastylib/HashTable.h
 [hashtbl-wiki]: https://en.wikipedia.org/wiki/Hash_table
-[unorderedset-wiki]: http://www.cplusplus.com/reference/unordered_set/unordered_set
+[unorderedset-wiki]: http://en.cppreference.com/w/cpp/container/unordered_set
 
 [avltree-details]: ./docs/details.md#avltree
 [avltree-tests]: ./test/test_AVLTree.cpp
@@ -159,12 +159,12 @@ See the [LICENSE](./LICENSE) file for license rights and limitations.
 [sharedptr-details]: ./docs/details.md#sharedptr
 [sharedptr-tests]: ./test/test_SharedPtr.cpp
 [sharedptr-src]: ./include/tastylib/SharedPtr.h
-[sharedptr-std]: http://www.cplusplus.com/reference/memory/shared_ptr/?kw=shared_ptr
+[sharedptr-std]: http://en.cppreference.com/w/cpp/memory/shared_ptr
 
 [uniqueptr-details]: ./docs/details.md#uniqueptr
 [uniqueptr-tests]: ./test/test_UniquePtr.cpp
 [uniqueptr-src]: ./include/tastylib/UniquePtr.h
-[uniqueptr-std]: http://www.cplusplus.com/reference/memory/unique_ptr/?kw=unique_ptr
+[uniqueptr-std]: https://en.cppreference.com/w/cpp/memory/unique_ptr
 
 [calculator-details]: ./docs/details.md#calculator
 [calculator-tests]: ./test/test_Calculator.cpp
