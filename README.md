@@ -79,13 +79,12 @@ C++ implementations of data structures, algorithms and useful designs.
 
 See the [LICENSE](./LICENSE) file for license rights and limitations.
 
-
-[ci-linux-badge]: https://travis-ci.org/chuyangliu/TastyLib.svg?branch=master
-[ci-linux-state]: https://travis-ci.org/chuyangliu/TastyLib
-[ci-win-badge]: https://ci.appveyor.com/api/projects/status/snba7lqd9fnx6kvt/branch/master?svg=true
+[ci-linux-badge]: https://travis-ci.org/chuyangliu/tastylib.svg?branch=master
+[ci-linux-state]: https://travis-ci.org/chuyangliu/tastylib
+[ci-win-badge]: https://ci.appveyor.com/api/projects/status/utormn9q8k735x3h/branch/master?svg=true
 [ci-win-state]: https://ci.appveyor.com/project/chuyangliu/tastylib/branch/master
-[coverage-badge]: https://coveralls.io/repos/github/chuyangliu/TastyLib/badge.svg?branch=master
-[coverage-state]: https://coveralls.io/github/chuyangliu/TastyLib?branch=master
+[coverage-badge]: https://coveralls.io/repos/github/chuyangliu/tastylib/badge.svg?branch=master
+[coverage-state]: https://coveralls.io/github/chuyangliu/tastylib?branch=master
 
 [cmake-site]: https://cmake.org
 [cmake-generator-docs]: https://cmake.org/cmake/help/v3.10/manual/cmake-generators.7.html
