@@ -25,7 +25,7 @@ C++ implementations of data structures, algorithms and useful designs.
 | Name | Source | Benchmarked | Note | Definition |
 |:----:|:------:|:-----------:|------|:----------:|
 |[MD5][md5-details]|[Tests][md5-tests]<br>[.h][md5-src]|Yes|A widely used hash function producing a 128-bit hash value.|[Wikipedia][md5-wiki]|
-|[Sort][sort-details]|[Tests][sort-tests]<br>[.h][sort-src]|Yes|Including [insertion sort][sort-wiki-insertion], [selection sort][sort-wiki-selection], [heapsort][sort-wiki-heap], [quicksort][sort-wiki-quick], [quickselect][sort-wiki-quickselect]. For [merge sort][sort-wiki-merge], please refer to [DoublyLinkedList.sort()][doublylist-details].|[Wikipedia][sort-wiki]|
+|[Sort][sort-details]|[Tests][sort-tests]<br>[.h][sort-src]|Yes|Including [insertion sort][sort-wiki-insertion], [selection sort][sort-wiki-selection], [heap sort][sort-wiki-heap], [quick sort][sort-wiki-quick], and [quick select][sort-wiki-quickselect]. For [merge sort][sort-wiki-merge], please refer to [DoublyLinkedList.sort()][doublylist-details].|[Wikipedia][sort-wiki]|
 |[Dijkstra][dijkstra-details]|[Tests][dijkstra-tests]<br>[.h][dijkstra-src]|No|An algorithm to find the shortest paths between vertices in a graph.|[Wikipedia][dijkstra-wiki]|
 |[LCS][lcs-details]|[Tests][lcs-tests]<br>[.h][lcs-src]|No|A dynamic programming solution to find the longest subsequence or substring common to two sequences.|[Wikipedia (substring)][lcs-wiki-substr]<br>[Wikipedia (subsequence)][lcs-wiki-subseq]|
 
@@ -48,7 +48,7 @@ C++ implementations of data structures, algorithms and useful designs.
         ```bash
         $ mkdir build
         $ cd build
-        $ cmake [-G <generator>] ..
+        $ cmake ..
         ```
 
     * Build benchmarks and testss
@@ -58,7 +58,7 @@ C++ implementations of data structures, algorithms and useful designs.
         $ cd build
         $ git submodule init
         $ git submodule update
-        $ cmake [-G <generator>] -DTASTYLIB_BUILD_TEST=ON ..
+        $ cmake -DTASTYLIB_BUILD_TEST=ON ..
         ```
 
     You can customize the [CMake Generators][cmake-generator-docs].
