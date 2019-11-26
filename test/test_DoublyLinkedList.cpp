@@ -19,6 +19,8 @@ std::string getListContent(const DoublyLinkedList<T>& list) {
 
 TEST(DoublyLinkedListTest, Basic) {
     DoublyLinkedList<int> list;
+    list.removeFront();
+    list.removeBack();
     EXPECT_TRUE(list.isEmpty());
     list.insertBack(1);
     EXPECT_EQ(getListContent(list), "1");
