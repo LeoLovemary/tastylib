@@ -77,7 +77,7 @@ C++ implementations of data structures, algorithms and useful designs.
 
 ## License
 
-See the [LICENSE](./LICENSE) file for license rights and limitations.
+See the [LICENSE](./LICENSE.md) file for license rights and limitations.
 
 [ci-linux-badge]: https://travis-ci.org/chuyangliu/tastylib.svg?branch=master
 [ci-linux-state]: https://travis-ci.org/chuyangliu/tastylib
